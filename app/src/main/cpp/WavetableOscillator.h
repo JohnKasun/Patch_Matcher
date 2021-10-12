@@ -1,0 +1,14 @@
+//
+// Created by JohnK on 10/12/2021.
+//
+
+#ifndef PATCH_MATCHER_WAVETABLEOSCILLATOR_H
+#define PATCH_MATCHER_WAVETABLEOSCILLATOR_H
+
+
+class WavetableOscillator {
+
+};
+
+
+#endif //PATCH_MATCHER_WAVETABLEOSCILLATOR_H
