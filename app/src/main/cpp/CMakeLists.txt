@@ -21,7 +21,10 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        native-lib.cpp)
+        native-lib.cpp
+        AudioEngine.cpp)
+
+include_directories(src/main/cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -47,6 +50,7 @@ target_link_libraries( # Specifies the target library.
         # included in the NDK.
         ${log-lib})
 
+# OBOE SETUP
 set(OBOE_DIR C:/Users/JohnK/Documents/oboe)
 add_subdirectory(${OBOE_DIR} ./oboe)
 include_directories(${OBOE_DIR}/include)
