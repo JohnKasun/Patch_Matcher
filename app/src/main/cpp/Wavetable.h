@@ -11,7 +11,10 @@ class Wavetable {
 private:
     unsigned size;
     float *table;
-    std::function<float(int)> patch;
+    std::function<float(double)> patch;
+
+    static float constexpr kPI = M_PI;
+    static float constexpr kTwoPi = kPI * 2;
 public:
 
     Wavetable(int size = 128);
@@ -20,7 +23,7 @@ public:
     void generate();
     unsigned get_size() const ;
     float operator[](int index) const;
-    void setPatch(std::function<float(int)> new_patch);
+    void setPatch(std::function<float(double)> new_patch);
 
 };
 

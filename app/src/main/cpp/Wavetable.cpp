@@ -6,9 +6,9 @@
 
 Wavetable::Wavetable(int size)
     : size(size), table(nullptr),
-      patch( [](int index){ return sinf(index);} )
+      patch( [](double currentAngle){ return sinf(currentAngle);} )
 {
-    table = new float[size];
+    table = new float[size]{};
 }
 
 Wavetable::~Wavetable()
@@ -18,8 +18,14 @@ Wavetable::~Wavetable()
 
 void Wavetable::generate()
 {
-    int index =
-    table[index] = patch(index);
+    auto angleDelta = kTwoPi / (double)(size - 1);
+    auto currentAngle = 0.0;
+
+    for (unsigned i = 0; i < size; ++i)
+    {
+        table[i] = patch(currentAngle);
+        currentAngle += angleDelta;
+    }
 }
 
 unsigned Wavetable::get_size() const
@@ -29,10 +35,10 @@ unsigned Wavetable::get_size() const
 
 float Wavetable::operator[](int index) const
 {
-
+    return table[index];
 };
 
-void Wavetable::setPatch(std::function<float(int)> new_patch)
+void Wavetable::setPatch(std::function<float(double)> new_patch)
 {
     patch = new_patch;
 }
