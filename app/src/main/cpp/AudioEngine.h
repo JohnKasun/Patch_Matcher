@@ -7,8 +7,14 @@
 #include <oboe/Oboe.h>
 
 
-class AudioEngine {
-
+class AudioEngine : public oboe::AudioStreamCallback{
+public:
+    AudioEngine();
+    virtual ~AudioEngine() = default;
+    int32_t startAudio();
+    void stopAudio();
+    oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
+private:
 };
 
 
