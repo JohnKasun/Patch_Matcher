@@ -50,3 +50,8 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
     }
     return oboe::DataCallbackResult::Continue;
 }
+
+void AudioEngine::loadWavetables()
+{
+    //loop through wavetables map and create common tables
+}

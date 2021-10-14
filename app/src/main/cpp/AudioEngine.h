@@ -5,7 +5,9 @@
 #ifndef PATCH_MATCHER_AUDIOENGINE_H
 #define PATCH_MATCHER_AUDIOENGINE_H
 #include <oboe/Oboe.h>
-
+#include "Wavetable.h"
+#include <unordered_map>
+#include <string>
 
 class AudioEngine : public oboe::AudioStreamCallback{
 public:
@@ -31,6 +33,11 @@ private:
     static double constexpr mPhaseIncrement = kFrequency * kTwoPi / (double) kSampleRate;
     // Keeps track of where the wave is
     float mPhase = 0.0;
+
+    //Load wavetables on startup
+    std::unordered_map<std::string, Wavetable> wavetables;
+
+    void loadWavetables();
 };
 
 
