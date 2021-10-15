@@ -4,7 +4,10 @@
 
 #include "AudioEngine.h"
 
-AudioEngine::AudioEngine(){}
+AudioEngine::AudioEngine()
+{
+    loadWavetables();
+}
 
 int32_t AudioEngine::startAudio()
 {
@@ -53,7 +56,6 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
 
 void AudioEngine::loadWavetables()
 {
-    Wavetable sineWavetable([](double currentAngle){ return sinf(currentAngle);});
-
-    wavetables["Sine"] = &sineWavetable;
+    sine.generate();
+    square.generate();
 }

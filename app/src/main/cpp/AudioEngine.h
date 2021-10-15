@@ -5,9 +5,13 @@
 #ifndef PATCH_MATCHER_AUDIOENGINE_H
 #define PATCH_MATCHER_AUDIOENGINE_H
 #include <oboe/Oboe.h>
-#include "Wavetable.h"
 #include <unordered_map>
 #include <string>
+
+#include "Wavetable.h"
+#include "SineWavetable.h"
+#include "SquareWavetable.h"
+#include "CustomWavetable.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 public:
@@ -34,10 +38,13 @@ private:
     // Keeps track of where the wave is
     float mPhase = 0.0;
 
-    //Load wavetables on startup
-    std::unordered_map<std::string, Wavetable *> wavetables;
+    //Wavetables
+    SineWavetable sine;
+    SquareWavetable square;
 
+    //load Wavetables on startup
     void loadWavetables();
+
 };
 
 
