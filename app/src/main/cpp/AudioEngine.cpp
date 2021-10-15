@@ -53,5 +53,7 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
 
 void AudioEngine::loadWavetables()
 {
-    //loop through wavetables map and create common tables
+    Wavetable sineWavetable([](double currentAngle){ return sinf(currentAngle);});
+
+    wavetables["Sine"] = &sineWavetable;
 }

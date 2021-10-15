@@ -4,9 +4,8 @@
 
 #include "Wavetable.h"
 
-Wavetable::Wavetable(int size)
-    : size(size), table(nullptr),
-      patch( [](double currentAngle){ return sinf(currentAngle);} )
+Wavetable::Wavetable(std::function<float(double)> patch, int size)
+    : patch(patch), size(size), table(nullptr)
 {
     table = new float[size]{};
 }

@@ -17,7 +17,7 @@ private:
     static float constexpr kTwoPi = kPI * 2;
 public:
 
-    Wavetable(int size = 128);
+    Wavetable(std::function<float(double)> patch, int size = 128);
     ~Wavetable();
 
     void generate();

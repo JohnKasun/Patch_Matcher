@@ -35,7 +35,7 @@ private:
     float mPhase = 0.0;
 
     //Load wavetables on startup
-    std::unordered_map<std::string, Wavetable> wavetables;
+    std::unordered_map<std::string, Wavetable *> wavetables;
 
     void loadWavetables();
 };
