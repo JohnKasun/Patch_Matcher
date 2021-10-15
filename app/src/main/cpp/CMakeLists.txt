@@ -24,7 +24,8 @@ add_library( # Sets the name of the library.
         native-lib.cpp
         AudioEngine.cpp
         WavetableOscillator.cpp
-        Wavetable.cpp)
+        Wavetable.cpp
+        SineWavetable.cpp)
 
 include_directories(src/main/cpp)
 
