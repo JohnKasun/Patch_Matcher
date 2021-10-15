@@ -3,3 +3,18 @@
 //
 
 #include "SquareWavetable.h"
+SquareWavetable::SquareWavetable() : Wavetable()
+{
+}
+
+void SquareWavetable::generate()
+{
+    for (unsigned i {0}; i < size; i++){
+        float sample{};
+        if (i < size/2)
+            sample = 1.0f;
+        else
+            sample = -1.0f;
+        table[i] = sample;
+    }
+}
