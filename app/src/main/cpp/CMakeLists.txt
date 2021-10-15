@@ -26,7 +26,8 @@ add_library( # Sets the name of the library.
         WavetableOscillator.cpp
         Wavetable.cpp
         SineWavetable.cpp
-        CustomWavetable.cpp)
+        CustomWavetable.cpp
+        SquareWavetable.cpp)
 
 include_directories(src/main/cpp)
 
