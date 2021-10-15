@@ -2,13 +2,20 @@
 // Created by JohnK on 10/15/2021.
 //
 
-#ifndef PATCH_MATCHER_CUSTOMWAVETABLE_H
-#define PATCH_MATCHER_CUSTOMWAVETABLE_H
+#ifndef CUSTOMWAVETABLE_H
+#define CUSTOMWAVETABLE_H
+#include "Wavetable.h"
 
+class CustomWavetable : public Wavetable
+{
+private:
+    std::function<float(double)> patch;
+public:
+    CustomWavetable(std::function<float(double)> patch = [](double){return -1;});
+    virtual ~CustomWavetable();
 
-class CustomWavetable {
-
+    virtual bool setPatch(std::function<float(double)> new_patch) override;
+    virtual void generate() override;
 };
 
-
-#endif //PATCH_MATCHER_CUSTOMWAVETABLE_H
+#endif // CUSTOMWAVETABLE_H
