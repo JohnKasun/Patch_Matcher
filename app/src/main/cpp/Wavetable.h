@@ -5,25 +5,24 @@
 #ifndef PATCH_MATCHER_WAVETABLE_H
 #define PATCH_MATCHER_WAVETABLE_H
 #include <functional>
-
+#include <fstream>
 
 class Wavetable {
-private:
-    unsigned size;
-    float *table;
-    std::function<float(double)> patch;
-
+protected:
     static float constexpr kPI = M_PI;
     static float constexpr kTwoPi = kPI * 2;
+    static unsigned constexpr size = 128;
+    float table[size];
 public:
+    Wavetable();
+    virtual ~Wavetable() = default;
 
-    Wavetable(std::function<float(double)> patch, int size = 128);
-    ~Wavetable();
-
-    void generate();
     unsigned get_size() const ;
     float operator[](int index) const;
-    void setPatch(std::function<float(double)> new_patch);
+    void print() const;
+
+    virtual void generate() = 0;
+    virtual bool setPatch(std::function<float(double)> new_patch);
 
 };
 

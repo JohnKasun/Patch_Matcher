@@ -4,28 +4,8 @@
 
 #include "Wavetable.h"
 
-Wavetable::Wavetable(std::function<float(double)> patch, int size)
-    : patch(patch), size(size), table(nullptr)
-{
-    table = new float[size]{};
-}
-
-Wavetable::~Wavetable()
-{
-    delete[] table;
-}
-
-void Wavetable::generate()
-{
-    auto angleDelta = kTwoPi / (double)(size - 1);
-    auto currentAngle = 0.0;
-
-    for (unsigned i = 0; i < size; ++i)
-    {
-        table[i] = patch(currentAngle);
-        currentAngle += angleDelta;
-    }
-}
+Wavetable::Wavetable() : table{}
+{}
 
 unsigned Wavetable::get_size() const
 {
@@ -37,7 +17,18 @@ float Wavetable::operator[](int index) const
     return table[index];
 };
 
-void Wavetable::setPatch(std::function<float(double)> new_patch)
+void Wavetable::print() const
 {
-    patch = new_patch;
+    std::ofstream out_file{};
+    out_file.open("Wavetable.txt");
+    if (out_file){
+        for (unsigned i {0}; i < size; i++)
+            out_file << table[i] << std::endl;
+    }
+    out_file.close();
+}
+
+bool Wavetable::setPatch(std::function<float(double)>)
+{
+    return false;
 }
