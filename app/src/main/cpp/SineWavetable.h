@@ -4,10 +4,16 @@
 
 #ifndef PATCH_MATCHER_SINEWAVETABLE_H
 #define PATCH_MATCHER_SINEWAVETABLE_H
+#include "Wavetable.h"
 
 
-class SineWavetable {
+class SineWavetable : public Wavetable {
+public:
 
+    SineWavetable();
+    virtual ~SineWavetable() = default;
+
+    virtual void generate() override;
 };
 
 
