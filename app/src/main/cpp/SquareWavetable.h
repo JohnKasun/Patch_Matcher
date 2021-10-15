@@ -2,13 +2,18 @@
 // Created by JohnK on 10/15/2021.
 //
 
-#ifndef PATCH_MATCHER_SQUAREWAVETABLE_H
-#define PATCH_MATCHER_SQUAREWAVETABLE_H
+#ifndef SQUAREWAVETABLE_H
+#define SQUAREWAVETABLE_H
+#include "Wavetable.h"
 
+class SquareWavetable : public Wavetable
+{
+public:
+    SquareWavetable();
+    ~SquareWavetable() = default;
 
-class SquareWavetable {
+    virtual void generate() override;
 
 };
 
-
-#endif //PATCH_MATCHER_SQUAREWAVETABLE_H
+#endif // SQUAREWAVETABLE_H
