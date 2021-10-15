@@ -20,7 +20,7 @@ float Wavetable::operator[](int index) const
 void Wavetable::print() const
 {
     std::ofstream out_file{};
-    out_file.open("Wavetable.txt");
+    out_file.open("Wavetable.csv");
     if (out_file){
         for (unsigned i {0}; i < size; i++)
             out_file << table[i] << std::endl;
