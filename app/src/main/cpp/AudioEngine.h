@@ -12,6 +12,7 @@
 #include "SineWavetable.h"
 #include "SquareWavetable.h"
 #include "CustomWavetable.h"
+#include "WavetableOscillator.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 public:
