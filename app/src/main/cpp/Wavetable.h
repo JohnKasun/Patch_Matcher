@@ -11,13 +11,13 @@ class Wavetable {
 protected:
     static float constexpr kPI = M_PI;
     static float constexpr kTwoPi = kPI * 2;
-    static unsigned constexpr size = 128;
+    static int constexpr size = 128;
     float table[size];
 public:
     Wavetable();
     virtual ~Wavetable() = default;
 
-    unsigned get_size() const ;
+    int get_size() const ;
     float operator[](int index) const;
     void print() const;
 

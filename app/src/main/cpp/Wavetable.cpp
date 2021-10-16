@@ -7,7 +7,7 @@
 Wavetable::Wavetable() : table{}
 {}
 
-unsigned Wavetable::get_size() const
+int Wavetable::get_size() const
 {
     return size;
 }
@@ -22,7 +22,7 @@ void Wavetable::print() const
     std::ofstream out_file{};
     out_file.open("Wavetable.csv");
     if (out_file){
-        for (unsigned i {0}; i < size; i++)
+        for (int i {0}; i < size; i++)
             out_file << table[i] << std::endl;
     }
     out_file.close();
