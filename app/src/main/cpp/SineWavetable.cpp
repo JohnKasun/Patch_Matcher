@@ -8,7 +8,7 @@ SineWavetable::SineWavetable() : Wavetable()
 
 void SineWavetable::generate()
 {
-    auto angleDelta = kTwoPi / (double)(size - 1);
+    auto angleDelta = kTwoPi / (double)size;
     auto currentAngle = 0.0;
 
     for (unsigned i = 0; i < size; ++i)
