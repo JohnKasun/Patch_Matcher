@@ -5,6 +5,7 @@
 #ifndef PATCH_MATCHER_WAVETABLEOSCILLATOR_H
 #define PATCH_MATCHER_WAVETABLEOSCILLATOR_H
 #include "Wavetable.h"
+#include <fstream>
 
 
 class WavetableOscillator
@@ -37,6 +38,7 @@ public:
 
         return currentSample;
     }
+    void print();
 
 };
 
