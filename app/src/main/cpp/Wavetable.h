@@ -4,6 +4,8 @@
 
 #ifndef PATCH_MATCHER_WAVETABLE_H
 #define PATCH_MATCHER_WAVETABLE_H
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <functional>
 #include <fstream>
 
@@ -19,7 +21,6 @@ public:
 
     int get_size() const ;
     float operator[](int index) const;
-    void print() const;
 
     virtual void generate() = 0;
     virtual bool setPatch(std::function<float(double)> new_patch);
