@@ -15,11 +15,14 @@ private:
     const int tableSize;
     float currentIndex = 0.0f;
     float tableDelta = 0.0f;
+    float frequency = 0.0f;
 public:
     WavetableOscillator(const Wavetable &wavetableToUse);
     ~WavetableOscillator();
 
-    void setFrequency(float frequency, float sampleRate);
+    void setFrequency(float freq, float sampleRate);
+    float getTableDelta() const;
+    float getFrequency() const;
     inline float getNextSample() noexcept
     {
         int indexBelow = (int) currentIndex;
@@ -38,7 +41,6 @@ public:
 
         return currentSample;
     }
-    void print();
 
 };
 

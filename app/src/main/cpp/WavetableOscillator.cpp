@@ -11,22 +11,19 @@ WavetableOscillator::~WavetableOscillator()
 {
 }
 
-void WavetableOscillator::setFrequency(float frequency, float sampleRate)
+void WavetableOscillator::setFrequency(float freq, float sampleRate)
 {
+    frequency = freq;
     float tableSizeOverSampleRate = (float)tableSize / sampleRate;
     tableDelta = frequency * tableSizeOverSampleRate;
 }
 
-void WavetableOscillator::print()
+float WavetableOscillator::getTableDelta() const
 {
-    std::ofstream out_file{};
-    out_file.open("WavetableOscillator.csv");
-    if (out_file){
-        int numtimes{1000};
-        while(numtimes--){
-            out_file << getNextSample() << std::endl;
-        }
-    }
-    out_file.close();
+    return tableDelta;
+}
 
+float WavetableOscillator::getFrequency() const
+{
+    return frequency;
 }
