@@ -52,7 +52,10 @@ captures/
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
 
+<<<<<<< HEAD
 .idea/misc.xml
+=======
+>>>>>>> wavetable
 .idea/.name
 
 # Keystore files

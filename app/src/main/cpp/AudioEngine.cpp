@@ -4,7 +4,10 @@
 
 #include "AudioEngine.h"
 
-AudioEngine::AudioEngine(){}
+AudioEngine::AudioEngine() : osc(sine), osc2(custom)
+{
+    loadWavetables();
+}
 
 int32_t AudioEngine::startAudio()
 {
@@ -22,6 +25,9 @@ int32_t AudioEngine::startAudio()
     if (result != oboe::Result::OK) return (int32_t) result;
 
     // Typically, start the stream after querying some stream information, as well as some input from the user
+    osc.setFrequency(440.0f, builder.getSampleRate());
+    osc2.setFrequency(554.38, builder.getSampleRate());
+    mStream->requestFlush();
     result = mStream->requestStart();
     return (int32_t) result;
 }
@@ -41,12 +47,20 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
 {
     float *floatData = (float *) audioData;
     for (int i = 0; i < numFrames; ++i) {
-        float sampleValue = kAmplitude * sinf(mPhase);
+        float sampleValue = kAmplitude * (osc.getNextSample() + osc2.getNextSample());
         for (int j = 0; j < kChannelCount; j++) {
             floatData[i * kChannelCount + j] = sampleValue;
         }
-        mPhase += mPhaseIncrement;
-        if (mPhase >= kTwoPi) mPhase -= kTwoPi;
     }
     return oboe::DataCallbackResult::Continue;
+}
+
+void AudioEngine::loadWavetables()
+{
+    sine.generate();
+    square.generate();
+    custom.setPatch([](double theta) {
+        return (sinf(theta) + 0.5 * sinf(2.0*theta) * 0.25 * sinf(3.0 * theta));
+    });
+    custom.generate();
 }
