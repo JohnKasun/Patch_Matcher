@@ -19,5 +19,5 @@ Java_com_example_patch_1matcher_MainActivity_onPlayButtonPress(JNIEnv *env, jobj
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_patch_1matcher_MainActivity_onStopButtonPress(JNIEnv *env, jobject thiz) {
-    engine.stopAudio();
+    engine.pauseAudio();
 }

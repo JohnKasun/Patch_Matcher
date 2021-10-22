@@ -4,12 +4,21 @@
 
 #include "AudioEngine.h"
 
-AudioEngine::AudioEngine() : osc(sine), osc2(custom)
+AudioEngine::AudioEngine()
 {
     loadWavetables();
+    initializeAudio();
+    osc = new WavetableOscillator(sine);
+    osc->setFrequency(440, kSampleRate);
 }
 
-int32_t AudioEngine::startAudio()
+AudioEngine::~AudioEngine()
+{
+    stopAudio();
+    delete osc;
+}
+
+int32_t AudioEngine::initializeAudio()
 {
     std::lock_guard<std::mutex> lock(mLock);
     oboe::AudioStreamBuilder builder;
@@ -22,14 +31,13 @@ int32_t AudioEngine::startAudio()
             ->setFormat(oboe::AudioFormat::Float)
             ->setDataCallback(this)
             ->openStream(mStream);
-    if (result != oboe::Result::OK) return (int32_t) result;
-
-    // Typically, start the stream after querying some stream information, as well as some input from the user
-    osc.setFrequency(440.0f, builder.getSampleRate());
-    osc2.setFrequency(554.38, builder.getSampleRate());
-    mStream->requestFlush();
-    result = mStream->requestStart();
     return (int32_t) result;
+}
+
+int32_t AudioEngine::startAudio()
+{
+    // Typically, start the stream after querying some stream information, as well as some input from the user
+    return (int32_t) mStream->requestStart();
 }
 
 void AudioEngine::stopAudio()
@@ -43,11 +51,21 @@ void AudioEngine::stopAudio()
     }
 }
 
+int32_t AudioEngine::pauseAudio()
+{
+    oboe::StreamState inputState = oboe::StreamState::Pausing;
+    oboe::StreamState nextState = oboe::StreamState::Uninitialized;
+    int64_t timeoutNanos = 100 * oboe::kNanosPerMillisecond;
+    mStream->requestPause();
+    return (int32_t) mStream->waitForStateChange(inputState, &nextState, timeoutNanos);
+}
+
+
 oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames)
 {
     float *floatData = (float *) audioData;
     for (int i = 0; i < numFrames; ++i) {
-        float sampleValue = kAmplitude * (osc.getNextSample() + osc2.getNextSample());
+        float sampleValue = kAmplitude * (osc->getNextSample());
         for (int j = 0; j < kChannelCount; j++) {
             floatData[i * kChannelCount + j] = sampleValue;
         }

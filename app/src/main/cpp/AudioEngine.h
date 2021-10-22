@@ -17,10 +17,12 @@
 class AudioEngine : public oboe::AudioStreamCallback{
 public:
     AudioEngine();
-    virtual ~AudioEngine() = default;
+    virtual ~AudioEngine();
 
+    int32_t initializeAudio();
     int32_t startAudio();
     void stopAudio();
+    int32_t pauseAudio();
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
 private:
@@ -40,8 +42,7 @@ private:
     SquareWavetable square;
     CustomWavetable custom;
 
-    WavetableOscillator osc;
-    WavetableOscillator osc2;
+    WavetableOscillator* osc;
 
     //load Wavetables on startup
     void loadWavetables();
