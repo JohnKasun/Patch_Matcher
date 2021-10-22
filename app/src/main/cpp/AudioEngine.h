@@ -23,6 +23,7 @@ public:
     int32_t startAudio();
     void stopAudio();
     int32_t pauseAudio();
+    void changeWavetable();
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
 private:
@@ -43,6 +44,7 @@ private:
     CustomWavetable custom;
 
     WavetableOscillator* osc;
+    WavetableOscillator* osc_fm;
 
     //load Wavetables on startup
     void loadWavetables();

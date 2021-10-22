@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
                 onStopButtonPress();
             }
         });
+
+        Button change_button = (Button) findViewById(R.id.change_button);
+        change_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChangeButtonPress();
+            }
+        });
        
     }
 
@@ -54,4 +62,5 @@ public class MainActivity extends AppCompatActivity {
     public native String stringFromJNI();
     public native void onPlayButtonPress();
     public native void onStopButtonPress();
+    public native void onChangeButtonPress();
 }

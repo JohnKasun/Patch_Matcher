@@ -3,7 +3,7 @@
 //
 
 #include "WavetableOscillator.h"
-WavetableOscillator::WavetableOscillator(const Wavetable &wavetableToUse) : wavetable{wavetableToUse}, tableSize{wavetableToUse.get_size()}
+WavetableOscillator::WavetableOscillator(const Wavetable* wavetableToUse) : wavetable{wavetableToUse}, tableSize{wavetableToUse->get_size()}
 {
 }
 
@@ -26,4 +26,11 @@ float WavetableOscillator::getTableDelta() const
 float WavetableOscillator::getFrequency() const
 {
     return frequency;
+}
+
+void WavetableOscillator::setWavetable(const Wavetable* newWavetable) {
+    wavetable = newWavetable;
+    int newTableSize = newWavetable->get_size();
+    tableDelta *= (newTableSize / tableSize);
+    tableSize = newTableSize;
 }

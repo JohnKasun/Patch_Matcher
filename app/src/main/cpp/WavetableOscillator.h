@@ -11,18 +11,19 @@
 class WavetableOscillator
 {
 private:
-    const Wavetable &wavetable;
-    const int tableSize;
+    const Wavetable* wavetable;
+    int tableSize;
     float currentIndex = 0.0f;
     float tableDelta = 0.0f;
     float frequency = 0.0f;
 public:
-    WavetableOscillator(const Wavetable &wavetableToUse);
+    WavetableOscillator(const Wavetable* wavetableToUse);
     ~WavetableOscillator();
 
     void setFrequency(float freq, float sampleRate);
     float getTableDelta() const;
     float getFrequency() const;
+    void setWavetable(const Wavetable* newWavetable);
     inline float getNextSample() noexcept
     {
         int indexBelow = (int) currentIndex;
@@ -33,7 +34,7 @@ public:
         float fracAbove = currentIndex - indexBelow;
         float fracBelow = 1.0 - fracAbove;
 
-        float currentSample = (fracBelow * wavetable[indexBelow]) + (fracAbove * wavetable[indexAbove]);
+        float currentSample = (fracBelow * wavetable->at(indexBelow)) + (fracAbove * wavetable->at(indexAbove));
 
         currentIndex += tableDelta;
         while(currentIndex >= (float)tableSize)

@@ -13,7 +13,7 @@ void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
     sine.generate();
 
     for (auto trial {0}; trial < numTrials; ++trial){
-        oscillator = new WavetableOscillator(sine);
+        oscillator = new WavetableOscillator(&sine);
         float randomFreq = (float)(rand()%460 + 20);
         oscillator->setFrequency(randomFreq, sampleRate);
         auto ground_func = [sampleRate, randomFreq](int n){

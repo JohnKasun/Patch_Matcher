@@ -21,3 +21,8 @@ JNIEXPORT void JNICALL
 Java_com_example_patch_1matcher_MainActivity_onStopButtonPress(JNIEnv *env, jobject thiz) {
     engine.pauseAudio();
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_onChangeButtonPress(JNIEnv *env, jobject thiz) {
+    engine.changeWavetable();
+}

@@ -21,6 +21,7 @@ public:
 
     int get_size() const ;
     float operator[](int index) const;
+    float at(int index) const;
 
     virtual void generate() = 0;
     virtual bool setPatch(std::function<float(double)> new_patch);
