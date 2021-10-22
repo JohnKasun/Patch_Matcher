@@ -60,16 +60,6 @@ int32_t AudioEngine::pauseAudio()
     return (int32_t) mStream->waitForStateChange(inputState, &nextState, timeoutNanos);
 }
 
-void AudioEngine::changeWavetable()
-{
-    static int type {0};
-    switch (type++ % 3){
-        case 0: osc->setWavetable(&sine);  break;
-        case 1: osc->setWavetable(&square);  break;
-        default: osc->setWavetable(&custom);
-    }
-}
-
 oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames)
 {
     float *floatData = (float *) audioData;
@@ -90,4 +80,14 @@ void AudioEngine::loadWavetables()
         return (sinf(theta) + 0.5 * sinf(2.0*theta) * 0.25 * sinf(3.0 * theta));
     });
     custom.generate();
+}
+
+void AudioEngine::changeWavetable()
+{
+    static int type {0};
+    switch (type++ % 3){
+        case 0: osc->setWavetable(&sine);  break;
+        case 1: osc->setWavetable(&square);  break;
+        default: osc->setWavetable(&custom);
+    }
 }

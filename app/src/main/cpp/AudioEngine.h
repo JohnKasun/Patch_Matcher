@@ -23,8 +23,9 @@ public:
     int32_t startAudio();
     void stopAudio();
     int32_t pauseAudio();
-    void changeWavetable();
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
+
+    void changeWavetable();
 
 private:
     std::mutex         mLock;
@@ -35,18 +36,15 @@ private:
     static int constexpr kSampleRate = 48000;
     // Wave params, these could be instance variables in order to modify at runtime
     static float constexpr kAmplitude = 0.5f;
-    static float constexpr kPI = M_PI;
-    static float constexpr kTwoPi = kPI * 2;
 
-    //Wavetables
+    // Wavetables
     SineWavetable sine;
     SquareWavetable square;
     CustomWavetable custom;
 
     WavetableOscillator* osc;
-    WavetableOscillator* osc_fm;
 
-    //load Wavetables on startup
+    // Load Wavetables on startup
     void loadWavetables();
 
 };
