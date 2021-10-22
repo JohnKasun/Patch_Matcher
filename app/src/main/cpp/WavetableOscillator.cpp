@@ -30,7 +30,10 @@ float WavetableOscillator::getFrequency() const
 
 void WavetableOscillator::setWavetable(const Wavetable* newWavetable) {
     wavetable = newWavetable;
-    int newTableSize = newWavetable->get_size();
-    tableDelta *= (newTableSize / tableSize);
-    tableSize = newTableSize;
+    if (tableSize != newWavetable->get_size()) {
+        int newTableSize = newWavetable->get_size();
+        tableDelta *= (newTableSize / tableSize);
+        tableSize = newTableSize;
+    }
+
 }
