@@ -13,6 +13,7 @@
 #include "SquareWavetable.h"
 #include "CustomWavetable.h"
 #include "WavetableOscillator.h"
+#include "Operator.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 public:
@@ -42,11 +43,15 @@ private:
     SquareWavetable square;
     CustomWavetable custom;
 
-    WavetableOscillator* osc;
+    // Operators
+    Operator operatorA;
+    Operator operatorB;
+    Operator operatorC;
 
     // Load Wavetables on startup
     void loadWavetables();
 
+    void initializeOperators();
 };
 
 

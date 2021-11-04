@@ -12,6 +12,7 @@
 
 #include "WavetableOscillator.h"
 #include "Wavetable.h"
+#include "Operator.h"
 #include "SineWavetable.h"
 #include "SquareWavetable.h"
 #include "CustomWavetable.h"

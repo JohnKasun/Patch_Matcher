@@ -18,11 +18,6 @@ void WavetableOscillator::setFrequency(float freq, float sampleRate)
     tableDelta = frequency * tableSizeOverSampleRate;
 }
 
-float WavetableOscillator::getTableDelta() const
-{
-    return tableDelta;
-}
-
 float WavetableOscillator::getFrequency() const
 {
     return frequency;
@@ -30,4 +25,9 @@ float WavetableOscillator::getFrequency() const
 
 void WavetableOscillator::setWavetable(const Wavetable* newWavetable) {
     wavetable = newWavetable;
+}
+
+void WavetableOscillator::setGain(float newGain)
+{
+    gain = newGain;
 }

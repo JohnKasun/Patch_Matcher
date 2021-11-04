@@ -13,7 +13,7 @@ void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
     sine.generate();
 
     for (auto trial {0}; trial < numTrials; ++trial){
-        oscillator = new WavetableOscillator(&sine);
+        oscillator = new Operator(&sine);
         float randomFreq = (float)(rand()%460 + 20);
         oscillator->setFrequency(randomFreq, sampleRate);
         auto ground_func = [sampleRate, randomFreq](int n){
@@ -23,7 +23,8 @@ void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
 
         std::vector<float> diff_vec;
         for (auto n {0}; n < numSamples; n++){
-            float diff_val = oscillator->getNextSample() - ground_func(n);
+            oscillator->generateNextSample();
+            float diff_val = oscillator->getCurrentSample() - ground_func(n);
             diff_vec.push_back(diff_val);
         }
         print(diff_vec);
@@ -46,7 +47,7 @@ void Tester::print(WavetableOscillator& osc, int numSamples)
     if (osc_log){
         osc_log << "--" << osc.getFrequency() << "--";
         for (int sample {0}; sample < numSamples; sample++)
-            osc_log << "," << osc.getNextSample();
+            osc_log << "," << osc.getCurrentSample();
         osc_log << std::endl;
     }
 }
