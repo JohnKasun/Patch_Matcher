@@ -28,6 +28,7 @@ add_library( # Sets the name of the library.
         SineWavetable.cpp
         CustomWavetable.cpp
         SquareWavetable.cpp
+        Operator.cpp
         Tester.cpp)
 
 include_directories(src/main/cpp)
