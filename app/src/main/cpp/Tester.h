@@ -33,9 +33,9 @@ public:
     Tester();
     ~Tester();
 
-    void runSineDiff(int numTrials = 10, int numSamples = 100, float sampleRate = 44100);
-    void print(WavetableOscillator& osc, int numSamples = 100);
-    void print(Wavetable& wavetable);
+/*    void runSineDiff(int numTrials = 10, int numSamples = 100, float sampleRate = 44100);*/
+    void print(Operator& osc, int numSamples = 100);
+/*    void print(Wavetable& wavetable);*/
 
 };
 
