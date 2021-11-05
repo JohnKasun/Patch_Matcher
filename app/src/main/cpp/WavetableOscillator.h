@@ -5,16 +5,21 @@
 #ifndef PATCH_MATCHER_WAVETABLEOSCILLATOR_H
 #define PATCH_MATCHER_WAVETABLEOSCILLATOR_H
 #include "Wavetable.h"
+#include <cmath>
 #include <fstream>
 
 
 class WavetableOscillator
 {
 protected:
+    static float constexpr kPI = M_PI;
+    static float constexpr kTwoPi = kPI * 2;
     const Wavetable* wavetable;
     int tableSize;
-    float currentIndex = 0.0f;
-    float tableDelta = 0.0f;
+    //float currentIndex = 0.0f;
+    float accumulatedPhase = 0.0f;
+    //float tableDelta = 0.0f;
+    float phaseDelta;
     float frequency = 0.0f;
     float gain = 0.0f;
     float currentSample = 0.0f;
@@ -26,8 +31,8 @@ public:
     float getFrequency() const;
     void setWavetable(const Wavetable* newWavetable);
     void setGain(float newGain);
-    inline float getCurrentSample() const noexcept { return currentSample; };
-    virtual inline void generateNextSample() noexcept = 0;
+    virtual inline float getNextSample() noexcept = 0;
+    float getCurrentSample() const { return currentSample; };
 };
 
 

@@ -6,7 +6,7 @@
 
 int Operator::numOperators = 0;
 
-Operator::Operator(const Wavetable* wavetable) : WavetableOscillator(wavetable), feedbackOn(false)
+Operator::Operator(const Wavetable* wavetable) : WavetableOscillator(wavetable), feedbackOn(false), RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi))
 {
     numOperators++;
 }

@@ -8,7 +8,7 @@ Tester::Tester()
     wav_log.open("log_Wavetables.csv");
 }
 
-void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
+/*void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
 {
     sine.generate();
 
@@ -23,7 +23,7 @@ void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
 
         std::vector<float> diff_vec;
         for (auto n {0}; n < numSamples; n++){
-            oscillator->generateNextSample();
+            oscillator->getNextSample();
             float diff_val = oscillator->getCurrentSample() - ground_func(n);
             diff_vec.push_back(diff_val);
         }
@@ -31,7 +31,7 @@ void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
 
         delete oscillator;
     }
-}
+}*/
 
 void Tester::print(const std::vector<float> &vec)
 {
@@ -42,17 +42,29 @@ void Tester::print(const std::vector<float> &vec)
     }
 }
 
-void Tester::print(WavetableOscillator& osc, int numSamples)
+void Tester::print(Operator& osc, int numSamples)
 {
     if (osc_log){
-        osc_log << "--" << osc.getFrequency() << "--";
-        for (int sample {0}; sample < numSamples; sample++)
-            osc_log << "," << osc.getCurrentSample();
+        /*std::cout << std::left << std::setw(10) << "Carrier";
+        for (int i {0}; i < Operator::numOperators - 1; i++)
+            std::cout << std::setw(10) << "Mod";
+        std::cout << std::endl;*/
+        for (int sample {0}; sample < numSamples - 1; sample++)
+        {
+            /*std::cout << std::setw(10) << osc.getNextSample();*/
+            /*for (const auto &modOperator : osc.modOperators)
+                std::cout << std::setw(10) << modOperator->getCurrentSample();*/
+            
+            osc_log << osc.getNextSample() << ",";
+            /*std::cout << std::endl;*/
+        }
+        osc_log << osc.getNextSample();
         osc_log << std::endl;
+        std::cout << "done" << std::endl;
     }
 }
 
-void Tester::print(Wavetable& wavetable)
+/*void Tester::print(Wavetable& wavetable)
 {
     static int numTables {0};
     if (wav_log){
@@ -61,7 +73,7 @@ void Tester::print(Wavetable& wavetable)
             wav_log << "," << wavetable[sample];
         wav_log << std::endl;
     }
-}
+}*/
 
 Tester::~Tester()
 {

@@ -13,9 +13,12 @@ WavetableOscillator::~WavetableOscillator()
 
 void WavetableOscillator::setFrequency(float freq, float sampleRate)
 {
-    frequency = freq;
+    /*frequency = freq;
     float tableSizeOverSampleRate = (float)tableSize / sampleRate;
-    tableDelta = frequency * tableSizeOverSampleRate;
+    tableDelta = frequency * tableSizeOverSampleRate;*/
+    
+    frequency = freq;
+    phaseDelta = (kTwoPi/sampleRate) * freq;
 }
 
 float WavetableOscillator::getFrequency() const

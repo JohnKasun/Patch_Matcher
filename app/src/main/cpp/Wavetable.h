@@ -13,7 +13,7 @@ class Wavetable {
 protected:
     static float constexpr kPI = M_PI;
     static float constexpr kTwoPi = kPI * 2;
-    static int constexpr size = 128;
+    static int constexpr size = 512;
     float table[size];
 public:
     Wavetable();
