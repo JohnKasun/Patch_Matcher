@@ -17,6 +17,7 @@
 #include "SquareWavetable.h"
 #include "CustomWavetable.h"
 
+class Operator;
 
 class Tester {
 private:

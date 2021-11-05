@@ -62,10 +62,7 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
 {
     float *floatData = (float *) audioData;
     for (int i = 0; i < numFrames; ++i) {
-        operatorA.generateNextSample();
-        operatorB.generateNextSample();
-        operatorC.generateNextSample();
-        float sampleValue = operatorA.getCurrentSample();
+        float sampleValue = operatorA.getNextSample();
         for (int j = 0; j < kChannelCount; j++) {
             floatData[i * kChannelCount + j] = sampleValue;
         }
@@ -86,7 +83,7 @@ void AudioEngine::loadWavetables()
 void AudioEngine::changeWavetable()
 {
     static int type {0};
-    switch (type++ % 3){
+    switch (++type % 3){
         case 0: operatorA.setWavetable(&sine);  break;
         case 1: operatorA.setWavetable(&square);  break;
         default: operatorA.setWavetable(&custom);
@@ -95,14 +92,12 @@ void AudioEngine::changeWavetable()
 
 void AudioEngine::initializeOperators()
 {
-    operatorA.setFrequency(440.0f, kSampleRate);
+    operatorA.setFrequency(210.0f, kSampleRate);
     operatorA.setGain(0.5f);
-    operatorB.setFrequency(220.0f, kSampleRate);
-    operatorB.setGain(0.1f);
-    operatorC.setFrequency(200.0f, kSampleRate);
+    operatorB.setFrequency(35.0f, kSampleRate);
+    operatorB.setGain(10.0f);
+    operatorC.setFrequency(5.0f, kSampleRate);
     operatorC.setGain(0.25f);
 
     operatorB.connectTo(&operatorA);
-    operatorC.connectTo(&operatorB);
-    operatorA.connectTo(&operatorC);
 }
