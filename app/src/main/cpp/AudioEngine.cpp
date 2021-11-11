@@ -4,7 +4,7 @@
 
 #include "AudioEngine.h"
 
-AudioEngine::AudioEngine() : operatorA(&sine), operatorB(&sine), operatorC(&sine)
+AudioEngine::AudioEngine() : operatorA(&sine), operatorB(&sine), operatorC(&sine), operatorD(&sine)
 {
     loadWavetables();
     initializeAudio();
@@ -96,8 +96,10 @@ void AudioEngine::initializeOperators()
     operatorA.setGain(0.5f);
     operatorB.setFrequency(35.0f, kSampleRate);
     operatorB.setGain(10.0f);
-    operatorC.setFrequency(5.0f, kSampleRate);
-    operatorC.setGain(0.25f);
+    operatorC.setFrequency(5, kSampleRate);
+    operatorC.setGain(1.0);
+    operatorD.setFrequency(0.1, kSampleRate);
+    operatorD.setGain(20.0);
 
     operatorB.connectTo(&operatorA);
 }

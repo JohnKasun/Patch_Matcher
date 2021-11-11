@@ -7,7 +7,7 @@
 #include "Tester.h"
 #include "WavetableOscillator.h"
 #include "Wavetable.h"
-#include <vector>
+#include <list>
 #include <iostream>
 
 
@@ -15,9 +15,10 @@ class Operator : public WavetableOscillator {
     friend class Tester;
 private:
     static int numOperators;
-    std::vector<Operator*> modOperators;
+    std::list<Operator*> modOperators;
     bool feedbackOn;
     float RADIANS_TO_INDEX;
+    int numModulating;
     
     inline float modulatePhase(float phase) noexcept {
         for (const auto &modOperator : modOperators)
@@ -30,7 +31,9 @@ public:
     virtual ~Operator();
     void enableFeedback(bool shouldEnable);
     void registerModulator(Operator *operatorToAdd);
+    void removeModulator(Operator *operatorToRemove);
     void connectTo(Operator *operatorToModulate);
+    void disconnectFrom(Operator *operatorToDisconnect);
     inline float getNextSample() noexcept override
     {
         

@@ -47,6 +47,7 @@ private:
     Operator operatorA;
     Operator operatorB;
     Operator operatorC;
+    Operator operatorD;
 
     // Load Wavetables on startup
     void loadWavetables();

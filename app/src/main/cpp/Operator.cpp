@@ -6,7 +6,8 @@
 
 int Operator::numOperators = 0;
 
-Operator::Operator(const Wavetable* wavetable) : WavetableOscillator(wavetable), feedbackOn(false), RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi))
+Operator::Operator(const Wavetable* wavetable)
+    : WavetableOscillator(wavetable), feedbackOn(false), RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)), numModulating{0}
 {
     numOperators++;
 }
@@ -26,12 +27,27 @@ void Operator::registerModulator(Operator *operatorToAdd)
     modOperators.push_back(operatorToAdd);
 }
 
+void Operator::removeModulator(Operator *operatorToRemove)
+{
+    modOperators.remove(operatorToRemove);
+}
+
 void Operator::connectTo(Operator *operatorToModulate)
 {
+    numModulating++;
     if (operatorToModulate == this)
         enableFeedback(true);
     else
         operatorToModulate->registerModulator(this);
+}
+
+void Operator::disconnectFrom(Operator *operatorToDisconnect)
+{
+    numModulating--;
+    if (operatorToDisconnect == this)
+        enableFeedback(false);
+    else
+        operatorToDisconnect->removeModulator(this);
 }
 
 int Operator::getNumOperators()
