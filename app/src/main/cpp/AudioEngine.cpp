@@ -96,10 +96,12 @@ void AudioEngine::initializeOperators()
     operatorA.setGain(0.5f);
     operatorB.setFrequency(35.0f, kSampleRate);
     operatorB.setGain(10.0f);
-    operatorC.setFrequency(5, kSampleRate);
-    operatorC.setGain(1.0);
+    operatorC.setFrequency(280, kSampleRate);
+    operatorC.setGain(0.5);
     operatorD.setFrequency(0.1, kSampleRate);
     operatorD.setGain(20.0);
 
     operatorB.connectTo(&operatorA);
+    operatorB.connectTo(&operatorC);
+    operatorC.connectTo(&operatorA);
 }

@@ -7,7 +7,9 @@
 int Operator::numOperators = 0;
 
 Operator::Operator(const Wavetable* wavetable)
-    : WavetableOscillator(wavetable), feedbackOn(false), RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)), numModulating{0}
+    : WavetableOscillator(wavetable), feedbackOn(false),
+        RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)),
+        numModulating{0}, counterGeneration{numModulating}, shouldGenerate(true)
 {
     numOperators++;
 }
@@ -35,6 +37,7 @@ void Operator::removeModulator(Operator *operatorToRemove)
 void Operator::connectTo(Operator *operatorToModulate)
 {
     numModulating++;
+    counterGeneration++;
     if (operatorToModulate == this)
         enableFeedback(true);
     else
@@ -44,6 +47,7 @@ void Operator::connectTo(Operator *operatorToModulate)
 void Operator::disconnectFrom(Operator *operatorToDisconnect)
 {
     numModulating--;
+    counterGeneration--;
     if (operatorToDisconnect == this)
         enableFeedback(false);
     else
