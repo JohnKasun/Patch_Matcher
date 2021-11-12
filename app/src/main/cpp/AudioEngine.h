@@ -14,7 +14,6 @@
 #include "CustomWavetable.h"
 #include "WavetableOscillator.h"
 #include "Operator.h"
-#include "OutputTerminal.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 public:

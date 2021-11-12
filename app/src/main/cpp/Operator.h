@@ -47,6 +47,7 @@ public:
     void connectTo(Operator *operatorToModulate);
     void connectTo(OutputTerminal *outputTerminal);
     void disconnectFrom(Operator *operatorToDisconnect);
+    void disconnectFrom(OutputTerminal *outputTerminal);
     inline float getNextSample() noexcept override
     {
         if(shouldGenerate){

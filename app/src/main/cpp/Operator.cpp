@@ -59,6 +59,11 @@ void Operator::disconnectFrom(Operator *operatorToDisconnect)
         operatorToDisconnect->removeModulator(this);
 }
 
+void Operator::disconnectFrom(OutputTerminal *outputTerminal)
+{
+    outputTerminal->removeOperator(this);
+}
+
 int Operator::getNumOperators()
 {
     return numOperators;
