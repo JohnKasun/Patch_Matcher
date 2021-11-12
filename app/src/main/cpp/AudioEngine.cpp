@@ -62,7 +62,7 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
 {
     float *floatData = (float *) audioData;
     for (int i = 0; i < numFrames; ++i) {
-        float sampleValue = operatorA.getNextSample();
+        float sampleValue = outputTerminal.getNextSample();
         for (int j = 0; j < kChannelCount; j++) {
             floatData[i * kChannelCount + j] = sampleValue;
         }
@@ -104,4 +104,5 @@ void AudioEngine::initializeOperators()
     operatorB.connectTo(&operatorA);
     operatorB.connectTo(&operatorC);
     operatorC.connectTo(&operatorA);
+
 }

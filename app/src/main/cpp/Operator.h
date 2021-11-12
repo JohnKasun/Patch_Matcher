@@ -10,6 +10,7 @@
 #include <list>
 #include <iostream>
 
+class OutputTerminal;
 
 class Operator : public WavetableOscillator {
     friend class Tester;
@@ -44,6 +45,7 @@ public:
     Operator(const Wavetable* wavetable);
     virtual ~Operator();
     void connectTo(Operator *operatorToModulate);
+    void connectTo(OutputTerminal *outputTerminal);
     void disconnectFrom(Operator *operatorToDisconnect);
     inline float getNextSample() noexcept override
     {
@@ -72,6 +74,24 @@ public:
 
     static int getNumOperators();
 };
+
+class OutputTerminal {
+    friend class Operator;
+private:
+    std::list<Operator*> outputOperators;
+    void addOperator(Operator* operatorToAdd) {outputOperators.push_back(operatorToAdd);};
+    void removeOperator(Operator* operatorToRemove) {outputOperators.remove(operatorToRemove);};
+public:
+    OutputTerminal(){};
+    ~OutputTerminal(){};
+    inline float getNextSample() const noexcept {
+        float currentSample {0};
+        for (const auto &outputOperator : outputOperators)
+            currentSample += outputOperator->getNextSample();
+        return currentSample;
+    }
+};
+
 
 
 #endif //PATCH_MATCHER_OPERATOR_H

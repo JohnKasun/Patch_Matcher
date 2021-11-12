@@ -44,6 +44,11 @@ void Operator::connectTo(Operator *operatorToModulate)
         operatorToModulate->registerModulator(this);
 }
 
+void Operator::connectTo(OutputTerminal *outputTerminal)
+{
+    outputTerminal->addOperator(this);
+}
+
 void Operator::disconnectFrom(Operator *operatorToDisconnect)
 {
     numModulating--;

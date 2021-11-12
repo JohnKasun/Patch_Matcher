@@ -14,6 +14,7 @@
 #include "CustomWavetable.h"
 #include "WavetableOscillator.h"
 #include "Operator.h"
+#include "OutputTerminal.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 public:
@@ -48,6 +49,9 @@ private:
     Operator operatorB;
     Operator operatorC;
     Operator operatorD;
+
+    // OutputTerminal
+    OutputTerminal outputTerminal;
 
     // Load Wavetables on startup
     void loadWavetables();
