@@ -6,6 +6,7 @@ Tester::Tester()
     diff_log.open("log_WavetableOscillatorDiffs.csv");
     osc_log.open("log_WavetableOscillators.csv");
     wav_log.open("log_Wavetables.csv");
+    out_log.open("log_OutputTerminal.csv");
 }
 
 /*void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
@@ -45,21 +46,27 @@ void Tester::print(const std::vector<float> &vec)
 void Tester::print(Operator& osc, int numSamples)
 {
     if (osc_log){
-        /*std::cout << std::left << std::setw(10) << "Carrier";
-        for (int i {0}; i < Operator::numOperators - 1; i++)
-            std::cout << std::setw(10) << "Mod";
-        std::cout << std::endl;*/
+
         for (int sample {0}; sample < numSamples - 1; sample++)
         {
-            /*std::cout << std::setw(10) << osc.getNextSample();*/
-            /*for (const auto &modOperator : osc.modOperators)
-                std::cout << std::setw(10) << modOperator->getCurrentSample();*/
-            
             osc_log << osc.getNextSample() << ",";
-            /*std::cout << std::endl;*/
         }
         osc_log << osc.getNextSample();
         osc_log << std::endl;
+        std::cout << "done" << std::endl;
+    }
+}
+
+void Tester::print(OutputTerminal &output, int numSamples)
+{
+    if (out_log){
+
+        for (int sample {0}; sample < numSamples - 1; sample++)
+        {
+            out_log << output.getNextSample() << ",";
+        }
+        out_log << output.getNextSample();
+        out_log << std::endl;
         std::cout << "done" << std::endl;
     }
 }
@@ -80,5 +87,7 @@ Tester::~Tester()
     diff_log.close();
     osc_log.close();
     wav_log.close();
+    out_log.close();
 }
+
 

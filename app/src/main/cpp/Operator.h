@@ -78,6 +78,7 @@ public:
 
 class OutputTerminal {
     friend class Operator;
+    friend class Tester;
 private:
     std::list<Operator*> outputOperators;
     void addOperator(Operator* operatorToAdd) {outputOperators.push_back(operatorToAdd);};

@@ -18,6 +18,7 @@
 #include "CustomWavetable.h"
 
 class Operator;
+class OutputTerminal;
 
 class Tester {
 private:
@@ -28,6 +29,7 @@ private:
     std::ofstream diff_log;
     std::ofstream osc_log;
     std::ofstream wav_log;
+    std::ofstream out_log;
 
     void print(const std::vector<float> &vec);
 public:
@@ -36,6 +38,7 @@ public:
 
 /*    void runSineDiff(int numTrials = 10, int numSamples = 100, float sampleRate = 44100);*/
     void print(Operator& osc, int numSamples = 100);
+    void print(OutputTerminal& output, int numSamples = 100);
 /*    void print(Wavetable& wavetable);*/
 
 };
