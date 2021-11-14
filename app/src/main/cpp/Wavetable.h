@@ -11,20 +11,20 @@
 
 class Wavetable {
 protected:
-    static float constexpr kPI = M_PI;
-    static float constexpr kTwoPi = kPI * 2;
-    static int constexpr size = 512;
-    float table[size];
+    static double constexpr kPI = M_PI;
+    static double constexpr kTwoPi = kPI * 2;
+    static int constexpr size = 1024;
+    double table[size];
 public:
     Wavetable();
     virtual ~Wavetable() = default;
 
     int get_size() const ;
-    float operator[](int index) const;
-    float at(int index) const;
+    double operator[](int index) const;
+    double at(int index) const;
 
     virtual void generate() = 0;
-    virtual bool setPatch(std::function<float(double)> new_patch);
+    virtual bool setPatch(std::function<double(double)> new_patch);
 
 };
 

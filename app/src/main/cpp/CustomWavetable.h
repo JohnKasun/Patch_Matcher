@@ -9,12 +9,12 @@
 class CustomWavetable : public Wavetable
 {
 private:
-    std::function<float(double)> patch;
+    std::function<double(double)> patch;
 public:
-    CustomWavetable(std::function<float(double)> patch = [](double){return -1;});
+    CustomWavetable(std::function<double(double)> patch = [](double){return -1;});
     virtual ~CustomWavetable();
 
-    virtual bool setPatch(std::function<float(double)> new_patch) override;
+    virtual bool setPatch(std::function<double(double)> new_patch) override;
     virtual void generate() override;
 };
 

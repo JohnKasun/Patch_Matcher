@@ -9,6 +9,7 @@
 #include "Wavetable.h"
 #include <list>
 #include <iostream>
+#include <math.h>
 
 class OutputTerminal;
 
@@ -18,12 +19,12 @@ private:
     static int numOperators;
     std::list<Operator*> modOperators;
     bool feedbackOn;
-    float RADIANS_TO_INDEX;
+    double RADIANS_TO_INDEX;
     int numModulating;
     int counterGeneration;
     bool shouldGenerate;
     
-    inline float modulatePhase(float phase) noexcept {
+    inline double modulatePhase(double phase) noexcept {
         for (const auto &modOperator : modOperators)
             phase += modOperator->getNextSample();
         return phase;
@@ -48,21 +49,21 @@ public:
     void connectTo(OutputTerminal *outputTerminal);
     void disconnectFrom(Operator *operatorToDisconnect);
     void disconnectFrom(OutputTerminal *outputTerminal);
-    inline float getNextSample() noexcept override
+    inline double getNextSample() noexcept override
     {
         if(shouldGenerate){
-            float instanteousPhase = modulatePhase(accumulatedPhase);
+            double instanteousPhase = modulatePhase(accumulatedPhase);
             instanteousPhase = fmod(instanteousPhase, kTwoPi);
             while (instanteousPhase<0) instanteousPhase += kTwoPi;
 
-            float currentIndex = (RADIANS_TO_INDEX) * instanteousPhase;
+            double currentIndex = (RADIANS_TO_INDEX) * instanteousPhase;
             int indexBelow = (int) currentIndex;
             int indexAbove = indexBelow + 1;
             if (indexAbove >= tableSize)
                 indexAbove = 0;
 
-            float fracAbove = currentIndex - indexBelow;
-            float fracBelow = 1.0 - fracAbove;
+            double fracAbove = currentIndex - indexBelow;
+            double fracBelow = 1.0 - fracAbove;
             currentSample = gain * ((fracBelow * wavetable->at(indexBelow)) + (fracAbove * wavetable->at(indexAbove)));
 
             accumulatedPhase += phaseDelta;
@@ -86,8 +87,8 @@ private:
 public:
     OutputTerminal(){};
     ~OutputTerminal(){};
-    inline float getNextSample() const noexcept {
-        float currentSample {0};
+    inline double getNextSample() const noexcept {
+        double currentSample {0.0};
         for (const auto &outputOperator : outputOperators)
             currentSample += outputOperator->getNextSample();
         return currentSample;

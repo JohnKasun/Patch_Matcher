@@ -12,18 +12,18 @@ int Wavetable::get_size() const
     return size;
 }
 
-float Wavetable::operator[](int index) const
+double Wavetable::operator[](int index) const
 {
     return table[index];
 };
 
-float Wavetable::at(int index) const
+double Wavetable::at(int index) const
 {
     //Add bounds checking?
     return table[index];
 }
 
-bool Wavetable::setPatch(std::function<float(double)>)
+bool Wavetable::setPatch(std::function<double(double)>)
 {
     return false;
 }

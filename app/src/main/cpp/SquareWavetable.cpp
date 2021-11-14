@@ -10,11 +10,11 @@ SquareWavetable::SquareWavetable() : Wavetable()
 void SquareWavetable::generate()
 {
     for (int i {0}; i < size; i++){
-        float sample{};
+        double sample{};
         if (i < size/2)
-            sample = 1.0f;
+            sample = 1.0;
         else
-            sample = -1.0f;
+            sample = -1.0;
         table[i] = sample;
     }
 }

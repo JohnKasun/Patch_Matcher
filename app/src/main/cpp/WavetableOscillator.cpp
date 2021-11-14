@@ -11,26 +11,23 @@ WavetableOscillator::~WavetableOscillator()
 {
 }
 
-void WavetableOscillator::setFrequency(float freq, float sampleRate)
+void WavetableOscillator::setFrequency(double freq, double sampleRate)
 {
-    /*frequency = freq;
-    float tableSizeOverSampleRate = (float)tableSize / sampleRate;
-    tableDelta = frequency * tableSizeOverSampleRate;*/
-    
     frequency = freq;
     phaseDelta = (kTwoPi/sampleRate) * freq;
 }
 
-float WavetableOscillator::getFrequency() const
+double WavetableOscillator::getFrequency() const
 {
     return frequency;
 }
 
-void WavetableOscillator::setWavetable(const Wavetable* newWavetable) {
+void WavetableOscillator::setWavetable(const Wavetable* newWavetable) 
+{
     wavetable = newWavetable;
 }
 
-void WavetableOscillator::setGain(float newGain)
+void WavetableOscillator::setGain(double newGain)
 {
     gain = newGain;
 }

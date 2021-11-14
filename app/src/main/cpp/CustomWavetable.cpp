@@ -3,7 +3,7 @@
 //
 
 #include "CustomWavetable.h"
-CustomWavetable::CustomWavetable(std::function<float(double)> patch) : Wavetable(), patch{patch}
+CustomWavetable::CustomWavetable(std::function<double(double)> patch) : Wavetable(), patch{patch}
 {
 }
 
@@ -11,7 +11,7 @@ CustomWavetable::~CustomWavetable()
 {
 }
 
-bool CustomWavetable::setPatch(std::function<float(double)> new_patch)
+bool CustomWavetable::setPatch(std::function<double(double)> new_patch)
 {
     patch = new_patch;
     return true;
