@@ -34,7 +34,7 @@ Tester::Tester()
     }
 }*/
 
-void Tester::print(const std::vector<float> &vec)
+void Tester::print(const std::vector<double> &vec)
 {
     if (diff_log){
         for (size_t i {0}; i < vec.size(); i++)

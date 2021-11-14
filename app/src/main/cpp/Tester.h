@@ -22,8 +22,8 @@ class OutputTerminal;
 
 class Tester {
 private:
-    static float constexpr kPI = M_PI;
-    static float constexpr kTwoPi = kPI * 2;
+    static double constexpr kPI = M_PI;
+    static double constexpr kTwoPi = kPI * 2;
     SineWavetable sine;
     WavetableOscillator* oscillator;
     std::ofstream diff_log;
@@ -31,7 +31,7 @@ private:
     std::ofstream wav_log;
     std::ofstream out_log;
 
-    void print(const std::vector<float> &vec);
+    void print(const std::vector<double> &vec);
 public:
     Tester();
     ~Tester();
