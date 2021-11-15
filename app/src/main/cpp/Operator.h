@@ -82,8 +82,10 @@ class OutputTerminal {
     friend class Tester;
 private:
     std::list<Operator*> outputOperators;
-    void addOperator(Operator* operatorToAdd) {outputOperators.push_back(operatorToAdd);};
-    void removeOperator(Operator* operatorToRemove) {outputOperators.remove(operatorToRemove);};
+    void addOperator(Operator* operatorToAdd) {outputOperators.push_back(operatorToAdd); updateGainNorm();};
+    void removeOperator(Operator* operatorToRemove) {outputOperators.remove(operatorToRemove); updateGainNorm();};
+    double gainNorm;
+    void updateGainNorm() { (!outputOperators.empty()) ? gainNorm = 1.0 / outputOperators.size() : gainNorm = 0.0; };
 public:
     OutputTerminal(){};
     ~OutputTerminal(){};
@@ -91,7 +93,7 @@ public:
         double currentSample {0.0};
         for (const auto &outputOperator : outputOperators)
             currentSample += outputOperator->getNextSample();
-        return currentSample;
+        return gainNorm * currentSample;
     }
 };
 
