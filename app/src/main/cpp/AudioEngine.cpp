@@ -4,7 +4,8 @@
 
 #include "AudioEngine.h"
 
-AudioEngine::AudioEngine() : operatorA(&sine), operatorB(&sine), operatorC(&sine), operatorD(&sine)
+AudioEngine::AudioEngine()
+    : operator1(&sine), operator2(&sine), operator3(&sine), operator4(&sine), operator5(&sine), operator6(&sine)
 {
     loadWavetables();
     initializeAudio();
@@ -84,26 +85,33 @@ void AudioEngine::changeWavetable()
 {
     static int type {0};
     switch (++type % 3){
-        case 0: operatorA.setWavetable(&sine);  break;
-        case 1: operatorA.setWavetable(&square);  break;
-        default: operatorA.setWavetable(&custom);
+        case 0: operator1.setWavetable(&sine);  break;
+        case 1: operator1.setWavetable(&square);  break;
+        default: operator1.setWavetable(&custom);
     }
 }
 
 void AudioEngine::initializeOperators()
 {
-    operatorA.setFrequency(500.0, kSampleRate);
-    operatorA.setGain(1.0);
-    operatorB.setFrequency(100.0, kSampleRate);
-    operatorB.setGain(1.5);
-    operatorC.setFrequency(280, kSampleRate);
-    operatorC.setGain(1.0);
-    operatorD.setFrequency(0.1, kSampleRate);
-    operatorD.setGain(20.0);
+    operator2.connectTo(&operator1);
+    operator4.connectTo(&operator3);
+    operator6.connectTo(&operator5);
+    operator1.connectTo(&outputTerminal);
+    operator3.connectTo(&outputTerminal);
+    operator5.connectTo(&outputTerminal);
 
-    operatorA.connectTo(&outputTerminal);
-    operatorB.connectTo(&operatorA);
+    operator1.setGain(0.99);
+    operator3.setGain(0.99);
+    operator5.setGain(0.99);
+    operator2.setGain(0.75);
+    operator4.setGain(0.75);
+    operator6.setGain(0.75);
 
-
+    operator1.setFrequency(500,kSampleRate);
+    operator3.setFrequency(505,kSampleRate);
+    operator5.setFrequency(510,kSampleRate);
+    operator2.setFrequency(505,kSampleRate);
+    operator4.setFrequency(510,kSampleRate);
+    operator6.setFrequency(505,kSampleRate);
 
 }

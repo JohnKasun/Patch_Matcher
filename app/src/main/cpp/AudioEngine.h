@@ -44,12 +44,12 @@ private:
     CustomWavetable custom;
 
     // Operators
-    Operator operatorA;
-    Operator operatorB;
-    Operator operatorC;
-    Operator operatorD;
-
-    // OutputTerminal
+    Operator operator1;
+    Operator operator2;
+    Operator operator3;
+    Operator operator4;
+    Operator operator5;
+    Operator operator6;
     OutputTerminal outputTerminal;
 
     // Load Wavetables on startup
