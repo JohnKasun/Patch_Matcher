@@ -16,28 +16,14 @@
 #include "Operator.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
-public:
-    AudioEngine();
-    virtual ~AudioEngine();
-
-    int32_t initializeAudio();
-    int32_t startAudio();
-    void stopAudio();
-    int32_t pauseAudio();
-    oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
-
-    void changeWavetable();
-    void enableFeedback() { operator1.connectTo(&operator1);};
-
 private:
     std::mutex         mLock;
     std::shared_ptr<oboe::AudioStream> mStream;
 
-    // Stream params
     static int constexpr kChannelCount = 2;
     static int constexpr kSampleRate = 48000;
-    // Wave params, these could be instance variables in order to modify at runtime
     static float constexpr kAmplitude = 0.5f;
+    static int constexpr maxOperators = 6;
 
     // Wavetables
     SineWavetable sine;
@@ -53,10 +39,32 @@ private:
     Operator operator6;
     OutputTerminal outputTerminal;
 
-    // Load Wavetables on startup
+    // Startup Functions
     void loadWavetables();
-
     void initializeOperators();
+
+public:
+    AudioEngine();
+    virtual ~AudioEngine();
+
+    int32_t initializeAudio();
+    int32_t startAudio();
+    void stopAudio();
+    int32_t pauseAudio();
+    oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
+
+    void changeWavetable();
+    void enableFeedback() { operator1.connectTo(&operator1);};
+
+    Operator* operatorInterface[maxOperators] {
+        &operator1,
+        &operator2,
+        &operator3,
+        &operator4,
+        &operator5,
+        &operator6,
+        };
+
 };
 
 
