@@ -4,13 +4,6 @@
 
 AudioEngine engine;
 
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_patch_1matcher_MainActivity_stringFromJNI(
-        JNIEnv* env,
-        jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
-}
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_patch_1matcher_MainActivity_onPlayButtonPress(JNIEnv *env, jobject thiz) {
@@ -28,12 +21,19 @@ Java_com_example_patch_1matcher_MainActivity_onChangeButtonPress(JNIEnv *env, jo
 }
 
 extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_patch_1matcher_MainActivity_onFeedbackEnable(JNIEnv *env, jobject thiz) {
-    engine.enableFeedback();
+JNIEXPORT jboolean JNICALL
+Java_com_example_patch_1matcher_MainActivity_onFeedbackButtonPress(JNIEnv *env, jobject thiz) {
+    static bool enabled{false};
+    if (!enabled)
+        engine.operatorInterface[0]->connectTo(engine.operatorInterface[0]);
+    else
+        engine.operatorInterface[0]->disconnectFrom(engine.operatorInterface[0]);
+    enabled = !enabled;
+    return enabled;
 }
+
 extern "C"
-JNIEXPORT void JNICALL
+JNIEXPORT jboolean JNICALL
 Java_com_example_patch_1matcher_MainActivity_onConnectButtonPress(JNIEnv *env, jobject thiz) {
     static bool connected{false};
     if (!connected)
@@ -41,4 +41,5 @@ Java_com_example_patch_1matcher_MainActivity_onConnectButtonPress(JNIEnv *env, j
     else
         engine.operatorInterface[1]->disconnectFrom(engine.operatorInterface[0]);
     connected = !connected;
+    return connected;
 }

@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -51,17 +52,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageView Operator1_feedbackArrow = findViewById(R.id.Operator1_feedbackArrow);
+        Operator1_feedbackArrow.setVisibility(View.INVISIBLE);
         Button feedback_button = (Button) findViewById(R.id.FeedbackButton);
         feedback_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { onFeedbackEnable(); }
+            public void onClick(View v) {
+                if (onFeedbackButtonPress()) {
+                    Operator1_feedbackArrow.setVisibility(View.VISIBLE);
+                    feedback_button.setText("Disable Feedback");
+                }
+                else {
+                    Operator1_feedbackArrow.setVisibility(View.INVISIBLE);
+                    feedback_button.setText("Enable Feedback");
+                }
+            }
         });
 
+        ImageView Operator21_arrow = findViewById(R.id.Operator21_arrow);
+        Operator21_arrow.setVisibility(View.INVISIBLE);
         Button connect_button = (Button) findViewById(R.id.connectButton);
         connect_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onConnectButtonPress();
+                if (onConnectButtonPress()) {
+                    Operator21_arrow.setVisibility(View.VISIBLE);
+                    connect_button.setText("Disconnect");
+                }
+                else {
+                    Operator21_arrow.setVisibility(View.INVISIBLE);
+                    connect_button.setText("Connect");
+                }
             }
         });
        
@@ -71,10 +92,9 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'patch_matcher' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
     public native void onPlayButtonPress();
     public native void onStopButtonPress();
     public native void onChangeButtonPress();
-    public native void onFeedbackEnable();
-    public native void onConnectButtonPress();
+    public native boolean onFeedbackButtonPress();
+    public native boolean onConnectButtonPress();
 }
