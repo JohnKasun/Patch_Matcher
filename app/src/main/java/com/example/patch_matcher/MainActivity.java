@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) { onFeedbackEnable(); }
         });
+
+        Button connect_button = (Button) findViewById(R.id.connectButton);
+        connect_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onConnectButtonPress();
+            }
+        });
        
     }
 
@@ -67,4 +75,5 @@ public class MainActivity extends AppCompatActivity {
     public native void onStopButtonPress();
     public native void onChangeButtonPress();
     public native void onFeedbackEnable();
+    public native void onConnectButtonPress();
 }

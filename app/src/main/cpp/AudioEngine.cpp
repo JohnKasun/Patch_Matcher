@@ -117,8 +117,13 @@ void AudioEngine::initializeOperators()
 */
 
     operator1.connectTo(&outputTerminal);
+
     operator1.setGain(1.0);
-    operator1.setFrequency(440.0, kSampleRate);
-    operator1.setFeedbackGain(0.2f);
+    operator1.setFrequency(500.0, kSampleRate);
+    operator1.setFeedbackGain(0.2);
+
+    operator2.setGain(0.5);
+    operator2.setFrequency(100.0, kSampleRate);
+
 
 }

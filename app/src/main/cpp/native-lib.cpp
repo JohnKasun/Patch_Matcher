@@ -32,3 +32,13 @@ JNIEXPORT void JNICALL
 Java_com_example_patch_1matcher_MainActivity_onFeedbackEnable(JNIEnv *env, jobject thiz) {
     engine.enableFeedback();
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_onConnectButtonPress(JNIEnv *env, jobject thiz) {
+    static bool connected{false};
+    if (!connected)
+        engine.operatorInterface[1]->connectTo(engine.operatorInterface[0]);
+    else
+        engine.operatorInterface[1]->disconnectFrom(engine.operatorInterface[0]);
+    connected = !connected;
+}
