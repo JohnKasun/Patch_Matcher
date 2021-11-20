@@ -19,6 +19,7 @@ private:
     static int numOperators;
     std::list<Operator*> modOperators;
     bool feedbackOn;
+    double feedbackGain;
     double RADIANS_TO_INDEX;
     int numModulating;
     int counterGeneration;
@@ -27,6 +28,8 @@ private:
     inline double modulatePhase(double phase) noexcept {
         for (const auto &modOperator : modOperators)
             phase += modOperator->getNextSample();
+        if (feedbackOn)
+            phase += feedbackGain * currentSample;
         return phase;
     }
 
@@ -45,6 +48,7 @@ private:
 public:
     Operator(const Wavetable* wavetable);
     virtual ~Operator();
+    void setFeedbackGain(double newFeedbackGain);
     void connectTo(Operator *operatorToModulate);
     void connectTo(OutputTerminal *outputTerminal);
     void disconnectFrom(Operator *operatorToDisconnect);

@@ -26,3 +26,10 @@ JNIEXPORT void JNICALL
 Java_com_example_patch_1matcher_MainActivity_onChangeButtonPress(JNIEnv *env, jobject thiz) {
     engine.changeWavetable();
 }
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_onFeedbackEnable(JNIEnv *env, jobject thiz) {
+    engine.enableFeedback();
+}

@@ -27,6 +27,7 @@ public:
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
     void changeWavetable();
+    void enableFeedback() { operator1.connectTo(&operator1);};
 
 private:
     std::mutex         mLock;
