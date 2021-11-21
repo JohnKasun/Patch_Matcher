@@ -20,6 +20,7 @@ public class Operator extends androidx.appcompat.widget.AppCompatButton {
         super(context, attrs);
         numOperators++;
         ID = numOperators;
+        setText("operator " + ID);
     }
 
     protected void finalize() {
