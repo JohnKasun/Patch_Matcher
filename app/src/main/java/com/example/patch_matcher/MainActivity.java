@@ -2,8 +2,10 @@ package com.example.patch_matcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActivityMainBinding binding;
+    private Button play_button, stop_button, change_button, feedback_button, connect_button;
+    private Operator operator1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,33 +32,27 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Button play_button = (Button) findViewById(R.id.play_button);
+        play_button = (Button) findViewById(R.id.play_button);
         play_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                onPlayButtonPress();
-            }
+            public void onClick(View v) { onPlayButtonPress(); }
         });
 
-        Button stop_button = (Button) findViewById(R.id.stop_button);
+        stop_button = (Button) findViewById(R.id.stop_button);
         stop_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                onStopButtonPress();
-            }
+            public void onClick(View v) { onStopButtonPress(); }
         });
 
-        Button change_button = (Button) findViewById(R.id.change_button);
+        change_button = (Button) findViewById(R.id.change_button);
         change_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                onChangeButtonPress();
-            }
+            public void onClick(View v) { onChangeButtonPress(); }
         });
 
         ImageView Operator1_feedbackArrow = findViewById(R.id.Operator1_feedbackArrow);
         Operator1_feedbackArrow.setVisibility(View.INVISIBLE);
-        Button feedback_button = (Button) findViewById(R.id.FeedbackButton);
+        feedback_button = (Button) findViewById(R.id.FeedbackButton);
         feedback_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,11 +65,13 @@ public class MainActivity extends AppCompatActivity {
                     feedback_button.setText("Enable Feedback");
                 }
             }
+
+
         });
 
         ImageView Operator21_arrow = findViewById(R.id.Operator21_arrow);
         Operator21_arrow.setVisibility(View.INVISIBLE);
-        Button connect_button = (Button) findViewById(R.id.connectButton);
+        connect_button = (Button) findViewById(R.id.connectButton);
         connect_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-       
+
+       operator1 = (Operator) findViewById(R.id.operator1);
+
+
     }
 
     /**
