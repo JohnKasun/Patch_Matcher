@@ -55,6 +55,7 @@ public:
 
     void changeWavetable();
     void enableFeedback() { operator1.connectTo(&operator1);};
+    void reset();
 
     Operator* operatorInterface[maxOperators] {
         &operator1,

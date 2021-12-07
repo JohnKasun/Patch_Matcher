@@ -27,12 +27,12 @@ void Operator::enableFeedback(bool shouldEnable)
 
 void Operator::registerModulator(Operator *operatorToAdd)
 {
-    modOperators.push_back(operatorToAdd);
+    modOperatorsIn.push_back(operatorToAdd);
 }
 
 void Operator::removeModulator(Operator *operatorToRemove)
 {
-    modOperators.remove(operatorToRemove);
+    modOperatorsIn.remove(operatorToRemove);
 }
 
 void Operator::setFeedbackGain(double newFeedbackGain)
@@ -46,6 +46,7 @@ void Operator::connectTo(Operator *operatorToModulate)
         enableFeedback(true);
     else {
         operatorToModulate->registerModulator(this);
+        modOperatorsOut.push_back(operatorToModulate);
         numModulating++;
         counterGeneration++;
     }
@@ -64,6 +65,7 @@ void Operator::disconnectFrom(Operator *operatorToDisconnect)
         enableFeedback(false);
     else {
         operatorToDisconnect->removeModulator(this);
+        modOperatorsOut.remove(operatorToDisconnect);
         numModulating--;
         counterGeneration--;
     }
@@ -75,6 +77,16 @@ void Operator::disconnectFrom(OutputTerminal *outputTerminal)
     numModulating--;
     counterGeneration--;
     outputTerminal->removeOperator(this);
+}
+
+void Operator::reset()
+{
+    std::list<Operator*> tempIn = modOperatorsIn;
+    std::list<Operator*> tempOut = modOperatorsOut;
+    for (auto modOperatorIn: tempIn)
+        modOperatorIn->disconnectFrom(this);
+    for (auto modOperatorOut: tempOut)
+        disconnectFrom(modOperatorOut);
 }
 
 int Operator::getNumOperators()

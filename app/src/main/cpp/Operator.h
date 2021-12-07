@@ -17,7 +17,8 @@ class Operator : public WavetableOscillator {
     friend class Tester;
 private:
     static int numOperators;
-    std::list<Operator*> modOperators;
+    std::list<Operator*> modOperatorsIn;
+    std::list<Operator*> modOperatorsOut;
     bool feedbackOn;
     double feedbackGain;
     double RADIANS_TO_INDEX;
@@ -26,8 +27,8 @@ private:
     bool shouldGenerate;
     
     inline double modulatePhase(double phase) noexcept {
-        for (const auto &modOperator : modOperators)
-            phase += modOperator->getNextSample();
+        for (const auto &modOperatorIn : modOperatorsIn)
+            phase += modOperatorIn->getNextSample();
         if (feedbackOn)
             phase += feedbackGain * currentSample;
         return phase;
@@ -53,6 +54,7 @@ public:
     void connectTo(OutputTerminal *outputTerminal);
     void disconnectFrom(Operator *operatorToDisconnect);
     void disconnectFrom(OutputTerminal *outputTerminal);
+    void reset();
     inline double getNextSample() noexcept override
     {
         if(shouldGenerate){

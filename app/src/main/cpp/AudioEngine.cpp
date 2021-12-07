@@ -125,5 +125,14 @@ void AudioEngine::initializeOperators()
     operator2.setGain(0.5);
     operator2.setFrequency(100.0, kSampleRate);
 
+    operator3.setGain(0.25);
+    operator3.setFrequency(250.0, kSampleRate);
+    operator3.connectTo(&operator1);
 
+}
+
+void AudioEngine::reset()
+{
+    for (auto op: operatorInterface)
+        op->reset();
 }

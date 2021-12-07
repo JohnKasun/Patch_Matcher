@@ -43,3 +43,9 @@ Java_com_example_patch_1matcher_MainActivity_onConnectButtonPress(JNIEnv *env, j
     connected = !connected;
     return connected;
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_onResetButtonPress(JNIEnv *env, jobject thiz) {
+    engine.reset();
+}

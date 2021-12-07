@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActivityMainBinding binding;
-    private Button play_button, stop_button, change_button, feedback_button, connect_button;
+    private Button play_button, stop_button, change_button, feedback_button, connect_button, reset_button;
     private Operator operator1;
 
     @Override
@@ -48,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         change_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { onChangeButtonPress(); }
+        });
+
+        reset_button = (Button) findViewById(R.id.resetButton);
+        reset_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { onResetButtonPress(); };
         });
 
         ImageView Operator1_feedbackArrow = findViewById(R.id.Operator1_feedbackArrow);
@@ -98,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     public native void onPlayButtonPress();
     public native void onStopButtonPress();
     public native void onChangeButtonPress();
+    public native void onResetButtonPress();
     public native boolean onFeedbackButtonPress();
     public native boolean onConnectButtonPress();
 }
