@@ -131,11 +131,13 @@
         android:id="@+id/outputTerminalView"
         android:layout_width="27dp"
         android:layout_height="166dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         app:OutputTerminalDrawable="@drawable/outputterminal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
+        app:layout_constraintVertical_bias="0.391" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

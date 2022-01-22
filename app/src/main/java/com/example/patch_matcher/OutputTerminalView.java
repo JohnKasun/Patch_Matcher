@@ -6,11 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-import androidx.core.view.GestureDetectorCompat;
 
 public class OutputTerminalView extends androidx.appcompat.widget.AppCompatImageView{
 
