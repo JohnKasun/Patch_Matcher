@@ -31,9 +31,12 @@ public class OutputTerminalView extends Connectable {
     }
 
     private void init(AttributeSet set){
+
         TypedArray ta = getContext().obtainStyledAttributes(set, R.styleable.OutputTerminalView);
         outputTerminalDrawable = ta.getDrawable(R.styleable.OutputTerminalView_OutputTerminalDrawable);
+        identifier = ta.getInteger(R.styleable.OutputTerminalView_OutputTerminalIdentifier, -1);
         setImageDrawable(outputTerminalDrawable);
+
         gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {

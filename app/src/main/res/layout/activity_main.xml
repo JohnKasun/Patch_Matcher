@@ -137,6 +137,7 @@
         android:background="#FFFFFF"
         android:scaleType="fitCenter"
         app:OutputTerminalDrawable="@drawable/outputterminal"
+        app:OutputTerminalIdentifier="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

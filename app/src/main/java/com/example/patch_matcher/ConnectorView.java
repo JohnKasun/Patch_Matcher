@@ -20,7 +20,7 @@ public class ConnectorView extends View {
     float mPosX, mPosY;
     int mAngle = 0;
     int mLength;
-    Connectable operatorA, operatorB;
+    private Connectable mConnectableStart, mConnectableEnd;
 
 
     public ConnectorView(Context context) {
@@ -46,18 +46,18 @@ public class ConnectorView extends View {
         setPivotX(0f);
         setPivotY(0f);
 
-        operatorA = null;
-        operatorB = null;
+        mConnectableStart = null;
+        mConnectableEnd = null;
     }
 
-    public void registerOperators(Connectable selectedOperator, Connectable clickedOperator) {
-        operatorA = selectedOperator;
-        operatorB = clickedOperator;
+    public void registerConnectables(Connectable connectableStart, Connectable connectableEnd) {
+        mConnectableStart = connectableStart;
+        mConnectableEnd = connectableEnd;
         updateOrientation();
     }
 
     public void updateOrientation() {
-        if (operatorA != null && operatorB != null) {
+        if (mConnectableStart != null && mConnectableEnd != null) {
             updatePosition();
             updateAngle();
             updateLength();
@@ -66,16 +66,16 @@ public class ConnectorView extends View {
     }
 
     private void updateLength(){
-        mLength = getDistance(operatorA, operatorB);
+        mLength = getDistance();
         getLayoutParams().width = mLength;
         requestLayout();
     }
 
-    private int getDistance(View operatorA, View operatorB){
-        float x1 = getViewCenterX(operatorA);
-        float x2 = getViewCenterX(operatorB);
-        float y1 = getViewCenterY(operatorA);
-        float y2 = getViewCenterY(operatorB);
+    private int getDistance(){
+        float x1 = getCenterX(mConnectableStart);
+        float x2 = getCenterX(mConnectableEnd);
+        float y1 = getCenterY(mConnectableStart);
+        float y2 = getCenterY(mConnectableEnd);
 
         float xDiff = x2 - x1;
         float yDiff = y2 - y1;
@@ -85,10 +85,10 @@ public class ConnectorView extends View {
     }
 
     private void updateAngle(){
-        float x1 = getViewCenterX(operatorA);
-        float x2 = getViewCenterX(operatorB);
-        float y1 = getViewCenterY(operatorA);
-        float y2 = getViewCenterY(operatorB);
+        float x1 = getCenterX(mConnectableStart);
+        float x2 = getCenterX(mConnectableEnd);
+        float y1 = getCenterY(mConnectableStart);
+        float y2 = getCenterY(mConnectableEnd);
 
         float xDiff = x2 - x1;
         float yDiff = y2 - y1;
@@ -97,16 +97,16 @@ public class ConnectorView extends View {
     }
 
     private void updatePosition() {
-        mPosX = getViewCenterX(operatorA);
-        mPosY = getViewCenterY(operatorA);
+        mPosX = getCenterX(mConnectableStart);
+        mPosY = getCenterY(mConnectableStart);
     }
 
-    private float getViewCenterX(View view){
-        return view.getX() + view.getWidth() / 2f;
+    public float getCenterX(Connectable connectable) {
+        return connectable.getX() + (connectable.getWidth() / 2f);
     }
 
-    private float getViewCenterY(View view){
-        return view.getY() + view.getHeight() / 2f;
+    public float getCenterY(Connectable connectable) {
+        return connectable.getY() + (connectable.getHeight() / 2f);
     }
 
     @Override
@@ -123,5 +123,13 @@ public class ConnectorView extends View {
         setRotation(mAngle);
         setX(mPosX);
         setY(mPosY);
+    }
+
+    public Connectable getStartConnectable() {
+        return mConnectableStart;
+    }
+
+    public Connectable getEndConnectable() {
+        return mConnectableEnd;
     }
 }

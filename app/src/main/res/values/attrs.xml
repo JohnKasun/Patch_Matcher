@@ -9,5 +9,6 @@
     </declare-styleable>
     <declare-styleable name="OutputTerminalView">
         <attr name = "OutputTerminalDrawable" format = "reference"/>
+        <attr name = "OutputTerminalIdentifier" format = "integer"/>
     </declare-styleable>
 </resources>

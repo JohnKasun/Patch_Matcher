@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-        knob = (RotaryKnobView)findViewById(R.id.knob);
-        knob2 = (RotaryKnobView)findViewById(R.id.knob2);
-        knob3 = (RotaryKnobView)findViewById(R.id.knob3);
-        textView1 = (TextView) findViewById(R.id.textView1);
-        textView2 = (TextView) findViewById(R.id.textView2);
-        textView3 = (TextView) findViewById(R.id.textView3);
-        outputTerminal = (OutputTerminalView) findViewById(R.id.outputTerminalView);
+        knob = findViewById(R.id.knob);
+        knob2 = findViewById(R.id.knob2);
+        knob3 = findViewById(R.id.knob3);
+        textView1 = findViewById(R.id.textView1);
+        textView2 = findViewById(R.id.textView2);
+        textView3 = findViewById(R.id.textView3);
+        outputTerminal = findViewById(R.id.outputTerminalView);
         outputTerminal.listener = this;
         knob.listener = this;
         knob2.listener = this;
@@ -133,29 +133,31 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         if (operatorB != operatorA && operatorA != null) {
             for (int i = 0; i < connectors.size(); i++) {
                 ConnectorView currentConnector = connectors.get(i);
-                if (operatorA == currentConnector.operatorA && operatorB == currentConnector.operatorB) {
+                if (operatorA == currentConnector.getStartConnectable() && operatorB == currentConnector.getEndConnectable()) {
                     background.removeView(currentConnector);
                     connectors.remove(currentConnector);
-                    String connectionInfo = "Operator " + operatorA.identifier + " removed from Operator " + operatorB.identifier;
-                    disconnectOperators(operatorA.identifier, operatorB.identifier);
+                    String connectionInfo = "Operator " + operatorA.getIdentifier() + " removed from Operator " + operatorB.getIdentifier();
+                    disconnectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
                     Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
                     return;
-                } else if (operatorA == currentConnector.operatorB && operatorB == currentConnector.operatorA) {
+                } else if (operatorA == currentConnector.getEndConnectable() && operatorB == currentConnector.getStartConnectable()) {
                     Toast.makeText(getApplicationContext(), "Connection already exists", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
 
-            String connectionInfo = "Operator " + operatorA.identifier + " connected to Operator " + operatorB.identifier;
-            //connectOperators(operatorA.identifier, operatorB.identifier);
+            String connectionInfo = "Operator " + operatorA.getIdentifier() + " connected to Operator " + operatorB.getIdentifier();
+            //connectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
             Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
             ConnectorView newConnector = new ConnectorView(MainActivity.this);
             int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
             int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
             newConnector.setLayoutParams(new ConstraintLayout.LayoutParams(widthDimensionDp, heightDimensionDp));
-            newConnector.registerOperators(operatorA, operatorB);
+            newConnector.registerConnectables(operatorA, operatorB);
             background.addView(newConnector);
             connectors.add(newConnector);
+            operatorA.bringToFront();
+            operatorB.bringToFront();
         }
     }
 
@@ -220,12 +222,12 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             });
 
             if (idBacklog.isEmpty())
-                newOperator.setID(numOperators);
+                newOperator.setIdentifier(numOperators);
             else
-                newOperator.setID(idBacklog.remove());
+                newOperator.setIdentifier(idBacklog.remove());
             background.addView(newOperator);
             operators.add(newOperator);
-            Toast.makeText(getApplicationContext(), "Created Operator " + newOperator.identifier, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Created Operator " + newOperator.getIdentifier(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -247,20 +249,20 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     }
 
     public void deleteOperator(OperatorView operatorToDelete) {
-        idBacklog.add(operatorToDelete.identifier);
+        idBacklog.add(operatorToDelete.getIdentifier());
         operators.remove(operatorToDelete);
         background.removeView(operatorToDelete);
         for (int i = 0; i < connectors.size(); i++){
             ConnectorView currentConnector = connectors.get(i);
-            if (currentConnector.operatorA == operatorToDelete) {
+            if (currentConnector.getStartConnectable() == operatorToDelete) {
                 connectors.remove(currentConnector);
                 background.removeView(currentConnector);
-                disconnectOperators(operatorToDelete.identifier, currentConnector.operatorB.identifier);
+                //disconnectOperators(operatorToDelete.getIdentifier(), currentConnector.getEndConnectable().getIdentifier());
                 i--;
-            } else if (currentConnector.operatorB == operatorToDelete) {
+            } else if (currentConnector.getEndConnectable() == operatorToDelete) {
                 connectors.remove(currentConnector);
                 background.removeView(currentConnector);
-                disconnectOperators(currentConnector.operatorA.identifier, operatorToDelete.identifier);
+                //disconnectOperators(currentConnector.getStartConnectable().getIdentifier(), operatorToDelete.getIdentifier());
                 i--;
             }
         }
@@ -294,8 +296,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     @Override
     public void connectToOutputTerminal() {
         if (selectedOperator != null) {
-            connectOperatorToOutput(selectedOperator.identifier);
-            Toast.makeText(getApplicationContext(), "Operator " + selectedOperator.identifier + " connected to Output Terminal", Toast.LENGTH_SHORT).show();
+            //connectOperatorToOutput(selectedOperator.getIdentifier());
+            Toast.makeText(getApplicationContext(), "Operator " + selectedOperator.getIdentifier() + " connected to Output Terminal", Toast.LENGTH_SHORT).show();
             generateConnector(selectedOperator, outputTerminal);
         }
     }

@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 public class Connectable extends androidx.appcompat.widget.AppCompatImageButton {
 
-    public int identifier;
+    protected int identifier;
 
     public Connectable(Context context) {
         super(context);
@@ -23,4 +23,9 @@ public class Connectable extends androidx.appcompat.widget.AppCompatImageButton 
     public Connectable(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
 }

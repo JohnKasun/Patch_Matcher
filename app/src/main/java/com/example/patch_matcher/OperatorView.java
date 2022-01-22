@@ -54,7 +54,7 @@ public class OperatorView extends Connectable {
         postInvalidate();
     }
 
-    public void setID(int newID){ identifier = newID; }
+    public void setIdentifier(int newIdentifier){ identifier = newIdentifier; }
 
 
     @Override
