@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
-public class OutputTerminalView extends androidx.appcompat.widget.AppCompatImageView{
+public class OutputTerminalView extends Connectable {
 
     GestureDetector gestureDetector;
     OutputTerminalListener listener;

@@ -129,15 +129,15 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         }
     }
 
-    public void generateConnector(OperatorView operatorA, OperatorView operatorB){
+    public void generateConnector(Connectable operatorA, Connectable operatorB){
         if (operatorB != operatorA && operatorA != null) {
             for (int i = 0; i < connectors.size(); i++) {
                 ConnectorView currentConnector = connectors.get(i);
                 if (operatorA == currentConnector.operatorA && operatorB == currentConnector.operatorB) {
                     background.removeView(currentConnector);
                     connectors.remove(currentConnector);
-                    String connectionInfo = "Operator " + operatorA.ID + " removed from Operator " + operatorB.ID;
-                    disconnectOperators(operatorA.ID, operatorB.ID);
+                    String connectionInfo = "Operator " + operatorA.identifier + " removed from Operator " + operatorB.identifier;
+                    disconnectOperators(operatorA.identifier, operatorB.identifier);
                     Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (operatorA == currentConnector.operatorB && operatorB == currentConnector.operatorA) {
@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                 }
             }
 
-            String connectionInfo = "Operator " + operatorA.ID + " connected to Operator " + operatorB.ID;
-            connectOperators(operatorA.ID, operatorB.ID);
+            String connectionInfo = "Operator " + operatorA.identifier + " connected to Operator " + operatorB.identifier;
+            //connectOperators(operatorA.identifier, operatorB.identifier);
             Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
             ConnectorView newConnector = new ConnectorView(MainActivity.this);
             int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                 newOperator.setID(idBacklog.remove());
             background.addView(newOperator);
             operators.add(newOperator);
-            Toast.makeText(getApplicationContext(), "Created Operator " + newOperator.ID, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Created Operator " + newOperator.identifier, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     }
 
     public void deleteOperator(OperatorView operatorToDelete) {
-        idBacklog.add(operatorToDelete.ID);
+        idBacklog.add(operatorToDelete.identifier);
         operators.remove(operatorToDelete);
         background.removeView(operatorToDelete);
         for (int i = 0; i < connectors.size(); i++){
@@ -255,12 +255,12 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             if (currentConnector.operatorA == operatorToDelete) {
                 connectors.remove(currentConnector);
                 background.removeView(currentConnector);
-                disconnectOperators(operatorToDelete.ID, currentConnector.operatorB.ID);
+                disconnectOperators(operatorToDelete.identifier, currentConnector.operatorB.identifier);
                 i--;
             } else if (currentConnector.operatorB == operatorToDelete) {
                 connectors.remove(currentConnector);
                 background.removeView(currentConnector);
-                disconnectOperators(currentConnector.operatorA.ID, operatorToDelete.ID);
+                disconnectOperators(currentConnector.operatorA.identifier, operatorToDelete.identifier);
                 i--;
             }
         }
@@ -294,8 +294,9 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     @Override
     public void connectToOutputTerminal() {
         if (selectedOperator != null) {
-            connectOperatorToOutput(selectedOperator.ID);
-            Toast.makeText(getApplicationContext(), "Operator " + selectedOperator.ID + " connected to Output Terminal", Toast.LENGTH_SHORT).show();
+            connectOperatorToOutput(selectedOperator.identifier);
+            Toast.makeText(getApplicationContext(), "Operator " + selectedOperator.identifier + " connected to Output Terminal", Toast.LENGTH_SHORT).show();
+            generateConnector(selectedOperator, outputTerminal);
         }
     }
 

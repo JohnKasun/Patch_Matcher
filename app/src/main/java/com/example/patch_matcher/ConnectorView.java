@@ -20,7 +20,7 @@ public class ConnectorView extends View {
     float mPosX, mPosY;
     int mAngle = 0;
     int mLength;
-    OperatorView operatorA, operatorB;
+    Connectable operatorA, operatorB;
 
 
     public ConnectorView(Context context) {
@@ -50,7 +50,7 @@ public class ConnectorView extends View {
         operatorB = null;
     }
 
-    public void registerOperators(OperatorView selectedOperator, OperatorView clickedOperator) {
+    public void registerOperators(Connectable selectedOperator, Connectable clickedOperator) {
         operatorA = selectedOperator;
         operatorB = clickedOperator;
         updateOrientation();
@@ -71,11 +71,11 @@ public class ConnectorView extends View {
         requestLayout();
     }
 
-    private int getDistance(OperatorView operatorA, OperatorView operatorB){
-        float x1 = operatorA.getCenterX();
-        float x2 = operatorB.getCenterX();
-        float y1 = operatorA.getCenterY();
-        float y2 = operatorB.getCenterY();
+    private int getDistance(View operatorA, View operatorB){
+        float x1 = getViewCenterX(operatorA);
+        float x2 = getViewCenterX(operatorB);
+        float y1 = getViewCenterY(operatorA);
+        float y2 = getViewCenterY(operatorB);
 
         float xDiff = x2 - x1;
         float yDiff = y2 - y1;
@@ -85,10 +85,10 @@ public class ConnectorView extends View {
     }
 
     private void updateAngle(){
-        float x1 = operatorA.getCenterX();
-        float x2 = operatorB.getCenterX();
-        float y1 = operatorA.getCenterY();
-        float y2 = operatorB.getCenterY();
+        float x1 = getViewCenterX(operatorA);
+        float x2 = getViewCenterX(operatorB);
+        float y1 = getViewCenterY(operatorA);
+        float y2 = getViewCenterY(operatorB);
 
         float xDiff = x2 - x1;
         float yDiff = y2 - y1;
@@ -97,8 +97,16 @@ public class ConnectorView extends View {
     }
 
     private void updatePosition() {
-        mPosX = operatorA.getCenterX();
-        mPosY = operatorA.getCenterY();
+        mPosX = getViewCenterX(operatorA);
+        mPosY = getViewCenterY(operatorA);
+    }
+
+    private float getViewCenterX(View view){
+        return view.getX() + view.getWidth() / 2f;
+    }
+
+    private float getViewCenterY(View view){
+        return view.getY() + view.getHeight() / 2f;
     }
 
     @Override

@@ -12,10 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class OperatorView extends androidx.appcompat.widget.AppCompatButton {
+public class OperatorView extends Connectable {
 
     private int mColor;
-    public int ID;
     private Paint paint;
     private Rect rect;
 
@@ -55,15 +54,7 @@ public class OperatorView extends androidx.appcompat.widget.AppCompatButton {
         postInvalidate();
     }
 
-    public float getCenterX() {
-        return getX() + getWidth() / 2f;
-    }
-
-    public float getCenterY() {
-        return getY() + getHeight() / 2f;
-    }
-
-    public void setID(int newID){ ID = newID; }
+    public void setID(int newID){ identifier = newID; }
 
 
     @Override
