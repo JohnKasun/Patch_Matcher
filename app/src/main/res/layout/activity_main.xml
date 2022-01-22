@@ -29,45 +29,45 @@
 
     <com.example.patch_matcher.RotaryKnobView
         android:id="@+id/knob"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_marginBottom="8dp"
         app:identifier="1"
         app:initialValue="0"
         app:knobDrawable="@drawable/rotaryknob"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintHorizontal_bias="0.215"
         app:layout_constraintStart_toStartOf="parent"
         app:maxValue="10000"
         app:minValue="0" />
 
     <com.example.patch_matcher.RotaryKnobView
         android:id="@+id/knob2"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_marginBottom="8dp"
         app:identifier="2"
         app:initialValue="0"
         app:knobDrawable="@drawable/rotaryknob"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.383"
         app:layout_constraintStart_toStartOf="parent"
         app:maxValue="25"
         app:minValue="0" />
 
     <com.example.patch_matcher.RotaryKnobView
         android:id="@+id/knob3"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_marginBottom="8dp"
         app:identifier="3"
         app:initialValue="0"
         app:knobDrawable="@drawable/rotaryknob"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.747"
+        app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="parent"
         app:maxValue="100"
         app:minValue="0" />
@@ -91,6 +91,41 @@
         app:layout_constraintBottom_toTopOf="@+id/knob3"
         app:layout_constraintEnd_toEndOf="@+id/knob3"
         app:layout_constraintStart_toStartOf="@+id/knob3" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="97dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="92dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="172dp"
+        android:layout_height="98dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/sinewave" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

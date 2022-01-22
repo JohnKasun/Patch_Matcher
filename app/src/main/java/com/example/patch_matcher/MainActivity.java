@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     int numOperators = 0;
     final int maxOperators = 6;
     boolean deleteModeEnabled = false;
-    int mValue;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
