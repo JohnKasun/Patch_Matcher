@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                     background.removeView(currentConnector);
                     connectors.remove(currentConnector);
                     String connectionInfo = "Operator " + operatorA.getIdentifier() + " removed from Operator " + operatorB.getIdentifier();
-                    disconnectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
+                    //disconnectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
                     Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (operatorA == currentConnector.getEndConnectable() && operatorB == currentConnector.getStartConnectable()) {
