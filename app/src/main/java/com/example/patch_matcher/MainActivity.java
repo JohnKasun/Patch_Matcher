@@ -29,12 +29,12 @@ import java.util.Queue;
 
 public class MainActivity extends AppCompatActivity implements RotaryKnobView.RotaryKnobListener {
 
-    Operator clickedOperator, selectedOperator;
+    OperatorView clickedOperator, selectedOperator;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob, knob2, knob3;
     ImageButton trashCan;
     List<ConnectorView> connectors;
-    List<Operator> operators;
+    List<OperatorView> operators;
     Queue<Integer> idBacklog;
     ConstraintLayout background;
     float xOffset, yOffset;
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         clickedOperator = null;
         selectedOperator = null;
         connectors = new ArrayList<ConnectorView>();
-        operators = new ArrayList<Operator>();
+        operators = new ArrayList<OperatorView>();
         idBacklog = new PriorityQueue<Integer>();
         trashCan = (ImageButton) findViewById(R.id.imageButton);
         trashCan.setOnTouchListener(new View.OnTouchListener() {
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         }
     }
 
-    public void generateConnector(Operator operatorA, Operator operatorB){
+    public void generateConnector(OperatorView operatorA, OperatorView operatorB){
         if (operatorB != operatorA && operatorA != null) {
             for (int i = 0; i < connectors.size(); i++) {
                 ConnectorView currentConnector = connectors.get(i);
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             Toast.makeText(getApplicationContext(), "Max Operator Limit Reached", Toast.LENGTH_SHORT).show();
         else {
             numOperators++;
-            Operator newOperator = new Operator(MainActivity.this);
+            OperatorView newOperator = new OperatorView(MainActivity.this);
             int dimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, getResources().getDisplayMetrics());
             newOperator.setLayoutParams(new ConstraintLayout.LayoutParams(dimensionDp, dimensionDp));
             newOperator.setX(e.getX());
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    clickedOperator = (Operator) v;
+                    clickedOperator = (OperatorView) v;
                     gestureDetectorOperator.onTouchEvent(event);
                     return false;
                 }
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             operators.get(i).setColor(operatorColor);
     }
 
-    public void deleteOperator(Operator operatorToDelete) {
+    public void deleteOperator(OperatorView operatorToDelete) {
         idBacklog.add(operatorToDelete.ID);
         operators.remove(operatorToDelete);
         background.removeView(operatorToDelete);
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         numOperators--;
     }
 
-    public void selectOperator(Operator operatorToSelect) {
+    public void selectOperator(OperatorView operatorToSelect) {
         if (selectedOperator != operatorToSelect) {
             if (selectedOperator != null)
                 selectedOperator.deselect();
@@ -262,5 +262,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                 break;
         }
     }
+
+
 
 }

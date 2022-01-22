@@ -20,7 +20,7 @@ public class ConnectorView extends View {
     float mPosX, mPosY;
     int mAngle = 0;
     int mLength;
-    Operator operatorA, operatorB;
+    OperatorView operatorA, operatorB;
 
 
     public ConnectorView(Context context) {
@@ -50,7 +50,7 @@ public class ConnectorView extends View {
         operatorB = null;
     }
 
-    public void registerOperators(Operator selectedOperator, Operator clickedOperator) {
+    public void registerOperators(OperatorView selectedOperator, OperatorView clickedOperator) {
         operatorA = selectedOperator;
         operatorB = clickedOperator;
         updateOrientation();
@@ -71,7 +71,7 @@ public class ConnectorView extends View {
         requestLayout();
     }
 
-    private int getDistance(Operator operatorA, Operator operatorB){
+    private int getDistance(OperatorView operatorA, OperatorView operatorB){
         float x1 = operatorA.getCenterX();
         float x2 = operatorB.getCenterX();
         float y1 = operatorA.getCenterY();

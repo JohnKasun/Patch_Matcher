@@ -12,24 +12,24 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class Operator extends androidx.appcompat.widget.AppCompatButton {
+public class OperatorView extends androidx.appcompat.widget.AppCompatButton {
 
     private int mColor;
     public int ID;
     private Paint paint;
     private Rect rect;
 
-    public Operator(Context context) {
+    public OperatorView(Context context) {
         super(context);
         init(null);
     }
 
-    public Operator(Context context, AttributeSet attrs) {
+    public OperatorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public Operator(Context context, AttributeSet attrs, int defStyleAttr) {
+    public OperatorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
