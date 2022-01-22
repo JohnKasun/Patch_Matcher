@@ -132,4 +132,16 @@ public class ConnectorView extends View {
     public Connectable getEndConnectable() {
         return mConnectableEnd;
     }
+
+    public boolean isEqualTo(ConnectorView newConnector) {
+        if (mConnectableStart == newConnector.getStartConnectable() && mConnectableEnd == newConnector.getEndConnectable())
+            return true;
+        return false;
+    }
+
+    public boolean isReverseOf(ConnectorView newConnector) {
+        if (mConnectableStart == newConnector.getEndConnectable() && mConnectableEnd == newConnector.getStartConnectable())
+            return true;
+        return false;
+    }
 }
