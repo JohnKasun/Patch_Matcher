@@ -14,38 +14,20 @@ JNIEXPORT void JNICALL
 Java_com_example_patch_1matcher_MainActivity_onStopButtonPress(JNIEnv *env, jobject thiz) {
     engine.pauseAudio();
 }
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_patch_1matcher_MainActivity_onChangeButtonPress(JNIEnv *env, jobject thiz) {
-    engine.changeWavetable();
-}
-
-extern "C"
-JNIEXPORT jboolean JNICALL
-Java_com_example_patch_1matcher_MainActivity_onFeedbackButtonPress(JNIEnv *env, jobject thiz) {
-    static bool enabled{false};
-    if (!enabled)
-        engine.operatorInterface[0]->connectTo(engine.operatorInterface[0]);
-    else
-        engine.operatorInterface[0]->disconnectFrom(engine.operatorInterface[0]);
-    enabled = !enabled;
-    return enabled;
-}
-
-extern "C"
-JNIEXPORT jboolean JNICALL
-Java_com_example_patch_1matcher_MainActivity_onConnectButtonPress(JNIEnv *env, jobject thiz) {
-    static bool connected{false};
-    if (!connected)
-        engine.operatorInterface[1]->connectTo(engine.operatorInterface[0]);
-    else
-        engine.operatorInterface[1]->disconnectFrom(engine.operatorInterface[0]);
-    connected = !connected;
-    return connected;
-}
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_patch_1matcher_MainActivity_onResetButtonPress(JNIEnv *env, jobject thiz) {
-    engine.reset();
+Java_com_example_patch_1matcher_MainActivity_connectOperators(JNIEnv *env, jobject thiz,
+                                                              jint operator_a, jint operator_b) {
+    int operatorA_index = operator_a - 1;
+    int operatorB_index = operator_b - 1;
+    engine.operatorInterface[operatorA_index]->connectTo(engine.operatorInterface[operatorB_index]);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_disconnectOperators(JNIEnv *env, jobject thiz,
+                                                                 jint operator_a, jint operator_b) {
+    int operatorA_index = operator_a - 1;
+    int operatorB_index = operator_b - 1;
+    engine.operatorInterface[operatorA_index]->disconnectFrom(engine.operatorInterface[operatorB_index]);
 }

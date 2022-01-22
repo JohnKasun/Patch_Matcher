@@ -5,34 +5,35 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
-import android.gesture.Gesture;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.Math;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import com.example.patch_matcher.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity implements RotaryKnobView.RotaryKnobListener {
 
+    static {
+        System.loadLibrary("patch_matcher");
+    }
+
+    private ActivityMainBinding binding;
     OperatorView clickedOperator, selectedOperator;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob, knob2, knob3;
-    ImageButton trashCan;
+    ImageButton trashCan, playButton, stopButton;
     List<ConnectorView> connectors;
     List<OperatorView> operators;
     Queue<Integer> idBacklog;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
         knob = (RotaryKnobView)findViewById(R.id.knob);
@@ -98,6 +101,20 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                 return true;
             }
         });
+        playButton = (ImageButton) findViewById(R.id.PlayButton);
+        stopButton = (ImageButton) findViewById(R.id.StopButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPlayButtonPress();
+            }
+        });
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onStopButtonPress();
+            }
+        });
     }
 
     public void deselectAll() {
@@ -117,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                     background.removeView(currentConnector);
                     connectors.remove(currentConnector);
                     String connectionInfo = "Operator " + operatorA.ID + " removed from Operator " + operatorB.ID;
+                    disconnectOperators(operatorA.ID, operatorB.ID);
                     Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (operatorA == currentConnector.operatorB && operatorB == currentConnector.operatorA) {
@@ -126,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             }
 
             String connectionInfo = "Operator " + operatorA.ID + " connected to Operator " + operatorB.ID;
+            connectOperators(operatorA.ID, operatorB.ID);
             Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
             ConnectorView newConnector = new ConnectorView(MainActivity.this);
             int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
@@ -230,9 +249,15 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         background.removeView(operatorToDelete);
         for (int i = 0; i < connectors.size(); i++){
             ConnectorView currentConnector = connectors.get(i);
-            if (currentConnector.operatorA == operatorToDelete || currentConnector.operatorB == operatorToDelete){
+            if (currentConnector.operatorA == operatorToDelete) {
                 connectors.remove(currentConnector);
                 background.removeView(currentConnector);
+                disconnectOperators(operatorToDelete.ID, currentConnector.operatorB.ID);
+                i--;
+            } else if (currentConnector.operatorB == operatorToDelete) {
+                connectors.remove(currentConnector);
+                background.removeView(currentConnector);
+                disconnectOperators(currentConnector.operatorA.ID, operatorToDelete.ID);
                 i--;
             }
         }
@@ -263,6 +288,9 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         }
     }
 
-
+    public native void onPlayButtonPress();
+    public native void onStopButtonPress();
+    public native void connectOperators(int operatorA, int operatorB);
+    public native void disconnectOperators(int operatorA, int operatorB);
 
 }
