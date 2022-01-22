@@ -37,7 +37,6 @@ private:
     Operator operator4;
     Operator operator5;
     Operator operator6;
-    OutputTerminal outputTerminal;
 
     // Startup Functions
     void loadWavetables();
@@ -57,6 +56,7 @@ public:
     void enableFeedback() { operator1.connectTo(&operator1);};
     void reset();
 
+    OutputTerminal outputTerminal;
     Operator* operatorInterface[maxOperators] {
         &operator1,
         &operator2,

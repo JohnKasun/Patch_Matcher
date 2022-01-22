@@ -11,4 +11,7 @@
         <attr name = "knobDrawable" format = "reference" />
         <attr name = "identifier" format = "integer"/>
     </declare-styleable>
+    <declare-styleable name="OutputTerminalView">
+        <attr name = "OutputTerminalDrawable" format = "reference"/>
+    </declare-styleable>
 </resources>

@@ -23,7 +23,7 @@ import java.util.Queue;
 
 import com.example.patch_matcher.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements RotaryKnobView.RotaryKnobListener {
+public class MainActivity extends AppCompatActivity implements RotaryKnobView.RotaryKnobListener, OutputTerminalView.OutputTerminalListener {
 
     static {
         System.loadLibrary("patch_matcher");
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
     private ActivityMainBinding binding;
     OperatorView clickedOperator, selectedOperator;
+    OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob, knob2, knob3;
     ImageButton trashCan, playButton, stopButton;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         textView1 = (TextView) findViewById(R.id.textView1);
         textView2 = (TextView) findViewById(R.id.textView2);
         textView3 = (TextView) findViewById(R.id.textView3);
+        outputTerminal = (OutputTerminalView) findViewById(R.id.outputTerminalView);
+        outputTerminal.listener = this;
         knob.listener = this;
         knob2.listener = this;
         knob3.listener = this;
@@ -288,9 +291,18 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         }
     }
 
+    @Override
+    public void connectToOutputTerminal() {
+        if (selectedOperator != null) {
+            connectOperatorToOutput(selectedOperator.ID);
+            Toast.makeText(getApplicationContext(), "Operator " + selectedOperator.ID + " connected to Output Terminal", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public native void onPlayButtonPress();
     public native void onStopButtonPress();
     public native void connectOperators(int operatorA, int operatorB);
     public native void disconnectOperators(int operatorA, int operatorB);
+    public native void connectOperatorToOutput(int selectedOperator);
 
 }

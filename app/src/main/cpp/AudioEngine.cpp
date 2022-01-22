@@ -93,14 +93,6 @@ void AudioEngine::changeWavetable()
 
 void AudioEngine::initializeOperators()
 {
-/*
-    operator2.connectTo(&operator1);
-    operator4.connectTo(&operator3);
-    operator6.connectTo(&operator5);
-    operator1.connectTo(&outputTerminal);
-    operator3.connectTo(&outputTerminal);
-    operator5.connectTo(&outputTerminal);
-
     operator1.setGain(0.99);
     operator3.setGain(0.99);
     operator5.setGain(0.99);
@@ -114,19 +106,7 @@ void AudioEngine::initializeOperators()
     operator2.setFrequency(505,kSampleRate);
     operator4.setFrequency(510,kSampleRate);
     operator6.setFrequency(505,kSampleRate);
-*/
 
-    operator1.connectTo(&outputTerminal);
-
-    operator1.setGain(1.0);
-    operator1.setFrequency(500.0, kSampleRate);
-    operator1.setFeedbackGain(0.2);
-
-    operator2.setGain(0.5);
-    operator2.setFrequency(100.0, kSampleRate);
-
-    operator3.setGain(0.5);
-    operator3.setFrequency(250.0, kSampleRate);
 
 }
 

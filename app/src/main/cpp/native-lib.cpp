@@ -31,3 +31,10 @@ Java_com_example_patch_1matcher_MainActivity_disconnectOperators(JNIEnv *env, jo
     int operatorB_index = operator_b - 1;
     engine.operatorInterface[operatorA_index]->disconnectFrom(engine.operatorInterface[operatorB_index]);
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_connectOperatorToOutput(JNIEnv *env, jobject thiz,
+                                                                     jint selected_operator) {
+    int operator_index = selected_operator - 1;
+    engine.operatorInterface[operator_index]->connectTo(&engine.outputTerminal);
+}
