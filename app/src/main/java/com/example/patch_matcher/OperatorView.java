@@ -24,13 +24,13 @@ public class OperatorView extends Connectable {
     private int mColor;
     private Paint paint;
     private Rect rect;
-    float xOffset = 0, yOffset = 0;
-    OperatorViewListener listener = null;
-    GestureDetector gestureDetector;
-    boolean deleteModeEnabled = false;
-    static OperatorView selectedOperator = null;
-    static int numOperators = 0;
-    static Queue<Integer> idBacklog = new PriorityQueue<Integer>();
+    private float xOffset = 0, yOffset = 0;
+    private GestureDetector gestureDetector;
+    public OperatorViewListener listener = null;
+    static private boolean deleteModeEnabled = false;
+    static private OperatorView selectedOperator = null;
+    static private int numOperators = 0;
+    static private Queue<Integer> idBacklog = new PriorityQueue<Integer>();
 
     public OperatorView(Context context) {
         super(context);
@@ -97,6 +97,25 @@ public class OperatorView extends Connectable {
 
     }
 
+    public static void setDeleteModeEnabled(boolean deleteMode){
+        deleteModeEnabled = deleteMode;
+    }
+
+    public static void setSelectedOperator(OperatorView newSelectedOperator){
+        selectedOperator = newSelectedOperator;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        paint.setColor(mColor);
+        rect.left = 0;
+        rect.right = getWidth();
+        rect.top = 0;
+        rect.bottom = getHeight();
+        canvas.drawRect(rect, paint);
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
@@ -105,13 +124,8 @@ public class OperatorView extends Connectable {
     public void deselect() {
         setColor(Color.BLACK);
     }
-    public void reset() {
-        deselect();
-        selectedOperator = null;
-    }
 
-    public void setDeleteMode(boolean deleteModeEnabled){
-        this.deleteModeEnabled = deleteModeEnabled;
+    public void setDeleteMode(){
         if (deleteModeEnabled)
             setColor(Color.RED);
         else
@@ -139,17 +153,6 @@ public class OperatorView extends Connectable {
         idBacklog.add(identifier);
         numOperators--;
         listener.onDeleteOperator(this);
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        paint.setColor(mColor);
-        rect.left = 0;
-        rect.right = getWidth();
-        rect.top = 0;
-        rect.bottom = getHeight();
-        canvas.drawRect(rect, paint);
     }
 
     interface OperatorViewListener {

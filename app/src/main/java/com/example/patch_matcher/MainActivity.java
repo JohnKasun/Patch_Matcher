@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     TextView textView1, textView2, textView3;
     RotaryKnobView knob, knob2, knob3;
     ImageButton trashCan, playButton, stopButton;
-    List<ConnectorView> connectorList;
-    List<OperatorView> operatorList;
     ConstraintLayout background;
-    final int maxOperators = 6;
+    List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
+    List<OperatorView> operatorList = new ArrayList<OperatorView>();
     boolean deleteModeEnabled = false;
     OperatorView selectedOperator = null;
+    final int maxOperators = 6;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -63,15 +63,10 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         outputTerminal = findViewById(R.id.outputTerminalView);
         outputTerminal.listener = this;
 
-        connectorList = new ArrayList<ConnectorView>();
-        operatorList = new ArrayList<OperatorView>();
-
         trashCan = findViewById(R.id.imageButton);
         trashCan.setOnTouchListener((v, event) -> {
-            switch (event.getActionMasked()){
-                case MotionEvent.ACTION_DOWN:
-                    toggleDeleteMode();
-                    break;
+            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                toggleDeleteMode();
             }
             return false;
         });
@@ -88,15 +83,15 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
-                    if (!deleteModeEnabled)
-                        generateOperator(e);
+                    generateOperator(e);
                     return super.onDoubleTap(e);
                 }
             });
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                gestureDetectorBackground.onTouchEvent(event);
+                if (!deleteModeEnabled)
+                    gestureDetectorBackground.onTouchEvent(event);
                 return true;
             }
         });
@@ -109,8 +104,11 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     }
 
     public void deselectAll() {
+        selectedOperator = null;
+        OperatorView.setSelectedOperator(null);
+        OutputTerminalView.setSelectedOperator(null);
         for (int i = 0; i < operatorList.size(); i++)
-            operatorList.get(i).reset();
+            operatorList.get(i).deselect();
     }
 
     public void generateOperator(MotionEvent e) {
@@ -130,8 +128,9 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     public void toggleDeleteMode() {
         deselectAll();
         deleteModeEnabled = !deleteModeEnabled;
+        OperatorView.setDeleteModeEnabled(deleteModeEnabled);
         for (int i = 0; i < operatorList.size(); i++)
-            operatorList.get(i).setDeleteMode(deleteModeEnabled);
+            operatorList.get(i).setDeleteMode();
 
         if (deleteModeEnabled)
             trashCan.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
@@ -183,11 +182,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     @Override
     public void onSelectOperator(OperatorView selectedOperator){
         this.selectedOperator = selectedOperator;
-    }
-
-    @Override
-    public void connectToOutputTerminal(){
-        onMakeConnection(selectedOperator, outputTerminal);
+        OutputTerminalView.setSelectedOperator(selectedOperator);
     }
 
     @Override

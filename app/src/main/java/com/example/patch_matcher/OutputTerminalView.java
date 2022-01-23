@@ -14,6 +14,7 @@ public class OutputTerminalView extends Connectable {
     GestureDetector gestureDetector;
     OutputTerminalListener listener;
     Drawable outputTerminalDrawable;
+    private static OperatorView selectedOperator = null;
 
     public OutputTerminalView(Context context) {
         super(context);
@@ -45,19 +46,22 @@ public class OutputTerminalView extends Connectable {
 
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                listener.connectToOutputTerminal();
+                listener.onMakeConnection(selectedOperator, OutputTerminalView.this);
                 return super.onDoubleTap(e);
             }
         });
     }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
     }
 
+    static public void setSelectedOperator(OperatorView newSelectedOperator) {
+        selectedOperator = newSelectedOperator;
+    }
+
     interface OutputTerminalListener {
-        void connectToOutputTerminal();
+        void onMakeConnection(Connectable connectableStart, Connectable connectableEnd);
     }
 }
