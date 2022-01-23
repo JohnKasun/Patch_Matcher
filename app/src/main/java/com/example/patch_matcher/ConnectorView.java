@@ -8,9 +8,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class ConnectorView extends View {
 
@@ -48,6 +50,10 @@ public class ConnectorView extends View {
 
         mConnectableStart = null;
         mConnectableEnd = null;
+
+        int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
+        int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        setLayoutParams(new ConstraintLayout.LayoutParams(widthDimensionDp, heightDimensionDp));
     }
 
     public void registerConnectables(Connectable connectableStart, Connectable connectableEnd) {

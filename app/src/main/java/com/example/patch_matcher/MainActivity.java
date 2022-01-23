@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     TextView textView1, textView2, textView3;
     RotaryKnobView knob, knob2, knob3;
     ImageButton trashCan, playButton, stopButton;
-    List<ConnectorView> connectors;
-    List<OperatorView> operators;
+    List<ConnectorView> connectorList;
+    List<OperatorView> operatorList;
     Queue<Integer> idBacklog;
     ConstraintLayout background;
     float xOffset, yOffset;
@@ -65,22 +65,19 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         knob3.listener = this;
         clickedOperator = null;
         selectedOperator = null;
-        connectors = new ArrayList<ConnectorView>();
-        operators = new ArrayList<OperatorView>();
+        connectorList = new ArrayList<ConnectorView>();
+        operatorList = new ArrayList<OperatorView>();
         idBacklog = new PriorityQueue<Integer>();
-        trashCan = (ImageButton) findViewById(R.id.imageButton);
-        trashCan.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getActionMasked()){
-                    case MotionEvent.ACTION_DOWN:
-                        toggleDeleteMode();
-                        break;
-                }
-                return false;
+        trashCan = findViewById(R.id.imageButton);
+        trashCan.setOnTouchListener((v, event) -> {
+            switch (event.getActionMasked()){
+                case MotionEvent.ACTION_DOWN:
+                    toggleDeleteMode();
+                    break;
             }
+            return false;
         });
-        background = (ConstraintLayout) findViewById(R.id.background);
+        background = findViewById(R.id.background);
         background.setOnTouchListener(new View.OnTouchListener() {
 
             GestureDetector gestureDetectorBackground = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
@@ -104,20 +101,10 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                 return true;
             }
         });
-        playButton = (ImageButton) findViewById(R.id.PlayButton);
-        stopButton = (ImageButton) findViewById(R.id.StopButton);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPlayButtonPress();
-            }
-        });
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onStopButtonPress();
-            }
-        });
+        playButton = findViewById(R.id.PlayButton);
+        stopButton = findViewById(R.id.StopButton);
+        playButton.setOnClickListener(v -> onPlayButtonPress());
+        stopButton.setOnClickListener(v -> onStopButtonPress());
     }
 
     public void deselectAll() {
@@ -128,15 +115,12 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             clickedOperator = null;
         }
     }
-    
+
     public void generateConnector(Connectable connectableStart, Connectable connectableEnd) {
         ConnectorView newConnector = new ConnectorView(MainActivity.this);
-        int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
-        int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
-        newConnector.setLayoutParams(new ConstraintLayout.LayoutParams(widthDimensionDp, heightDimensionDp));
         newConnector.registerConnectables(connectableStart, connectableEnd);
-        for (int i = 0; i < connectors.size(); i++) {
-            ConnectorView currentConnector = connectors.get(i);
+        for (int i = 0; i < connectorList.size(); i++) {
+            ConnectorView currentConnector = connectorList.get(i);
             if (newConnector.isEqualTo(currentConnector)){
                 deleteConnector(currentConnector);
                 return;
@@ -145,18 +129,17 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                 return;
             }
         }
-        String connectionInfo = "Operator " + connectableStart.getIdentifier() + " connected to Operator " + connectableEnd.getIdentifier();
         //connectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
-        Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Operator " + connectableStart.getIdentifier() + " connected to Operator " + connectableEnd.getIdentifier(), Toast.LENGTH_SHORT).show();
         background.addView(newConnector);
-        connectors.add(newConnector);
+        connectorList.add(newConnector);
         connectableStart.bringToFront();
         connectableEnd.bringToFront();
     }
 
     public void updateConnectorOrientations(){
-        for (int connector = 0; connector < connectors.size(); connector++)
-            connectors.get(connector).updateOrientation();
+        for (int i = 0; i < connectorList.size(); i++)
+            connectorList.get(i).updateOrientation();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -219,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             else
                 newOperator.setIdentifier(idBacklog.remove());
             background.addView(newOperator);
-            operators.add(newOperator);
+            operatorList.add(newOperator);
             Toast.makeText(getApplicationContext(), "Created Operator " + newOperator.getIdentifier(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -237,23 +220,23 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             operatorColor = Color.BLACK;
         }
         trashCan.setBackgroundTintList(ColorStateList.valueOf(trashCanColor));
-        for (int i = 0; i < operators.size(); i++)
-            operators.get(i).setColor(operatorColor);
+        for (int i = 0; i < operatorList.size(); i++)
+            operatorList.get(i).setColor(operatorColor);
     }
 
     public void deleteOperator(OperatorView operatorToDelete) {
         idBacklog.add(operatorToDelete.getIdentifier());
-        operators.remove(operatorToDelete);
+        operatorList.remove(operatorToDelete);
         background.removeView(operatorToDelete);
-        for (int i = 0; i < connectors.size(); i++){
-            ConnectorView currentConnector = connectors.get(i);
+        for (int i = 0; i < connectorList.size(); i++){
+            ConnectorView currentConnector = connectorList.get(i);
             if (currentConnector.getStartConnectable() == operatorToDelete) {
-                connectors.remove(currentConnector);
+                connectorList.remove(currentConnector);
                 background.removeView(currentConnector);
                 //disconnectOperators(operatorToDelete.getIdentifier(), currentConnector.getEndConnectable().getIdentifier());
                 i--;
             } else if (currentConnector.getEndConnectable() == operatorToDelete) {
-                connectors.remove(currentConnector);
+                connectorList.remove(currentConnector);
                 background.removeView(currentConnector);
                 //disconnectOperators(currentConnector.getStartConnectable().getIdentifier(), operatorToDelete.getIdentifier());
                 i--;
@@ -264,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
     public void deleteConnector(ConnectorView connectorToDelete) {
         background.removeView(connectorToDelete);
-        connectors.remove(connectorToDelete);
+        connectorList.remove(connectorToDelete);
         String connectionInfo = "Operator " + connectorToDelete.getStartConnectable().getIdentifier() + " removed from Operator " + connectorToDelete.getEndConnectable().getIdentifier();
         //disconnectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
         Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
