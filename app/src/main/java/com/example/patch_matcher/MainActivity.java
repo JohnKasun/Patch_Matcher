@@ -137,6 +137,13 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
     }
 
+    public void updateKnobPositions(OperatorView selectedOperator){
+        knob1.setKnobPosition(selectedOperator.getFreqValue());
+        knob2.setKnobPosition(selectedOperator.getGainValue());
+        textView1.setText("" + selectedOperator.getFreqValue());
+        textView2.setText("" + selectedOperator.getGainValue());
+    }
+
     @Override
     public void onDeleteOperator(OperatorView operatorToDelete) {
         operatorList.remove(operatorToDelete);
@@ -156,10 +163,12 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             switch (identifier) {
                 case 1:
                     textView1.setText("" + value);
+                    selectedOperator.setFreqValue(value);
                     onChangeFrequency(selectedOperator.getIdentifier(), value);
                     break;
                 case 2:
                     textView2.setText("" + value);
+                    selectedOperator.setGainValue(value);
                     onChangeGain(selectedOperator.getIdentifier(), value);
                     break;
                 case 3:
@@ -173,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     public void onSelectOperator(OperatorView selectedOperator){
         this.selectedOperator = selectedOperator;
         OutputTerminalView.setSelectedOperator(selectedOperator);
+        updateKnobPositions(selectedOperator);
     }
 
     @Override

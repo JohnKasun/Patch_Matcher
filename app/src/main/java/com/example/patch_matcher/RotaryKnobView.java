@@ -115,6 +115,16 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     private int calculateValue(int angle){
         return (int) (angle * scaleFactor);
     }
+    private int convertValueToAngle(int value) { return (int) (value / scaleFactor);};
+    private int convertAngleToPosition(int angle) {
+        int position = (int) (kTwoPi * radius * angle / 360.0);
+        return position;
+    }
+    public void setKnobPosition(int value) {
+        int newAngle = convertValueToAngle(value);
+        setRotation(newAngle);
+        storedPosition = convertAngleToPosition(newAngle);
+    }
 
     interface RotaryKnobListener {
         void onKnobRotate(int identifier, int value);

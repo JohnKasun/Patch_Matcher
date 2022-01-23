@@ -93,24 +93,6 @@ void AudioEngine::changeWavetable()
 
 void AudioEngine::initializeOperators()
 {
-    operator1.setGain(0.99);
-    operator1.setFrequency(500,kSampleRate);
-
-    operator2.setGain(0.75);
-    operator2.setFrequency(250,kSampleRate);
-
-    operator3.setGain(0.99);
-    operator3.setFrequency(125,kSampleRate);
-
-    operator4.setGain(0.75);
-    operator4.setFrequency(25,kSampleRate);
-
-    operator5.setGain(0.99);
-    operator5.setFrequency(1000,kSampleRate);
-
-    operator6.setGain(0.75);
-    operator6.setFrequency(2,kSampleRate);
-
 }
 
 void AudioEngine::reset()

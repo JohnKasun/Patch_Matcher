@@ -25,6 +25,7 @@ public class OperatorView extends Connectable {
     private Paint paint;
     private Rect rect;
     private float xOffset = 0, yOffset = 0;
+    private int freqValue = 0, gainValue = 0;
     private GestureDetector gestureDetector;
     public OperatorViewListener listener = null;
     static private boolean deleteModeEnabled = false;
@@ -154,6 +155,11 @@ public class OperatorView extends Connectable {
         numOperators--;
         listener.onDeleteOperator(this);
     }
+
+    public int getFreqValue() { return freqValue; };
+    public int getGainValue() { return gainValue; };
+    public void setFreqValue(int newFreqValue) { freqValue = newFreqValue; };
+    public void setGainValue(int newGainValue) { gainValue = newGainValue; };
 
     interface OperatorViewListener {
         void onSelectOperator(OperatorView selectedOperator);
