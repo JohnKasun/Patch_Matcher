@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="67dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/knob2"
-        app:layout_constraintEnd_toEndOf="@+id/knob2"
-        app:layout_constraintStart_toStartOf="@+id/knob2" />
-
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
@@ -27,77 +17,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/trashcan" />
 
-    <com.example.patch_matcher.RotaryKnobView
-        android:id="@+id/knob1"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="8dp"
-        app:identifier="1"
-        app:initialValue="0"
-        app:knobDrawable="@drawable/rotaryknob"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.215"
-        app:layout_constraintStart_toStartOf="parent"
-        app:maxValue="10000"
-        app:minValue="0" />
-
-    <com.example.patch_matcher.RotaryKnobView
-        android:id="@+id/knob2"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="8dp"
-        app:identifier="2"
-        app:initialValue="0"
-        app:knobDrawable="@drawable/rotaryknob"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.383"
-        app:layout_constraintStart_toStartOf="parent"
-        app:maxValue="25"
-        app:minValue="0" />
-
-    <com.example.patch_matcher.RotaryKnobView
-        android:id="@+id/knob3"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="8dp"
-        app:identifier="3"
-        app:initialValue="0"
-        app:knobDrawable="@drawable/rotaryknob"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintStart_toStartOf="parent"
-        app:maxValue="100"
-        app:minValue="0" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="67dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/knob"
-        app:layout_constraintEnd_toEndOf="@+id/knob"
-        app:layout_constraintStart_toStartOf="@+id/knob" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="60dp"
-        android:layout_height="23dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/knob3"
-        app:layout_constraintEnd_toEndOf="@+id/knob3"
-        app:layout_constraintStart_toStartOf="@+id/knob3" />
-
     <ImageButton
         android:id="@+id/StopButton"
-        android:layout_width="97dp"
+        android:layout_width="92dp"
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/design_default_color_secondary"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -119,20 +44,94 @@
     <ImageButton
         android:id="@+id/imageButton4"
         android:layout_width="172dp"
-        android:layout_height="98dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="4dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintHorizontal_bias="0.797"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/sinewave" />
 
+    <com.example.patch_matcher.RotaryKnobView
+        android:id="@+id/knob2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="4dp"
+        app:identifier="2"
+        app:initialValue="0"
+        app:knobDrawable="@drawable/rotaryknob"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.371"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxValue="25"
+        app:minValue="0" />
+
+    <com.example.patch_matcher.RotaryKnobView
+        android:id="@+id/knob3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="4dp"
+        app:identifier="3"
+        app:initialValue="0"
+        app:knobDrawable="@drawable/rotaryknob"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxValue="100"
+        app:minValue="0" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="60dp"
+        android:layout_height="23dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/knob3"
+        app:layout_constraintEnd_toEndOf="@+id/knob3"
+        app:layout_constraintStart_toStartOf="@+id/knob3" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="67dp"
+        android:layout_height="24dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/knob1"
+        app:layout_constraintEnd_toEndOf="@+id/knob1"
+        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintStart_toStartOf="@+id/knob1" />
+
+    <com.example.patch_matcher.RotaryKnobView
+        android:id="@+id/knob1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="4dp"
+        app:identifier="1"
+        app:initialValue="0"
+        app:knobDrawable="@drawable/rotaryknob"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.202"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxValue="10000"
+        app:minValue="0" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="67dp"
+        android:layout_height="24dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/knob2"
+        app:layout_constraintEnd_toEndOf="@+id/knob2"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="@+id/knob2" />
+
     <com.example.patch_matcher.OutputTerminalView
         android:id="@+id/outputTerminalView"
-        android:layout_width="52dp"
-        android:layout_height="169dp"
+        android:layout_width="24dp"
+        android:layout_height="194dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="4dp"
         android:layout_marginBottom="32dp"
         android:background="#FFFFFF"
         android:scaleType="fitCenter"
@@ -141,7 +140,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.376" />
+        app:layout_constraintVertical_bias="0.371" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
