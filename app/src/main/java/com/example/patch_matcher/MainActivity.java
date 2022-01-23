@@ -152,16 +152,20 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
     @Override
     public void onKnobRotate(int identifier, int value) {
-        switch (identifier){
-            case 1:
-                textView1.setText(""+value);
-                break;
-            case 2:
-                textView2.setText(""+value);
-                break;
-            case 3:
-                textView3.setText(""+value);
-                break;
+        if (selectedOperator != null) {
+            switch (identifier) {
+                case 1:
+                    textView1.setText("" + value);
+                    onChangeFrequency(selectedOperator.getIdentifier(), value);
+                    break;
+                case 2:
+                    textView2.setText("" + value);
+                    onChangeGain(selectedOperator.getIdentifier(), value);
+                    break;
+                case 3:
+                    textView3.setText("" + value);
+                    break;
+            }
         }
     }
 
@@ -203,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
     public native void onPlayButtonPress();
     public native void onStopButtonPress();
+    public native void onChangeFrequency(int operator_id, int value);
+    public native void onChangeGain(int operator_id, int value);
     public native void connect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
     public native void disconnect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
 

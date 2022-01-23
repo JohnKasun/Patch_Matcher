@@ -53,6 +53,7 @@ public:
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
     void changeWavetable();
+    double getSampleRate() { return kSampleRate; };
     void enableFeedback() { operator1.connectTo(&operator1);};
     void reset();
 

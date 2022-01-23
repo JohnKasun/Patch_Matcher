@@ -42,3 +42,20 @@ Java_com_example_patch_1matcher_MainActivity_disconnect_1AudioEngine(JNIEnv *env
     else
         engine.operatorInterface[connectable_a_id]->disconnectFrom(engine.operatorInterface[connectable_b_id]);
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_onChangeFrequency(JNIEnv *env, jobject thiz,
+                                                               jint operator_id, jint value) {
+    operator_id -= 1;
+
+    engine.operatorInterface[operator_id]->setFrequency(value, engine.getSampleRate());
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_onChangeGain(JNIEnv *env, jobject thiz,
+                                                          jint operator_id, jint value) {
+    operator_id -= 1;
+
+    double valueScaled = static_cast<double>(value) / 100.0;
+    engine.operatorInterface[operator_id]->setGain(valueScaled);
+}

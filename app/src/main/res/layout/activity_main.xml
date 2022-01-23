@@ -54,6 +54,21 @@
         app:srcCompat="@drawable/sinewave" />
 
     <com.example.patch_matcher.RotaryKnobView
+        android:id="@+id/knob1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="4dp"
+        app:identifier="1"
+        app:initialValue="0"
+        app:knobDrawable="@drawable/rotaryknob"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.202"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxValue="1000"
+        app:minValue="0" />
+
+    <com.example.patch_matcher.RotaryKnobView
         android:id="@+id/knob2"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -65,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.371"
         app:layout_constraintStart_toStartOf="parent"
-        app:maxValue="25"
+        app:maxValue="1000"
         app:minValue="0" />
 
     <com.example.patch_matcher.RotaryKnobView
@@ -101,21 +116,6 @@
         app:layout_constraintEnd_toEndOf="@+id/knob1"
         app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="@+id/knob1" />
-
-    <com.example.patch_matcher.RotaryKnobView
-        android:id="@+id/knob1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="4dp"
-        app:identifier="1"
-        app:initialValue="0"
-        app:knobDrawable="@drawable/rotaryknob"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.202"
-        app:layout_constraintStart_toStartOf="parent"
-        app:maxValue="10000"
-        app:minValue="0" />
 
     <TextView
         android:id="@+id/textView2"
