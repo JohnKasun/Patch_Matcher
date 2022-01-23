@@ -17,24 +17,28 @@ Java_com_example_patch_1matcher_MainActivity_onStopButtonPress(JNIEnv *env, jobj
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_patch_1matcher_MainActivity_connectOperators(JNIEnv *env, jobject thiz,
-                                                              jint operator_a, jint operator_b) {
-    int operatorA_index = operator_a - 1;
-    int operatorB_index = operator_b - 1;
-    engine.operatorInterface[operatorA_index]->connectTo(engine.operatorInterface[operatorB_index]);
+Java_com_example_patch_1matcher_MainActivity_connect_1AudioEngine(JNIEnv *env, jobject thiz,
+                                                                  jint connectable_a_id,
+                                                                  jint connectable_b_id) {
+    connectable_a_id -= 1;
+    connectable_b_id -= 1;
+
+    if (connectable_b_id < 0)
+        engine.operatorInterface[connectable_a_id]->connectTo(&engine.outputTerminal);
+    else
+        engine.operatorInterface[connectable_a_id]->connectTo(engine.operatorInterface[connectable_b_id]);
 }
+
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_patch_1matcher_MainActivity_disconnectOperators(JNIEnv *env, jobject thiz,
-                                                                 jint operator_a, jint operator_b) {
-    int operatorA_index = operator_a - 1;
-    int operatorB_index = operator_b - 1;
-    engine.operatorInterface[operatorA_index]->disconnectFrom(engine.operatorInterface[operatorB_index]);
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_patch_1matcher_MainActivity_connectOperatorToOutput(JNIEnv *env, jobject thiz,
-                                                                     jint selected_operator) {
-    int operator_index = selected_operator - 1;
-    engine.operatorInterface[operator_index]->connectTo(&engine.outputTerminal);
+Java_com_example_patch_1matcher_MainActivity_disconnect_1AudioEngine(JNIEnv *env, jobject thiz,
+                                                                     jint connectable_a_id,
+                                                                     jint connectable_b_id) {
+    connectable_a_id -= 1;
+    connectable_b_id -= 1;
+
+    if (connectable_b_id < 0)
+        engine.operatorInterface[connectable_a_id]->disconnectFrom(&engine.outputTerminal);
+    else
+        engine.operatorInterface[connectable_a_id]->disconnectFrom(engine.operatorInterface[connectable_b_id]);
 }

@@ -18,15 +18,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.patch_matcher.databinding.ActivityMainBinding;
-
 public class MainActivity extends AppCompatActivity implements RotaryKnobView.RotaryKnobListener, OutputTerminalView.OutputTerminalListener, OperatorView.OperatorViewListener {
 
     static {
         System.loadLibrary("patch_matcher");
     }
 
-    private ActivityMainBinding binding;
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob1, knob2, knob3;
@@ -42,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
         knob1 = findViewById(R.id.knob1);
@@ -135,10 +130,10 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     }
 
     public void deleteConnector(ConnectorView connectorToDelete) {
+        disconnect_AudioEngine(connectorToDelete.getStartConnectable().getIdentifier(), connectorToDelete.getEndConnectable().getIdentifier());
         background.removeView(connectorToDelete);
         connectorList.remove(connectorToDelete);
         String connectionInfo = "Operator " + connectorToDelete.getStartConnectable().getIdentifier() + " removed from Operator " + connectorToDelete.getEndConnectable().getIdentifier();
-        //disconnectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
         Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
     }
 
@@ -148,13 +143,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         background.removeView(operatorToDelete);
         for (int i = 0; i < connectorList.size(); i++){
             ConnectorView currentConnector = connectorList.get(i);
-            if (currentConnector.getStartConnectable() == operatorToDelete) {
+            if (currentConnector.getStartConnectable() == operatorToDelete || currentConnector.getEndConnectable() == operatorToDelete) {
                 deleteConnector(currentConnector);
-                //disconnectOperators(operatorToDelete.getIdentifier(), currentConnector.getEndConnectable().getIdentifier());
-                i--;
-            } else if (currentConnector.getEndConnectable() == operatorToDelete) {
-                deleteConnector(currentConnector);
-                //disconnectOperators(currentConnector.getStartConnectable().getIdentifier(), operatorToDelete.getIdentifier());
                 i--;
             }
         }
@@ -196,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                     return;
                 }
             }
-            //connectOperators(operatorA.getIdentifier(), operatorB.getIdentifier());
+            connect_AudioEngine(connectableStart.getIdentifier(), connectableEnd.getIdentifier());
             Toast.makeText(getApplicationContext(), "Operator " + connectableStart.getIdentifier() + " connected to Operator " + connectableEnd.getIdentifier(), Toast.LENGTH_SHORT).show();
             background.addView(newConnector);
             connectorList.add(newConnector);
@@ -213,8 +203,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
     public native void onPlayButtonPress();
     public native void onStopButtonPress();
-    public native void connectOperators(int operatorA, int operatorB);
-    public native void disconnectOperators(int operatorA, int operatorB);
-    public native void connectOperatorToOutput(int selectedOperator);
+    public native void connect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
+    public native void disconnect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
 
 }
