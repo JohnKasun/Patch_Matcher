@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,8 +17,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import com.example.patch_matcher.databinding.ActivityMainBinding;
 
@@ -32,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     private ActivityMainBinding binding;
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
-    RotaryKnobView knob, knob2, knob3;
+    RotaryKnobView knob1, knob2, knob3;
     ImageButton trashCan, playButton, stopButton;
     ConstraintLayout background;
     List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
@@ -49,10 +46,10 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-        knob = findViewById(R.id.knob);
+        knob1 = findViewById(R.id.knob1);
         knob2 = findViewById(R.id.knob2);
         knob3 = findViewById(R.id.knob3);
-        knob.listener = this;
+        knob1.listener = this;
         knob2.listener = this;
         knob3.listener = this;
 
@@ -65,9 +62,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
         trashCan = findViewById(R.id.imageButton);
         trashCan.setOnTouchListener((v, event) -> {
-            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+            if (event.getActionMasked() == MotionEvent.ACTION_DOWN)
                 toggleDeleteMode();
-            }
             return false;
         });
 

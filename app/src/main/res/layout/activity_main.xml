@@ -28,7 +28,7 @@
         app:srcCompat="@drawable/trashcan" />
 
     <com.example.patch_matcher.RotaryKnobView
-        android:id="@+id/knob"
+        android:id="@+id/knob1"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_marginBottom="8dp"
