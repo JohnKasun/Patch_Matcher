@@ -59,3 +59,11 @@ Java_com_example_patch_1matcher_MainActivity_onChangeGain(JNIEnv *env, jobject t
     double valueScaled = static_cast<double>(value) / 100.0;
     engine.operatorInterface[operator_id]->setGain(valueScaled);
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_patch_1matcher_MainActivity_resetValues(JNIEnv *env, jobject thiz,
+                                                         jint operator_id) {
+    operator_id -= 1;
+    engine.operatorInterface[operator_id]->setFrequency(0.0, engine.getSampleRate());
+    engine.operatorInterface[operator_id]->setGain(0.0);
+}

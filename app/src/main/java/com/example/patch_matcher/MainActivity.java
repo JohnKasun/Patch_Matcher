@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     public void onDeleteOperator(OperatorView operatorToDelete) {
         operatorList.remove(operatorToDelete);
         background.removeView(operatorToDelete);
+        resetValues(operatorToDelete.getIdentifier());
         for (int i = 0; i < connectorList.size(); i++){
             ConnectorView currentConnector = connectorList.get(i);
             if (currentConnector.getStartConnectable() == operatorToDelete || currentConnector.getEndConnectable() == operatorToDelete) {
@@ -221,5 +222,6 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     public native void onChangeGain(int operator_id, int value);
     public native void connect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
     public native void disconnect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
+    public native void resetValues(int operator_id);
 
 }
