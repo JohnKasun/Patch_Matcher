@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.patch_matcher">
+    package="com.test.patch_matcher">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Patch_Matcher">
         <activity
-            android:name=".MainActivity"
+            android:name="com.test.patch_matcher.MainActivity"
             android:screenOrientation="landscape"
             android:exported="true">
             <intent-filter>

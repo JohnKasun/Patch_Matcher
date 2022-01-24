@@ -5,7 +5,7 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.test.patch_matcher.MainActivity">
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/sinewave" />
 
-    <com.example.patch_matcher.RotaryKnobView
+    <com.test.patch_matcher.RotaryKnobView
         android:id="@+id/knob1"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -68,7 +68,7 @@
         app:maxValue="1000"
         app:minValue="0" />
 
-    <com.example.patch_matcher.RotaryKnobView
+    <com.test.patch_matcher.RotaryKnobView
         android:id="@+id/knob2"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -83,7 +83,7 @@
         app:maxValue="1000"
         app:minValue="0" />
 
-    <com.example.patch_matcher.RotaryKnobView
+    <com.test.patch_matcher.RotaryKnobView
         android:id="@+id/knob3"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -127,7 +127,7 @@
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/knob2" />
 
-    <com.example.patch_matcher.OutputTerminalView
+    <com.test.patch_matcher.OutputTerminalView
         android:id="@+id/outputTerminalView"
         android:layout_width="24dp"
         android:layout_height="194dp"

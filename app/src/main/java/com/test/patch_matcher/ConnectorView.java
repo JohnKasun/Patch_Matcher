@@ -1,8 +1,6 @@
-package com.example.patch_matcher;
+package com.test.patch_matcher;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;

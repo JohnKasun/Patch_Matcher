@@ -1,4 +1,4 @@
-package com.example.patch_matcher;
+package com.test.patch_matcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
