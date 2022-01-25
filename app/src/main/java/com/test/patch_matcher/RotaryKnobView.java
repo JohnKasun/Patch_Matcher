@@ -26,6 +26,7 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     private int maxValue;
     private int minValue;
     private int identifier;
+    private boolean enhancedPrecision = false;
     public RotaryKnobListener listener;
     float storedPosition, newPosition;
     Drawable knobDrawable;
@@ -67,10 +68,11 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 float currentDisplacement = e2.getRawX() - e1.getRawX();
+                if (enhancedPrecision) currentDisplacement *= 0.01f;
                 newPosition = storedPosition + currentDisplacement;
                 if (newPosition > maxPosition) newPosition = maxPosition;
                 if (newPosition < 0) newPosition = minValue;
-                int angle = calculateAngle(newPosition);
+                float angle = calculateAngle(newPosition);
                 int value = calculateValue(angle);
                 setRotation(angle);
                 listener.onKnobRotate(identifier, value);
@@ -88,7 +90,9 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
             @Override
             public void onShowPress(MotionEvent e) {}
             @Override
-            public void onLongPress(MotionEvent e) {}
+            public void onLongPress(MotionEvent e) {
+                enhancedPrecision = !enhancedPrecision;
+            }
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) { return false; }
 
@@ -107,21 +111,21 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
             return super.onTouchEvent(event);
     }
 
-    private int calculateAngle(float newPosition) {
-        int angle = (int) ((360.0 * newPosition) / (kTwoPi * radius));
+    private float calculateAngle(float newPosition) {
+        float angle = (float) ((360.0 * newPosition) / (kTwoPi * radius));
         return angle;
     }
 
-    private int calculateValue(int angle){
+    private int calculateValue(float angle){
         return (int) (angle * scaleFactor);
     }
     private int convertValueToAngle(int value) { return (int) (value / scaleFactor);};
-    private int convertAngleToPosition(int angle) {
+    private int convertAngleToPosition(float angle) {
         int position = (int) (kTwoPi * radius * angle / 360.0);
         return position;
     }
     public void setKnobPosition(int value) {
-        int newAngle = convertValueToAngle(value);
+        float newAngle = convertValueToAngle(value);
         setRotation(newAngle);
         storedPosition = convertAngleToPosition(newAngle);
     }
