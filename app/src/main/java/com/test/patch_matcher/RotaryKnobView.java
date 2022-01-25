@@ -32,7 +32,8 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     Drawable knobDrawable;
     float radius;
     float maxPosition;
-    float scaleFactor;
+    float conversionFactor;
+    float conversionFactorFlipped;
     final float kTwoPi = (float) (2f * Math.PI);
 
     public RotaryKnobView(@NonNull Context context) {
@@ -57,7 +58,8 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
         minValue = ta.getInt(R.styleable.RotaryKnobView_minValue, 0);
         maxValue = ta.getInt(R.styleable.RotaryKnobView_maxValue, 0);
         identifier = ta.getInteger(R.styleable.RotaryKnobView_identifier, -1);
-        scaleFactor = maxValue / 270f;
+        conversionFactor = maxValue / 270f;
+        conversionFactorFlipped = 1.0f / conversionFactor;
         storedPosition = ta.getInt(R.styleable.RotaryKnobView_initialValue, 0);
         knobDrawable = ta.getDrawable(R.styleable.RotaryKnobView_knobDrawable);
         setImageDrawable(knobDrawable);
@@ -81,8 +83,8 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
 
             @Override
             public boolean onDown(MotionEvent e) {
-                radius = (float) getLayoutParams().width / 2;
-                maxPosition = (float) (kTwoPi*radius*0.75);
+                radius = (float) getLayoutParams().width / 2.0f;
+                maxPosition = (float) (kTwoPi*radius*0.75f);
                 return true;
             }
             @Override
@@ -117,9 +119,9 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     }
 
     private int calculateValue(float angle){
-        return (int) (angle * scaleFactor);
+        return (int) (angle * conversionFactor);
     }
-    private int convertValueToAngle(int value) { return (int) (value / scaleFactor);};
+    private int convertValueToAngle(int value) { return (int) (value * conversionFactorFlipped);};
     private int convertAngleToPosition(float angle) {
         int position = (int) (kTwoPi * radius * angle / 360.0);
         return position;
