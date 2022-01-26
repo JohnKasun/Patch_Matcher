@@ -1,24 +1,17 @@
-package com.test.patch_matcher;
+package com.johnkasun.patch_matcher;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.gesture.Gesture;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GestureDetectorCompat;
+
 
 public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView {
 

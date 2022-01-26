@@ -6,18 +6,18 @@ AudioEngine engine;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_test_patch_1matcher_MainActivity_onPlayButtonPress(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_MainActivity_onPlayButtonPress(JNIEnv *env, jobject thiz) {
     engine.startAudio();
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_test_patch_1matcher_MainActivity_onStopButtonPress(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_MainActivity_onStopButtonPress(JNIEnv *env, jobject thiz) {
     engine.pauseAudio();
 }
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_test_patch_1matcher_MainActivity_connect_1AudioEngine(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_MainActivity_connect_1AudioEngine(JNIEnv *env, jobject thiz,
                                                                   jint connectable_a_id,
                                                                   jint connectable_b_id) {
     connectable_a_id -= 1;
@@ -31,7 +31,7 @@ Java_com_test_patch_1matcher_MainActivity_connect_1AudioEngine(JNIEnv *env, jobj
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_test_patch_1matcher_MainActivity_disconnect_1AudioEngine(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_MainActivity_disconnect_1AudioEngine(JNIEnv *env, jobject thiz,
                                                                      jint connectable_a_id,
                                                                      jint connectable_b_id) {
     connectable_a_id -= 1;
@@ -44,7 +44,7 @@ Java_com_test_patch_1matcher_MainActivity_disconnect_1AudioEngine(JNIEnv *env, j
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_test_patch_1matcher_MainActivity_onChangeFrequency(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_MainActivity_onChangeFrequency(JNIEnv *env, jobject thiz,
                                                                jint operator_id, jint value) {
     operator_id -= 1;
 
@@ -52,7 +52,7 @@ Java_com_test_patch_1matcher_MainActivity_onChangeFrequency(JNIEnv *env, jobject
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_test_patch_1matcher_MainActivity_onChangeGain(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_MainActivity_onChangeGain(JNIEnv *env, jobject thiz,
                                                           jint operator_id, jint value) {
     operator_id -= 1;
 
@@ -61,7 +61,7 @@ Java_com_test_patch_1matcher_MainActivity_onChangeGain(JNIEnv *env, jobject thiz
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_test_patch_1matcher_MainActivity_resetValues(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_MainActivity_resetValues(JNIEnv *env, jobject thiz,
                                                          jint operator_id) {
     operator_id -= 1;
     engine.operatorInterface[operator_id]->setFrequency(0.0, engine.getSampleRate());

@@ -1,4 +1,4 @@
-package com.test.patch_matcher;
+package com.johnkasun.patch_matcher;
 
 import android.content.Context;
 import android.graphics.Canvas;
