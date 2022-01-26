@@ -5,6 +5,7 @@
         <attr name = "maxValue" format = "integer" />
         <attr name = "initialValue" format = "integer" />
         <attr name = "knobDrawable" format = "reference" />
+        <attr name = "knobEnhancedDrawable" format = "reference" />
         <attr name = "identifier" format = "integer"/>
     </declare-styleable>
     <declare-styleable name="OutputTerminalView">
