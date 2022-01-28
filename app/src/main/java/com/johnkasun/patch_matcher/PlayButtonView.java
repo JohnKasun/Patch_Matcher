@@ -4,18 +4,21 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GestureDetectorCompat;
 
 
 public class PlayButtonView extends androidx.appcompat.widget.AppCompatImageView {
 
     private Drawable playingDrawable;
     private Drawable stoppedDrawable;
+    private GestureDetectorCompat gestureDetector;
     public PlayButtonListener listener;
     private boolean isEnabled = false;
 
@@ -41,6 +44,19 @@ public class PlayButtonView extends androidx.appcompat.widget.AppCompatImageView
         stoppedDrawable = ta.getDrawable(R.styleable.PlayButtonView_PlayButtonView_playDrawable);
         setImageDrawable(stoppedDrawable);
 
+        gestureDetector = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                listener.onPlayButtonClicked(PlayButtonView.this);
+                return super.onSingleTapUp(e);
+            }
+        });
+
     }
 
     public void setEnabled(boolean shouldEnable) {
@@ -53,9 +69,10 @@ public class PlayButtonView extends androidx.appcompat.widget.AppCompatImageView
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        listener.onPlayButtonClicked(this);
-        return super.onTouchEvent(event);
+        return gestureDetector.onTouchEvent(event);
     }
+
+
 
     interface PlayButtonListener {
         void onPlayButtonClicked(PlayButtonView playButtonView);
