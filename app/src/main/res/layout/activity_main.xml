@@ -7,19 +7,41 @@
     android:layout_height="match_parent"
     tools:context="com.johnkasun.patch_matcher.MainActivity">
 
+    <com.johnkasun.patch_matcher.PlayButtonView
+        android:id="@+id/playButtonUser"
+        android:layout_width="92dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="208dp"
+        app:PlayButtonView_playDrawable="@drawable/playbutton"
+        app:PlayButtonView_stopDrawable="@drawable/stopbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.johnkasun.patch_matcher.PlayButtonView
+        android:id="@+id/playButtonTarget"
+        android:layout_width="92dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="88dp"
+        app:PlayButtonView_playDrawable="@drawable/playbutton"
+        app:PlayButtonView_stopDrawable="@drawable/stopbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/trashcan"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:id="@+id/StopButton"
+        android:id="@+id/PlayButtonTarget"
         android:layout_width="92dp"
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
@@ -30,7 +52,7 @@
         app:srcCompat="@drawable/playbutton" />
 
     <ImageButton
-        android:id="@+id/PlayButton"
+        android:id="@+id/PlayButtonUser"
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:layout_marginEnd="4dp"

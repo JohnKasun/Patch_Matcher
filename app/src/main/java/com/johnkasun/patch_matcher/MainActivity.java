@@ -19,7 +19,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RotaryKnobView.RotaryKnobListener, OutputTerminalView.OutputTerminalListener, OperatorView.OperatorViewListener {
+public class MainActivity extends AppCompatActivity
+        implements RotaryKnobView.RotaryKnobListener,
+                    OutputTerminalView.OutputTerminalListener,
+                    OperatorView.OperatorViewListener,
+                    PlayButtonView.PlayButtonListener{
 
     static {
         System.loadLibrary("patch_matcher");
@@ -34,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob1, knob2, knob3;
-    ImageButton trashCan, playButton, stopButton;
+    ImageButton trashCan;
+    PlayButtonView playButtonUser, playButtonTarget;
     ConstraintLayout background;
     Drawable playButtonDrawable, stopButtonDrawable;
     List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
@@ -48,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        playButtonDrawable = getDrawable(R.drawable.playbutton);
-        stopButtonDrawable = getDrawable(R.drawable.stopbutton);
 
         knob1 = findViewById(R.id.knob1);
         knob2 = findViewById(R.id.knob2);
@@ -99,11 +101,10 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             }
         });
 
-        playButton = findViewById(R.id.PlayButton);
-        playButton.setOnClickListener(v -> toggleUserPlayButton());
-
-        stopButton = findViewById(R.id.StopButton);
-        stopButton.setOnClickListener(v -> toggleTargetPlayButton());
+        playButtonUser = findViewById(R.id.playButtonUser);
+        playButtonTarget = findViewById(R.id.playButtonTarget);
+        playButtonUser.listener = this;
+        playButtonTarget.listener = this;
     }
 
     public void deselectAll() {
@@ -163,40 +164,6 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         textView1.setText("");
         textView2.setText("");
         textView3.setText("");
-    }
-
-    public void toggleUserPlayButton() {
-        switch (playState){
-            case playingTarget:
-                stopButton.setImageDrawable(playButtonDrawable);
-            case notPlaying:
-                onPlayUser_a();
-                playState = state.playingUser;
-                playButton.setImageDrawable(stopButtonDrawable);
-                break;
-            case playingUser:
-                onStopAudio_a();
-                playState = state.notPlaying;
-                playButton.setImageDrawable(playButtonDrawable);
-                break;
-        }
-    }
-
-    public void toggleTargetPlayButton(){
-        switch (playState){
-            case playingUser:
-                playButton.setImageDrawable(playButtonDrawable);
-            case notPlaying:
-                onPlayTarget_a();
-                playState = state.playingTarget;
-                stopButton.setImageDrawable(stopButtonDrawable);
-                break;
-            case playingTarget:
-                onStopAudio_a();
-                playState = state.notPlaying;
-                stopButton.setImageDrawable(playButtonDrawable);
-                break;
-        }
     }
 
 
@@ -270,6 +237,41 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     public void onMoveOperator(){
         for (int i = 0; i < connectorList.size(); i++)
             connectorList.get(i).updateOrientation();
+    }
+
+    @Override
+    public void onPlayButtonClicked(PlayButtonView playButtonView) {
+        if (playButtonView == playButtonUser) {
+            switch (playState){
+                case playingTarget:
+                    playButtonTarget.setEnabled(false);
+                case notPlaying:
+                    onPlayUser_a();
+                    playState = state.playingUser;
+                    playButtonUser.setEnabled(true);
+                    break;
+                case playingUser:
+                    onStopAudio_a();
+                    playState = state.notPlaying;
+                    playButtonUser.setEnabled(false);
+                    break;
+            }
+        } else {
+            switch (playState){
+                case playingUser:
+                    playButtonUser.setEnabled(false);
+                case notPlaying:
+                    onPlayTarget_a();
+                    playState = state.playingTarget;
+                    playButtonTarget.setEnabled(true);
+                    break;
+                case playingTarget:
+                    onStopAudio_a();
+                    playState = state.notPlaying;
+                    playButtonTarget.setEnabled(false);
+                    break;
+            }
+        }
     }
 
     public native void onStopAudio_a();
