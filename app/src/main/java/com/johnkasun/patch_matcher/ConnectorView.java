@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -15,8 +16,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 public class ConnectorView extends View {
 
     Rect mRect;
-    Paint mPaint;
-    int mColor;
+    Path mPath;
+    Paint mRectPaint;
+    Paint mArrowPaint;
     float mPosX, mPosY;
     int mAngle = 0;
     int mLength;
@@ -40,8 +42,12 @@ public class ConnectorView extends View {
 
     public void init(AttributeSet set) {
         mRect = new Rect();
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mColor = Color.BLACK;
+        mPath = new Path();
+        mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mRectPaint.setColor(Color.BLACK);
+        mArrowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mArrowPaint.setStyle(Paint.Style.FILL);
+        mArrowPaint.setColor(Color.BLACK);
 
         setPivotX(0f);
         setPivotY(0f);
@@ -49,8 +55,9 @@ public class ConnectorView extends View {
         mConnectableStart = null;
         mConnectableEnd = null;
 
+
         int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
-        int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         setLayoutParams(new ConstraintLayout.LayoutParams(widthDimensionDp, heightDimensionDp));
     }
 
@@ -116,13 +123,22 @@ public class ConnectorView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint.setColor(mColor);
+
+        int width = getWidth();
+        int height = getHeight();
 
         mRect.left = 0;
-        mRect.right = getWidth();
-        mRect.top = 0;
-        mRect.bottom = getHeight();
-        canvas.drawRect(mRect,mPaint);
+        mRect.right = width;
+        mRect.top = (height / 2) + 5;
+        mRect.bottom = (height / 2) - 5;
+        canvas.drawRect(mRect,mRectPaint);
+
+        Path newPath = new Path();
+        newPath.moveTo(width / 2, height);
+        newPath.lineTo(width / 2 + 50, height / 2);
+        newPath.lineTo(width / 2, 0);
+        newPath.close();
+        canvas.drawPath(newPath, mArrowPaint);
 
         setRotation(mAngle);
         setX(mPosX);

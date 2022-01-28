@@ -112,6 +112,7 @@ public class OperatorView extends Connectable {
         rect.top = 0;
         rect.bottom = getHeight();
         canvas.drawRect(rect, paint);
+
     }
 
     @Override
