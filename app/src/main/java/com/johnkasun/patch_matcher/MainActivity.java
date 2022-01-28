@@ -6,7 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity
     ImageButton trashCan;
     PlayButtonView playButtonUser, playButtonTarget;
     ConstraintLayout background;
-    Drawable playButtonDrawable, stopButtonDrawable;
     List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
     List<OperatorView> operatorList = new ArrayList<OperatorView>();
     boolean deleteModeEnabled = false;
@@ -143,7 +141,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void deleteConnector(ConnectorView connectorToDelete) {
-        disconnect_AudioEngine(connectorToDelete.getStartConnectable().getIdentifier(), connectorToDelete.getEndConnectable().getIdentifier());
+        ai_disconnect(connectorToDelete.getStartConnectable().getIdentifier(), connectorToDelete.getEndConnectable().getIdentifier());
         background.removeView(connectorToDelete);
         connectorList.remove(connectorToDelete);
         String connectionInfo = "Operator " + connectorToDelete.getStartConnectable().getIdentifier() + " removed from Operator " + connectorToDelete.getEndConnectable().getIdentifier();
@@ -171,7 +169,7 @@ public class MainActivity extends AppCompatActivity
     public void onDeleteOperator(OperatorView operatorToDelete) {
         operatorList.remove(operatorToDelete);
         background.removeView(operatorToDelete);
-        resetValues(operatorToDelete.getIdentifier());
+        ai_resetValues(operatorToDelete.getIdentifier());
         for (int i = 0; i < connectorList.size(); i++){
             ConnectorView currentConnector = connectorList.get(i);
             if (currentConnector.getStartConnectable() == operatorToDelete || currentConnector.getEndConnectable() == operatorToDelete) {
@@ -188,12 +186,12 @@ public class MainActivity extends AppCompatActivity
                 case 1:
                     textView1.setText("" + value);
                     selectedOperator.setFreqValue(value);
-                    onChangeFrequency(selectedOperator.getIdentifier(), value);
+                    ai_onChangeFrequency(selectedOperator.getIdentifier(), value);
                     break;
                 case 2:
                     textView2.setText("" + value);
                     selectedOperator.setGainValue(value);
-                    onChangeGain(selectedOperator.getIdentifier(), value);
+                    ai_onChangeGain(selectedOperator.getIdentifier(), value);
                     break;
                 case 3:
                     textView3.setText("" + value);
@@ -224,7 +222,7 @@ public class MainActivity extends AppCompatActivity
                     return;
                 }
             }
-            connect_AudioEngine(connectableStart.getIdentifier(), connectableEnd.getIdentifier());
+            ai_connect(connectableStart.getIdentifier(), connectableEnd.getIdentifier());
             Toast.makeText(getApplicationContext(), "Operator " + connectableStart.getIdentifier() + " connected to Operator " + connectableEnd.getIdentifier(), Toast.LENGTH_SHORT).show();
             background.addView(newConnector);
             connectorList.add(newConnector);
@@ -246,12 +244,12 @@ public class MainActivity extends AppCompatActivity
                 case playingTarget:
                     playButtonTarget.setEnabled(false);
                 case notPlaying:
-                    onPlayUser_a();
+                    ai_onPlayUserAudio();
                     playState = state.playingUser;
                     playButtonUser.setEnabled(true);
                     break;
                 case playingUser:
-                    onStopAudio_a();
+                    ai_onStopAudio();
                     playState = state.notPlaying;
                     playButtonUser.setEnabled(false);
                     break;
@@ -261,12 +259,12 @@ public class MainActivity extends AppCompatActivity
                 case playingUser:
                     playButtonUser.setEnabled(false);
                 case notPlaying:
-                    onPlayTarget_a();
+                    ai_onPlayTargetAudio();
                     playState = state.playingTarget;
                     playButtonTarget.setEnabled(true);
                     break;
                 case playingTarget:
-                    onStopAudio_a();
+                    ai_onStopAudio();
                     playState = state.notPlaying;
                     playButtonTarget.setEnabled(false);
                     break;
@@ -274,13 +272,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public native void onStopAudio_a();
-    public native void onChangeFrequency(int operator_id, int value);
-    public native void onChangeGain(int operator_id, int value);
-    public native void connect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
-    public native void disconnect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
-    public native void resetValues(int operator_id);
-    public native void onPlayTarget_a();
-    public native void onPlayUser_a();
+    public native void ai_onStopAudio();
+    public native void ai_onChangeFrequency(int operator_id, int value);
+    public native void ai_onChangeGain(int operator_id, int value);
+    public native void ai_connect(int ConnectableA_id, int ConnectableB_id);
+    public native void ai_disconnect(int ConnectableA_id, int ConnectableB_id);
+    public native void ai_resetValues(int operator_id);
+    public native void ai_onPlayTargetAudio();
+    public native void ai_onPlayUserAudio();
 
 }
