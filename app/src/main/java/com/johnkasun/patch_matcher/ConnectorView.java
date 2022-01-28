@@ -21,9 +21,11 @@ public class ConnectorView extends View {
     private Paint mArrowPaint;
     private float mPosX, mPosY;
     private int mAngle = 0;
-    private Connectable mConnectableStart, mConnectableEnd;
-    private int mArrowHeight = 20;
-    private int mArrowWidth = 50;
+    private Connectable mConnectableStart = null, mConnectableEnd = null;
+    private final int mArrowHeight = 20;
+    private final int mArrowWidth = 50;
+    private float m_xDiff = 0;
+    private float m_yDiff = 0;
 
 
     public ConnectorView(Context context) {
@@ -53,9 +55,6 @@ public class ConnectorView extends View {
         setPivotX(0f);
         setPivotY(0f);
 
-        mConnectableStart = null;
-        mConnectableEnd = null;
-
         int initialWidth = 250;
         int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, initialWidth, getResources().getDisplayMetrics());
         int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mArrowHeight, getResources().getDisplayMetrics());
@@ -70,6 +69,7 @@ public class ConnectorView extends View {
 
     public void updateOrientation() {
         if (mConnectableStart != null && mConnectableEnd != null) {
+            updatePositionDiff();
             updatePosition();
             updateAngle();
             updateLength();
@@ -83,33 +83,28 @@ public class ConnectorView extends View {
     }
 
     private int getDistance(){
-        float x1 = getCenterX(mConnectableStart);
-        float x2 = getCenterX(mConnectableEnd);
-        float y1 = getCenterY(mConnectableStart);
-        float y2 = getCenterY(mConnectableEnd);
-
-        float xDiff = x2 - x1;
-        float yDiff = y2 - y1;
-
-        return (int) Math.sqrt( Math.pow(xDiff,2) + Math.pow(yDiff,2) );
+        return (int) Math.sqrt( Math.pow(m_xDiff,2) + Math.pow(m_yDiff,2) );
     }
 
     private void updateAngle(){
-        float x1 = getCenterX(mConnectableStart);
-        float x2 = getCenterX(mConnectableEnd);
-        float y1 = getCenterY(mConnectableStart);
-        float y2 = getCenterY(mConnectableEnd);
-
-        float xDiff = x2 - x1;
-        float yDiff = y2 - y1;
-
-        mAngle = (int) (Math.atan2(yDiff,xDiff) * 180 / Math.PI);
+        mAngle = (int) (Math.atan2(m_yDiff,m_xDiff) * 180 / Math.PI);
     }
 
     private void updatePosition() {
         mPosX = getCenterX(mConnectableStart);
         mPosY = getCenterY(mConnectableStart);
     }
+
+    private void updatePositionDiff() {
+        float x1 = getCenterX(mConnectableStart);
+        float x2 = getCenterX(mConnectableEnd);
+        float y1 = getCenterY(mConnectableStart);
+        float y2 = getCenterY(mConnectableEnd);
+
+        m_xDiff = x2 - x1;
+        m_yDiff = y2 - y1;
+    }
+
 
     public float getCenterX(Connectable connectable) {
         return connectable.getX() + (connectable.getWidth() / 2f);
