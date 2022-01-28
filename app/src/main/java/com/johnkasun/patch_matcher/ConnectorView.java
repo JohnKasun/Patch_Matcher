@@ -15,14 +15,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class ConnectorView extends View {
 
-    Rect mRect;
-    Path mPath;
-    Paint mRectPaint;
-    Paint mArrowPaint;
-    float mPosX, mPosY;
-    int mAngle = 0;
-    int mLength;
+    private Rect mRect;
+    private Path mPath;
+    private Paint mRectPaint;
+    private Paint mArrowPaint;
+    private float mPosX, mPosY;
+    private int mAngle = 0;
     private Connectable mConnectableStart, mConnectableEnd;
+    private int mArrowHeight = 20;
+    private int mArrowWidth = 50;
 
 
     public ConnectorView(Context context) {
@@ -55,9 +56,9 @@ public class ConnectorView extends View {
         mConnectableStart = null;
         mConnectableEnd = null;
 
-
-        int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
-        int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+        int initialWidth = 250;
+        int widthDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, initialWidth, getResources().getDisplayMetrics());
+        int heightDimensionDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mArrowHeight, getResources().getDisplayMetrics());
         setLayoutParams(new ConstraintLayout.LayoutParams(widthDimensionDp, heightDimensionDp));
     }
 
@@ -77,8 +78,7 @@ public class ConnectorView extends View {
     }
 
     private void updateLength(){
-        mLength = getDistance();
-        getLayoutParams().width = mLength;
+        getLayoutParams().width = getDistance();
         requestLayout();
     }
 
@@ -91,8 +91,7 @@ public class ConnectorView extends View {
         float xDiff = x2 - x1;
         float yDiff = y2 - y1;
 
-        int result = (int) Math.sqrt( Math.pow(xDiff,2) + Math.pow(yDiff,2) );
-        return result;
+        return (int) Math.sqrt( Math.pow(xDiff,2) + Math.pow(yDiff,2) );
     }
 
     private void updateAngle(){
@@ -126,19 +125,21 @@ public class ConnectorView extends View {
 
         int width = getWidth();
         int height = getHeight();
+        int widthHalf = width / 2;
+        int heightHalf = height / 2;
 
         mRect.left = 0;
         mRect.right = width;
-        mRect.top = (height / 2) + 5;
-        mRect.bottom = (height / 2) - 5;
+        mRect.top = heightHalf + 5;
+        mRect.bottom = heightHalf - 5;
         canvas.drawRect(mRect,mRectPaint);
 
-        Path newPath = new Path();
-        newPath.moveTo(width / 2, height);
-        newPath.lineTo(width / 2 + 50, height / 2);
-        newPath.lineTo(width / 2, 0);
-        newPath.close();
-        canvas.drawPath(newPath, mArrowPaint);
+        mPath.reset();
+        mPath.moveTo(widthHalf, height);
+        mPath.lineTo(widthHalf + mArrowWidth, heightHalf);
+        mPath.lineTo(widthHalf, 0);
+        mPath.close();
+        canvas.drawPath(mPath, mArrowPaint);
 
         setRotation(mAngle);
         setX(mPosX);
@@ -154,14 +155,10 @@ public class ConnectorView extends View {
     }
 
     public boolean isEqualTo(ConnectorView newConnector) {
-        if (mConnectableStart == newConnector.getStartConnectable() && mConnectableEnd == newConnector.getEndConnectable())
-            return true;
-        return false;
+        return mConnectableStart == newConnector.getStartConnectable() && mConnectableEnd == newConnector.getEndConnectable();
     }
 
     public boolean isReverseOf(ConnectorView newConnector) {
-        if (mConnectableStart == newConnector.getEndConnectable() && mConnectableEnd == newConnector.getStartConnectable())
-            return true;
-        return false;
+        return mConnectableStart == newConnector.getEndConnectable() && mConnectableEnd == newConnector.getStartConnectable();
     }
 }
