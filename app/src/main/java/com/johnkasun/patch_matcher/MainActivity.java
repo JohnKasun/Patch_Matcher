@@ -161,9 +161,9 @@ public class MainActivity extends AppCompatActivity
         knob1.setKnobPosition(0);
         knob2.setKnobPosition(0);
         knob3.setKnobPosition(0);
-        textView1.setText("");
-        textView2.setText("");
-        textView3.setText("");
+        textView1.setText("Frequency");
+        textView2.setText("Gain");
+        textView3.setText("Feedback");
     }
 
 
