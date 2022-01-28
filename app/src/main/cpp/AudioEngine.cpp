@@ -106,7 +106,7 @@ void AudioEngine::changeWavetable()
 void AudioEngine::initializeOperators()
 {
     operator1_t.setFrequency(440.0, kSampleRate);
-    operator1_t.setGain(50.0);
+    operator1_t.setGain(0.5f);
     operator1_t.connectTo(&outputTerminal_t);
 }
 

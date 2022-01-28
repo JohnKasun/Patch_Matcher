@@ -5,7 +5,7 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.test.patch_matcher.com.johnkasun.patch_matcher.MainActivity">
+    tools:context="com.johnkasun.patch_matcher.MainActivity">
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -24,23 +24,21 @@
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="4dp"
-        android:backgroundTint="@color/teal_200"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        app:srcCompat="@drawable/playbutton" />
 
     <ImageButton
         android:id="@+id/PlayButton"
-        android:layout_width="92dp"
+        android:layout_width="100dp"
         android:layout_height="80dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
-        android:backgroundTint="@color/teal_200"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        app:srcCompat="@drawable/playbutton" />
 
     <ImageButton
         android:id="@+id/imageButton4"

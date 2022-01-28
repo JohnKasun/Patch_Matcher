@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     RotaryKnobView knob1, knob2, knob3;
     ImageButton trashCan, playButton, stopButton;
     ConstraintLayout background;
+    Drawable playButtonDrawable, stopButtonDrawable;
     List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
     List<OperatorView> operatorList = new ArrayList<OperatorView>();
     boolean deleteModeEnabled = false;
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        playButtonDrawable = getDrawable(R.drawable.playbutton);
+        stopButtonDrawable = getDrawable(R.drawable.stopbutton);
 
         knob1 = findViewById(R.id.knob1);
         knob2 = findViewById(R.id.knob2);
@@ -162,28 +167,34 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
 
     public void toggleUserPlayButton() {
         switch (playState){
-            case notPlaying:
             case playingTarget:
+                stopButton.setImageDrawable(playButtonDrawable);
+            case notPlaying:
                 onPlayUser_a();
                 playState = state.playingUser;
+                playButton.setImageDrawable(stopButtonDrawable);
                 break;
             case playingUser:
                 onStopAudio_a();
                 playState = state.notPlaying;
+                playButton.setImageDrawable(playButtonDrawable);
                 break;
         }
     }
 
     public void toggleTargetPlayButton(){
         switch (playState){
-            case notPlaying:
             case playingUser:
+                playButton.setImageDrawable(playButtonDrawable);
+            case notPlaying:
                 onPlayTarget_a();
                 playState = state.playingTarget;
+                stopButton.setImageDrawable(stopButtonDrawable);
                 break;
             case playingTarget:
                 onStopAudio_a();
                 playState = state.notPlaying;
+                stopButton.setImageDrawable(playButtonDrawable);
                 break;
         }
     }
