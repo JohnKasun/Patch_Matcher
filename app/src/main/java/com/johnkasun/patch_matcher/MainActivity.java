@@ -160,9 +160,9 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         knob1.setKnobPosition(0);
         knob2.setKnobPosition(0);
         knob3.setKnobPosition(0);
-        textView1.setText("0");
-        textView2.setText("0");
-        textView3.setText("0");
+        textView1.setText("");
+        textView2.setText("");
+        textView3.setText("");
     }
 
     public void toggleUserPlayButton() {

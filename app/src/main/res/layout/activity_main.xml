@@ -104,7 +104,6 @@
         android:id="@+id/textView3"
         android:layout_width="60dp"
         android:layout_height="23dp"
-        android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/knob3"
         app:layout_constraintEnd_toEndOf="@+id/knob3"
         app:layout_constraintStart_toStartOf="@+id/knob3" />
@@ -113,7 +112,6 @@
         android:id="@+id/textView1"
         android:layout_width="67dp"
         android:layout_height="24dp"
-        android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/knob1"
         app:layout_constraintEnd_toEndOf="@+id/knob1"
         app:layout_constraintHorizontal_bias="0.615"
@@ -123,7 +121,6 @@
         android:id="@+id/textView2"
         android:layout_width="67dp"
         android:layout_height="24dp"
-        android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/knob2"
         app:layout_constraintEnd_toEndOf="@+id/knob2"
         app:layout_constraintHorizontal_bias="0.461"
