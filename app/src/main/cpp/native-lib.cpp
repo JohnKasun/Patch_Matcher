@@ -6,17 +6,6 @@ AudioEngine engine;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_onPlayButtonPress(JNIEnv *env, jobject thiz) {
-    engine.startAudio();
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_onStopButtonPress(JNIEnv *env, jobject thiz) {
-    engine.pauseAudio();
-}
-
-extern "C"
-JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_connect_1AudioEngine(JNIEnv *env, jobject thiz,
                                                                   jint connectable_a_id,
                                                                   jint connectable_b_id) {
@@ -66,4 +55,24 @@ Java_com_johnkasun_patch_1matcher_MainActivity_resetValues(JNIEnv *env, jobject 
     operator_id -= 1;
     engine.operatorInterface[operator_id]->setFrequency(0.0, engine.getSampleRate());
     engine.operatorInterface[operator_id]->setGain(0.0);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_onStopAudio_1a(JNIEnv *env, jobject thiz) {
+    engine.pauseAudio();
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_onPlayTarget_1a(JNIEnv *env, jobject thiz) {
+    engine.setOutputType(false);
+    if (!engine.isRunning())
+        engine.startAudio();
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_onPlayUser_1a(JNIEnv *env, jobject thiz) {
+    engine.setOutputType(true);
+    if (!engine.isRunning())
+        engine.startAudio();
 }

@@ -17,6 +17,7 @@
 
 class AudioEngine : public oboe::AudioStreamCallback{
 private:
+
     std::mutex         mLock;
     std::shared_ptr<oboe::AudioStream> mStream;
 
@@ -24,6 +25,8 @@ private:
     static int constexpr kSampleRate = 48000;
     static float constexpr kAmplitude = 0.5f;
     static int constexpr maxOperators = 6;
+    bool shouldPlayUser = true;
+    bool m_isRunning = false;
 
     // Wavetables
     SineWavetable sine;
@@ -37,6 +40,15 @@ private:
     Operator operator4;
     Operator operator5;
     Operator operator6;
+
+    // Target Operators
+    Operator operator1_t;
+    Operator operator2_t;
+    Operator operator3_t;
+    Operator operator4_t;
+    Operator operator5_t;
+    Operator operator6_t;
+    OutputTerminal outputTerminal_t;
 
     // Startup Functions
     void loadWavetables();
@@ -55,6 +67,8 @@ public:
     void changeWavetable();
     double getSampleRate() { return kSampleRate; };
     void enableFeedback() { operator1.connectTo(&operator1);};
+    void setOutputType(bool shouldPlayUser) { this->shouldPlayUser = shouldPlayUser; };
+    bool isRunning() const { return m_isRunning; };
     void reset();
 
     OutputTerminal outputTerminal;

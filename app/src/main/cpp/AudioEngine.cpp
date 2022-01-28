@@ -5,7 +5,8 @@
 #include "AudioEngine.h"
 
 AudioEngine::AudioEngine()
-    : operator1(&sine), operator2(&sine), operator3(&sine), operator4(&sine), operator5(&sine), operator6(&sine)
+    : operator1(&sine), operator2(&sine), operator3(&sine), operator4(&sine), operator5(&sine), operator6(&sine),
+    operator1_t(&sine), operator2_t(&sine), operator3_t(&sine), operator4_t(&sine), operator5_t(&sine),operator6_t(&sine)
 {
     loadWavetables();
     initializeAudio();
@@ -36,12 +37,14 @@ int32_t AudioEngine::initializeAudio()
 int32_t AudioEngine::startAudio()
 {
     // Typically, start the stream after querying some stream information, as well as some input from the user
+    m_isRunning = true;
     return (int32_t) mStream->requestStart();
 }
 
 void AudioEngine::stopAudio()
 {
     // Stop, close and delete in case not already closed.
+    m_isRunning = false;
     std::lock_guard<std::mutex> lock(mLock);
     if (mStream) {
         mStream->stop();
@@ -52,6 +55,7 @@ void AudioEngine::stopAudio()
 
 int32_t AudioEngine::pauseAudio()
 {
+    m_isRunning = false;
     oboe::StreamState inputState = oboe::StreamState::Pausing;
     oboe::StreamState nextState = oboe::StreamState::Uninitialized;
     int64_t timeoutNanos = 100 * oboe::kNanosPerMillisecond;
@@ -59,13 +63,21 @@ int32_t AudioEngine::pauseAudio()
     return (int32_t) mStream->waitForStateChange(inputState, &nextState, timeoutNanos);
 }
 
-oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames)
-{
+oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) {
     float *floatData = (float *) audioData;
-    for (int i = 0; i < numFrames; ++i) {
-        float sampleValue = (float)outputTerminal.getNextSample();
-        for (int j = 0; j < kChannelCount; j++) {
-            floatData[i * kChannelCount + j] = sampleValue;
+    if (shouldPlayUser) {
+        for (int i = 0; i < numFrames; ++i) {
+            float sampleValue = (float) outputTerminal.getNextSample();
+            for (int j = 0; j < kChannelCount; j++) {
+                floatData[i * kChannelCount + j] = sampleValue;
+            }
+        }
+    } else {
+        for (int i = 0; i < numFrames; ++i) {
+            float sampleValue = (float) outputTerminal_t.getNextSample();
+            for (int j = 0; j < kChannelCount; j++) {
+                floatData[i * kChannelCount + j] = sampleValue;
+            }
         }
     }
     return oboe::DataCallbackResult::Continue;
@@ -93,6 +105,9 @@ void AudioEngine::changeWavetable()
 
 void AudioEngine::initializeOperators()
 {
+    operator1_t.setFrequency(440.0, kSampleRate);
+    operator1_t.setGain(50.0);
+    operator1_t.connectTo(&outputTerminal_t);
 }
 
 void AudioEngine::reset()

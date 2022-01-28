@@ -24,6 +24,12 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         System.loadLibrary("patch_matcher");
     }
 
+    enum state {
+        notPlaying,
+        playingUser,
+        playingTarget
+    };
+    state playState = state.notPlaying;
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob1, knob2, knob3;
@@ -69,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
                     deselectAll();
+                    disableKnobs();
                     return super.onSingleTapConfirmed(e);
                 }
 
@@ -88,10 +95,10 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         });
 
         playButton = findViewById(R.id.PlayButton);
-        playButton.setOnClickListener(v -> onPlayButtonPress());
+        playButton.setOnClickListener(v -> toggleUserPlayButton());
 
         stopButton = findViewById(R.id.StopButton);
-        stopButton.setOnClickListener(v -> onStopButtonPress());
+        stopButton.setOnClickListener(v -> toggleTargetPlayButton());
     }
 
     public void deselectAll() {
@@ -143,6 +150,44 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
         textView1.setText("" + selectedOperator.getFreqValue());
         textView2.setText("" + selectedOperator.getGainValue());
     }
+
+    public void disableKnobs(){
+        knob1.setKnobPosition(0);
+        knob2.setKnobPosition(0);
+        knob3.setKnobPosition(0);
+        textView1.setText("0");
+        textView2.setText("0");
+        textView3.setText("0");
+    }
+
+    public void toggleUserPlayButton() {
+        switch (playState){
+            case notPlaying:
+            case playingTarget:
+                onPlayUser_a();
+                playState = state.playingUser;
+                break;
+            case playingUser:
+                onStopAudio_a();
+                playState = state.notPlaying;
+                break;
+        }
+    }
+
+    public void toggleTargetPlayButton(){
+        switch (playState){
+            case notPlaying:
+            case playingUser:
+                onPlayTarget_a();
+                playState = state.playingTarget;
+                break;
+            case playingTarget:
+                onStopAudio_a();
+                playState = state.notPlaying;
+                break;
+        }
+    }
+
 
     @Override
     public void onDeleteOperator(OperatorView operatorToDelete) {
@@ -216,12 +261,13 @@ public class MainActivity extends AppCompatActivity implements RotaryKnobView.Ro
             connectorList.get(i).updateOrientation();
     }
 
-    public native void onPlayButtonPress();
-    public native void onStopButtonPress();
+    public native void onStopAudio_a();
     public native void onChangeFrequency(int operator_id, int value);
     public native void onChangeGain(int operator_id, int value);
     public native void connect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
     public native void disconnect_AudioEngine(int ConnectableA_id, int ConnectableB_id);
     public native void resetValues(int operator_id);
+    public native void onPlayTarget_a();
+    public native void onPlayUser_a();
 
 }
