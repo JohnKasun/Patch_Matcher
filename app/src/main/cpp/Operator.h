@@ -22,9 +22,10 @@ private:
     bool feedbackOn;
     double feedbackGain;
     double RADIANS_TO_INDEX;
-    int numModulating;
+/*    int numModulating;
     int counterGeneration;
-    bool shouldGenerate;
+    bool shouldGenerate;*/
+    bool m_bHasBeenGenerated;
     
     inline double modulatePhase(double phase) noexcept {
         for (const auto &modOperatorIn : modOperatorsIn)
@@ -34,13 +35,13 @@ private:
         return phase;
     }
 
-    inline void determineNextGeneration() noexcept {
+    /*inline void determineNextGeneration() noexcept {
         if (--counterGeneration <= 0){
             counterGeneration = numModulating;
             shouldGenerate = true;
         } else
             shouldGenerate = false;
-    }
+    }*/
 
     void enableFeedback(bool shouldEnable);
     void registerModulator(Operator *operatorToAdd);
@@ -55,9 +56,10 @@ public:
     void disconnectFrom(Operator *operatorToDisconnect);
     void disconnectFrom(OutputTerminal *outputTerminal);
     void reset();
+    void resetGeneration();
     inline double getNextSample() noexcept override
     {
-        if(shouldGenerate){
+        if(!m_bHasBeenGenerated){
             double instanteousPhase = modulatePhase(accumulatedPhase);
             instanteousPhase = fmod(instanteousPhase, kTwoPi);
             while (instanteousPhase<0) instanteousPhase += kTwoPi;
@@ -75,8 +77,9 @@ public:
             accumulatedPhase += phaseDelta;
             accumulatedPhase = fmod(accumulatedPhase, kTwoPi);
 
+            m_bHasBeenGenerated = true;
         }
-        determineNextGeneration();
+        //determineNextGeneration();
         return currentSample;
     }
 

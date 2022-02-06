@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         playingUser,
         playingTarget
     };
+
     state playState = state.notPlaying;
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;

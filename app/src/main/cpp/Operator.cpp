@@ -6,11 +6,15 @@
 
 int Operator::numOperators = 0;
 
-Operator::Operator(const Wavetable* wavetable)
-    : WavetableOscillator(wavetable), feedbackOn(false), feedbackGain(0.0f),
-        RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)),
-        numModulating{0}, counterGeneration{numModulating}, 
-        shouldGenerate{true}
+Operator::Operator(const Wavetable* wavetable) :
+    WavetableOscillator(wavetable),
+    feedbackOn(false),
+    feedbackGain(0.0f),
+    RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)),
+/*    numModulating{0},
+    counterGeneration{numModulating},
+    shouldGenerate{true},*/
+    m_bHasBeenGenerated(false)
 {
     numOperators++;
 }
@@ -47,15 +51,15 @@ void Operator::connectTo(Operator *operatorToModulate)
     else {
         operatorToModulate->registerModulator(this);
         modOperatorsOut.push_back(operatorToModulate);
-        numModulating++;
-        counterGeneration++;
+/*        numModulating++;
+        counterGeneration++;*/
     }
 }
 
 void Operator::connectTo(OutputTerminal *outputTerminal)
 {
-    numModulating++;
-    counterGeneration++;
+/*    numModulating++;
+    counterGeneration++;*/
     outputTerminal->addOperator(this);
 }
 
@@ -66,16 +70,16 @@ void Operator::disconnectFrom(Operator *operatorToDisconnect)
     else {
         operatorToDisconnect->removeModulator(this);
         modOperatorsOut.remove(operatorToDisconnect);
-        numModulating--;
-        counterGeneration--;
+/*        numModulating--;
+        counterGeneration--;*/
     }
 
 }
 
 void Operator::disconnectFrom(OutputTerminal *outputTerminal)
 {
-    numModulating--;
-    counterGeneration--;
+/*    numModulating--;
+    counterGeneration--;*/
     outputTerminal->removeOperator(this);
 }
 
@@ -87,6 +91,11 @@ void Operator::reset()
         modOperatorIn->disconnectFrom(this);
     for (auto modOperatorOut: tempOut)
         disconnectFrom(modOperatorOut);
+}
+
+void Operator::resetGeneration()
+{
+    m_bHasBeenGenerated = false;
 }
 
 int Operator::getNumOperators()
