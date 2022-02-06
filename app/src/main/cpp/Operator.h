@@ -6,7 +6,6 @@
 #define PATCH_MATCHER_OPERATOR_H
 #include "Tester.h"
 #include "WavetableOscillator.h"
-#include "Wavetable.h"
 #include "COperatorList.h"
 #include <math.h>
 
@@ -42,6 +41,7 @@ private:
 public:
     Operator(const Wavetable* wavetable);
     virtual ~Operator();
+
     void setFeedbackGain(float newFeedbackGain);
     void connectTo(Operator *operatorToModulate);
     void connectTo(OutputTerminal *outputTerminal);

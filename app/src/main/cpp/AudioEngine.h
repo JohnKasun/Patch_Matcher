@@ -8,11 +8,9 @@
 #include <unordered_map>
 #include <string>
 
-#include "Wavetable.h"
 #include "SineWavetable.h"
 #include "SquareWavetable.h"
 #include "CustomWavetable.h"
-#include "WavetableOscillator.h"
 #include "Operator.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
