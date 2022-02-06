@@ -22,11 +22,16 @@ private:
     float m_fFeedbackGain;
     float RADIANS_TO_INDEX;
     bool m_bHasBeenGenerated;
+    bool m_bIsCurrentlyProcessing;
     
     inline float modulatePhase(float phase) noexcept
     {
-        for (int i = 0; i < m_cModOperatorsIn.getSize(); i++)
-            phase += m_cModOperatorsIn.get(i)->getNextSample();
+        if (!m_bIsCurrentlyProcessing)
+        {
+            m_bIsCurrentlyProcessing = true;
+            for (int i = 0; i < m_cModOperatorsIn.getSize(); i++)
+                phase += m_cModOperatorsIn.get(i)->getNextSample();
+        }
         phase += m_fFeedbackGain * m_fCurrentSample;
         return phase;
     }
@@ -50,21 +55,23 @@ public:
             instanteousPhase = fmod(instanteousPhase, kTwoPi);
             while (instanteousPhase<0) instanteousPhase += kTwoPi;
 
-            float currentIndex = (RADIANS_TO_INDEX) * instanteousPhase;
-            int indexBelow = (int) currentIndex;
-            int indexAbove = indexBelow + 1;
-            if (indexAbove >= m_iTableSize)
-                indexAbove = 0;
+            if (!m_bHasBeenGenerated) {
+                float currentIndex = (RADIANS_TO_INDEX) * instanteousPhase;
+                int indexBelow = (int) currentIndex;
+                int indexAbove = indexBelow + 1;
+                if (indexAbove >= m_iTableSize)
+                    indexAbove = 0;
 
-            float fracAbove = currentIndex - indexBelow;
-            float fracBelow = 1.0 - fracAbove;
-            m_fCurrentSample = m_fGain * ((fracBelow * m_pWavetable->at(indexBelow)) + (fracAbove * m_pWavetable->at(indexAbove)));
+                float fracAbove = currentIndex - indexBelow;
+                float fracBelow = 1.0 - fracAbove;
+                m_fCurrentSample = m_fGain * ((fracBelow * m_pWavetable->at(indexBelow)) + (fracAbove * m_pWavetable->at(indexAbove)));
 
-            m_fAccumulatedPhase += m_fPhaseDelta;
-            m_fAccumulatedPhase = fmod(m_fAccumulatedPhase, kTwoPi);
-
+                m_fAccumulatedPhase += m_fPhaseDelta;
+                m_fAccumulatedPhase = fmod(m_fAccumulatedPhase, kTwoPi);
+            }
             m_bHasBeenGenerated = true;
         }
+        m_bIsCurrentlyProcessing = false;
         return m_fCurrentSample;
     }
 };

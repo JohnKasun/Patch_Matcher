@@ -9,6 +9,7 @@ Operator::Operator(const Wavetable* wavetable) :
     m_fFeedbackGain(0.0f),
     RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)),
     m_bHasBeenGenerated(false),
+    m_bIsCurrentlyProcessing(false),
     m_cModOperatorsIn(s_iMaxModOperators),
     m_cModOperatorsOut(s_iMaxModOperators)
 {
