@@ -18,22 +18,18 @@ class COperatorList;
 class Operator : public WavetableOscillator {
     friend class Tester;
 private:
-    static int numOperators;
-    //std::list<Operator*> modOperatorsIn;
-    //std::list<Operator*> modOperatorsOut;
+    static int constexpr s_iMaxModOperators = 5;
     COperatorList m_cModOperatorsIn;
     COperatorList m_cModOperatorsOut;
-    float feedbackGain;
+    float m_fFeedbackGain;
     float RADIANS_TO_INDEX;
     bool m_bHasBeenGenerated;
     
     inline float modulatePhase(float phase) noexcept
     {
-        /*for (const auto &modOperatorIn : modOperatorsIn)
-            phase += modOperatorIn->getNextSample();*/
         for (int i = 0; i < m_cModOperatorsIn.getSize(); i++)
             phase += m_cModOperatorsIn.get(i)->getNextSample();
-        phase += feedbackGain * currentSample;
+        phase += m_fFeedbackGain * currentSample;
         return phase;
     }
 
@@ -73,8 +69,6 @@ public:
         }
         return currentSample;
     }
-
-    static int getNumOperators();
 };
 
 class OutputTerminal {
@@ -82,10 +76,9 @@ class OutputTerminal {
     friend class Tester;
 private:
 
-    //std::list<Operator*> outputOperators;
+    static int constexpr s_iMaxOutputOperators = 6;
     COperatorList m_cOutputOperators;
     float m_fGainNorm;
-    float m_fCurrentSample;
 
     void addOperator(Operator* operatorToAdd);
     void removeOperator(Operator* operatorToRemove);
@@ -97,11 +90,10 @@ public:
     ~OutputTerminal();
     inline float getNextSample() noexcept
     {
-        /*for (const auto &outputOperator : outputOperators)
-            currentSample += outputOperator->getNextSample();*/
+        float fCurrentSample = 0.0f;
         for (int i = 0; i < m_cOutputOperators.getSize(); i++)
-            m_fCurrentSample = m_cOutputOperators.get(i)->getNextSample();
-        return m_fGainNorm * m_fCurrentSample;
+            fCurrentSample += m_cOutputOperators.get(i)->getNextSample();
+        return m_fGainNorm * fCurrentSample;
     }
 };
 

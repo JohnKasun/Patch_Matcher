@@ -50,6 +50,16 @@ private:
     Operator operator6_t;
     OutputTerminal outputTerminal_t;
 
+    // Target Operators Interface
+    Operator* operatorInterface_t[maxOperators] {
+            &operator1_t,
+            &operator2_t,
+            &operator3_t,
+            &operator4_t,
+            &operator5_t,
+            &operator6_t,
+    };
+
     // Startup Functions
     void loadWavetables();
     void initializeOperators();
