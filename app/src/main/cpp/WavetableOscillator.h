@@ -14,23 +14,31 @@ class WavetableOscillator
 protected:
     static float constexpr kPI = M_PI;
     static float constexpr kTwoPi = kPI * 2.0;
-    const Wavetable* wavetable;
-    int tableSize;
-    float accumulatedPhase;
-    float phaseDelta;
-    float frequency;
-    float gain;
-    float currentSample;
+    static float s_fSampleRate;
+    static float s_FREQ_TO_PHASEDELTA;
+    static float s_PHASEDELTA_TO_FREQ;
+
+
+    const Wavetable* m_pWavetable;
+
+    int m_iTableSize;
+    float m_fAccumulatedPhase;
+    float m_fPhaseDelta;
+    float m_fGain;
+    float m_fCurrentSample;
+
 public:
     WavetableOscillator(const Wavetable* wavetableToUse);
     virtual ~WavetableOscillator();
 
-    void setFrequency(float freq, float sampleRate);
+    void setFrequency(float freq);
     float getFrequency() const;
     void setWavetable(const Wavetable* newWavetable);
     void setGain(float newGain);
+    float getCurrentSample() const { return m_fCurrentSample; };
+
     virtual inline float getNextSample() noexcept = 0;
-    float getCurrentSample() const { return currentSample; };
+    static void setSampleRate(float fSampleRate);
 };
 
 

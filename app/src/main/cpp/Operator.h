@@ -8,8 +8,6 @@
 #include "WavetableOscillator.h"
 #include "Wavetable.h"
 #include "COperatorList.h"
-#include <list>
-#include <iostream>
 #include <math.h>
 
 class OutputTerminal;
@@ -29,7 +27,7 @@ private:
     {
         for (int i = 0; i < m_cModOperatorsIn.getSize(); i++)
             phase += m_cModOperatorsIn.get(i)->getNextSample();
-        phase += m_fFeedbackGain * currentSample;
+        phase += m_fFeedbackGain * m_fCurrentSample;
         return phase;
     }
 
@@ -48,26 +46,26 @@ public:
     inline float getNextSample() noexcept override
     {
         if(!m_bHasBeenGenerated){
-            float instanteousPhase = modulatePhase(accumulatedPhase);
+            float instanteousPhase = modulatePhase(m_fAccumulatedPhase);
             instanteousPhase = fmod(instanteousPhase, kTwoPi);
             while (instanteousPhase<0) instanteousPhase += kTwoPi;
 
             float currentIndex = (RADIANS_TO_INDEX) * instanteousPhase;
             int indexBelow = (int) currentIndex;
             int indexAbove = indexBelow + 1;
-            if (indexAbove >= tableSize)
+            if (indexAbove >= m_iTableSize)
                 indexAbove = 0;
 
             float fracAbove = currentIndex - indexBelow;
             float fracBelow = 1.0 - fracAbove;
-            currentSample = gain * ((fracBelow * wavetable->at(indexBelow)) + (fracAbove * wavetable->at(indexAbove)));
+            m_fCurrentSample = m_fGain * ((fracBelow * m_pWavetable->at(indexBelow)) + (fracAbove * m_pWavetable->at(indexAbove)));
 
-            accumulatedPhase += phaseDelta;
-            accumulatedPhase = fmod(accumulatedPhase, kTwoPi);
+            m_fAccumulatedPhase += m_fPhaseDelta;
+            m_fAccumulatedPhase = fmod(m_fAccumulatedPhase, kTwoPi);
 
             m_bHasBeenGenerated = true;
         }
-        return currentSample;
+        return m_fCurrentSample;
     }
 };
 

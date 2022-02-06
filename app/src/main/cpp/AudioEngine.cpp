@@ -31,6 +31,7 @@ int32_t AudioEngine::initializeAudio()
             ->setFormat(oboe::AudioFormat::Float)
             ->setDataCallback(this)
             ->openStream(mStream);
+    WavetableOscillator::setSampleRate(kSampleRate);
     return (int32_t) result;
 }
 
@@ -56,11 +57,7 @@ void AudioEngine::stopAudio()
 int32_t AudioEngine::pauseAudio()
 {
     m_isRunning = false;
-    oboe::StreamState inputState = oboe::StreamState::Pausing;
-    oboe::StreamState nextState = oboe::StreamState::Uninitialized;
-    int64_t timeoutNanos = 100 * oboe::kNanosPerMillisecond;
-    mStream->requestPause();
-    return (int32_t) mStream->waitForStateChange(inputState, &nextState, timeoutNanos);
+    return static_cast<int32_t>(mStream->requestPause());
 }
 
 oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) {
@@ -109,7 +106,7 @@ void AudioEngine::changeWavetable()
 
 void AudioEngine::initializeOperators()
 {
-    operator1_t.setFrequency(440.0, kSampleRate);
+    operator1_t.setFrequency(440.0f);
     operator1_t.setGain(0.5f);
     operator1_t.connectTo(&outputTerminal_t);
 }

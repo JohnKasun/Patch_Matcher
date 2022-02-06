@@ -37,7 +37,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFrequency(JNIEnv *env
                                                                      jint operator_id, jint value) {
     operator_id -= 1;
 
-    engine.operatorInterface[operator_id]->setFrequency(value, engine.getSampleRate());
+    engine.operatorInterface[operator_id]->setFrequency(value);
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -53,7 +53,7 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1resetValues(JNIEnv *env, jobject thiz,
                                                                jint operator_id) {
     operator_id -= 1;
-    engine.operatorInterface[operator_id]->setFrequency(0.0, engine.getSampleRate());
+    engine.operatorInterface[operator_id]->setFrequency(0.0);
     engine.operatorInterface[operator_id]->setGain(0.0);
 }
 

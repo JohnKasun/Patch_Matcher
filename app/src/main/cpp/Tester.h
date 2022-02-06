@@ -8,6 +8,7 @@
 #include <time.h>
 #include <vector>
 #include <fstream>
+#include <iostream>
 #include <functional>
 
 #include "WavetableOscillator.h"
