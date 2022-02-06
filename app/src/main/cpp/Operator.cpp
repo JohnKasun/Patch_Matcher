@@ -60,7 +60,13 @@ void Operator::disconnectFrom(OutputTerminal *outputTerminal)
 
 void Operator::resetGeneration()
 {
-    m_bHasBeenGenerated = false;
+    if (m_bHasBeenGenerated)
+    {
+        m_bHasBeenGenerated = false;
+        for (int i = 0; i < m_cModOperatorsIn.getSize(); i++)
+            m_cModOperatorsIn.get(i)->resetGeneration();
+    }
+
 }
 
 //=========================================

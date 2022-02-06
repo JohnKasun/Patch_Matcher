@@ -100,6 +100,8 @@ public:
         float fCurrentSample = 0.0f;
         for (int i = 0; i < m_cOutputOperators.getSize(); i++)
             fCurrentSample += m_cOutputOperators.get(i)->getNextSample();
+        for (int i = 0; i < m_cOutputOperators.getSize(); i++)
+            m_cOutputOperators.get(i)->resetGeneration();
         return m_fGainNorm * fCurrentSample;
     }
 };

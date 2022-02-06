@@ -65,8 +65,8 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
     if (shouldPlayUser) {
         for (int i = 0; i < numFrames; ++i) {
             float sampleValue = (float) outputTerminal.getNextSample();
-            for (const auto cOperator : operatorInterface)
-                cOperator->resetGeneration();
+/*            for (const auto cOperator : operatorInterface)
+                cOperator->resetGeneration();*/
             for (int j = 0; j < kChannelCount; j++) {
                 floatData[i * kChannelCount + j] = sampleValue;
             }
@@ -74,8 +74,8 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
     } else {
         for (int i = 0; i < numFrames; ++i) {
             float sampleValue = (float) outputTerminal_t.getNextSample();
-            for (const auto cOperator_t : operatorInterface_t)
-                cOperator_t->resetGeneration();
+/*            for (const auto cOperator_t : operatorInterface_t)
+                cOperator_t->resetGeneration();*/
             for (int j = 0; j < kChannelCount; j++) {
                 floatData[i * kChannelCount + j] = sampleValue;
             }
