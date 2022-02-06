@@ -19,29 +19,16 @@ private:
     static int numOperators;
     std::list<Operator*> modOperatorsIn;
     std::list<Operator*> modOperatorsOut;
-    bool feedbackOn;
     double feedbackGain;
     double RADIANS_TO_INDEX;
-/*    int numModulating;
-    int counterGeneration;
-    bool shouldGenerate;*/
     bool m_bHasBeenGenerated;
     
     inline double modulatePhase(double phase) noexcept {
         for (const auto &modOperatorIn : modOperatorsIn)
             phase += modOperatorIn->getNextSample();
-        if (feedbackOn)
-            phase += feedbackGain * currentSample;
+        phase += feedbackGain * currentSample;
         return phase;
     }
-
-    /*inline void determineNextGeneration() noexcept {
-        if (--counterGeneration <= 0){
-            counterGeneration = numModulating;
-            shouldGenerate = true;
-        } else
-            shouldGenerate = false;
-    }*/
 
     void enableFeedback(bool shouldEnable);
     void registerModulator(Operator *operatorToAdd);
@@ -79,7 +66,6 @@ public:
 
             m_bHasBeenGenerated = true;
         }
-        //determineNextGeneration();
         return currentSample;
     }
 
