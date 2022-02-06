@@ -111,9 +111,3 @@ void AudioEngine::initializeOperators()
     operator1_t.setGain(0.5f);
     operator1_t.connectTo(&outputTerminal_t);
 }
-
-void AudioEngine::reset()
-{
-    for (auto op: operatorInterface)
-        op->reset();
-}

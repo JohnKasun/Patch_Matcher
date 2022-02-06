@@ -69,7 +69,6 @@ public:
     void enableFeedback() { operator1.connectTo(&operator1);};
     void setOutputType(bool shouldPlayUser) { this->shouldPlayUser = shouldPlayUser; };
     bool isRunning() const { return m_isRunning; };
-    void reset();
 
     OutputTerminal outputTerminal;
     Operator* operatorInterface[maxOperators] {
