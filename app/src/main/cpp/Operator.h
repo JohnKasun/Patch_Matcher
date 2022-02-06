@@ -50,22 +50,24 @@ public:
     void resetGeneration();
     inline float getNextSample() noexcept override
     {
-        if(!m_bHasBeenGenerated){
+        if(!m_bHasBeenGenerated)
+        {
             float instanteousPhase = modulatePhase(m_fAccumulatedPhase);
             instanteousPhase = fmod(instanteousPhase, kTwoPi);
             while (instanteousPhase<0) instanteousPhase += kTwoPi;
 
-            if (!m_bHasBeenGenerated) {
-                float currentIndex = (RADIANS_TO_INDEX) * instanteousPhase;
-                int indexBelow = (int) currentIndex;
-                int indexAbove = indexBelow + 1;
-                if (indexAbove >= m_iTableSize)
-                    indexAbove = 0;
+            float currentIndex = (RADIANS_TO_INDEX) * instanteousPhase;
+            int indexBelow = (int) currentIndex;
+            int indexAbove = indexBelow + 1;
+            if (indexAbove >= m_iTableSize)
+                indexAbove = 0;
 
-                float fracAbove = currentIndex - indexBelow;
-                float fracBelow = 1.0 - fracAbove;
-                m_fCurrentSample = m_fGain * ((fracBelow * m_pWavetable->at(indexBelow)) + (fracAbove * m_pWavetable->at(indexAbove)));
+            float fracAbove = currentIndex - indexBelow;
+            float fracBelow = 1.0 - fracAbove;
+            m_fCurrentSample = m_fGain * ((fracBelow * m_pWavetable->at(indexBelow)) + (fracAbove * m_pWavetable->at(indexAbove)));
 
+            if (!m_bHasBeenGenerated)
+            {
                 m_fAccumulatedPhase += m_fPhaseDelta;
                 m_fAccumulatedPhase = fmod(m_fAccumulatedPhase, kTwoPi);
             }
