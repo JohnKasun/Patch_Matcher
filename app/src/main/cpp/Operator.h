@@ -15,7 +15,7 @@ class COperatorList;
 class Operator : public WavetableOscillator {
     friend class Tester;
 private:
-    static int constexpr s_iMaxModOperators = 5;
+    const int s_iMaxModOperators = 5;
     COperatorList m_cModOperatorsIn;
     COperatorList m_cModOperatorsOut;
     float m_fFeedbackGain;
@@ -83,7 +83,7 @@ class OutputTerminal {
     friend class Tester;
 private:
 
-    static int constexpr s_iMaxOutputOperators = 6;
+    const int s_iMaxOutputOperators = 6;
     COperatorList m_cOutputOperators;
     float m_fGainNorm;
 

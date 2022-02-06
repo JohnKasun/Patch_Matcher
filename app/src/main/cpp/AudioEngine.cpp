@@ -94,16 +94,6 @@ void AudioEngine::loadWavetables()
     custom.generate();
 }
 
-void AudioEngine::changeWavetable()
-{
-    static int type {0};
-    switch (++type % 3){
-        case 0: operator1.setWavetable(&sine);  break;
-        case 1: operator1.setWavetable(&square);  break;
-        default: operator1.setWavetable(&custom);
-    }
-}
-
 void AudioEngine::initializeOperators()
 {
     operator1_t.setFrequency(440.0f);
