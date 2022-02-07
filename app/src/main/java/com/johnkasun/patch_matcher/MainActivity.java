@@ -22,11 +22,13 @@ public class MainActivity extends AppCompatActivity
         implements RotaryKnobView.RotaryKnobListener,
                     OutputTerminalView.OutputTerminalListener,
                     OperatorView.OperatorViewListener,
-                    PlayButtonView.PlayButtonListener{
+                    PlayButtonView.PlayButtonListener,
+                    WavetableView.WavetableViewListener {
 
     static {
         System.loadLibrary("patch_matcher");
     }
+
 
     enum state {
         notPlaying,
@@ -39,7 +41,8 @@ public class MainActivity extends AppCompatActivity
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob1, knob2, knob3;
-    ImageButton trashCan, wavetable;
+    ImageButton trashCan;
+    WavetableView wavetableView;
     PlayButtonView playButtonUser, playButtonTarget;
     ConstraintLayout background;
     List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity
 
         outputTerminal = findViewById(R.id.outputTerminalView);
         outputTerminal.listener = this;
+
+        wavetableView = findViewById(R.id.wavetable);
+        wavetableView.listener = this;
 
         trashCan = findViewById(R.id.imageButton);
         trashCan.setOnTouchListener((v, event) -> {
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity
         selectedOperator = null;
         OperatorView.setSelectedOperator(null);
         OutputTerminalView.setSelectedOperator(null);
+        wavetableView.setSelectedOperator(null);
         for (int i = 0; i < operatorList.size(); i++)
             operatorList.get(i).deselect();
     }
@@ -211,6 +218,7 @@ public class MainActivity extends AppCompatActivity
     public void onSelectOperator(OperatorView selectedOperator){
         this.selectedOperator = selectedOperator;
         OutputTerminalView.setSelectedOperator(selectedOperator);
+        wavetableView.setSelectedOperator(selectedOperator);
         updateKnobPositions(selectedOperator);
     }
 
@@ -279,11 +287,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onWavetableChange(OperatorView operatorToChangeWavetable) {
+        ai_onWavetableChange(operatorToChangeWavetable.getIdentifier(), operatorToChangeWavetable.getWavetableType());
+    }
+
     public native void ai_onStopAudio();
     public native void ai_onChangeFrequency(int operator_id, int value);
     public native void ai_onChangeGain(int operator_id, int value);
     public native void ai_onChangeFeedback(int operator_id, int value);
-    public native void ai_onWavetableChange(int operator_id, int wavetable);
+    public native void ai_onWavetableChange(int operator_id, int wavetableType);
     public native void ai_connect(int ConnectableA_id, int ConnectableB_id);
     public native void ai_disconnect(int ConnectableA_id, int ConnectableB_id);
     public native void ai_resetValues(int operator_id);

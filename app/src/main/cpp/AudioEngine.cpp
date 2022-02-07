@@ -80,6 +80,22 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
     return oboe::DataCallbackResult::Continue;
 }
 
+void AudioEngine::changeWavetable(int iOperatorId, int iWavetableType)
+{
+    Operator* pOperator = operatorInterface[iOperatorId];
+    switch(iWavetableType)
+    {
+        case 0:
+            pOperator->setWavetable(&sine);
+            break;
+        case 1:
+            pOperator->setWavetable(&square);
+            break;
+        case 2:
+            pOperator->setWavetable(&custom);
+    }
+}
+
 void AudioEngine::loadWavetables()
 {
     sine.generate();

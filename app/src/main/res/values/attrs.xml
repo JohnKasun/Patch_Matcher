@@ -16,4 +16,9 @@
         <attr name = "PlayButtonView_playDrawable" format = "reference"/>
         <attr name = "PlayButtonView_stopDrawable" format = "reference"/>
     </declare-styleable>
+    <declare-styleable name="WavetableView">
+        <attr name = "WavetableView_sineDrawable" format = "reference"/>
+        <attr name = "WavetableView_squareDrawable" format = "reference"/>
+        <attr name = "WavetableView_customDrawable" format = "reference"/>
+    </declare-styleable>
 </resources>

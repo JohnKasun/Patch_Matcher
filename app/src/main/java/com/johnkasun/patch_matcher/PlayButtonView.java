@@ -43,6 +43,7 @@ public class PlayButtonView extends androidx.appcompat.widget.AppCompatImageView
         playingDrawable = ta.getDrawable(R.styleable.PlayButtonView_PlayButtonView_stopDrawable);
         stoppedDrawable = ta.getDrawable(R.styleable.PlayButtonView_PlayButtonView_playDrawable);
         setImageDrawable(stoppedDrawable);
+        ta.recycle();
 
         gestureDetector = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener(){
             @Override

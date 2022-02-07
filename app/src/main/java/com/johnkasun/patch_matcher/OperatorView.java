@@ -162,6 +162,7 @@ public class OperatorView extends Connectable {
     public void setGainValue(int newGainValue) { gainValue = newGainValue; };
     public void setFeedbackValue(int newFeedbackValue) { feedbackValue = newFeedbackValue; };
     public void setWavetableType(int newWavetableType) { wavetableType = newWavetableType; };
+    public void incrementWavetableType() { wavetableType = ++wavetableType % WavetableView.getNumWavetableTypes(); };
 
     interface OperatorViewListener {
         void onSelectOperator(OperatorView selectedOperator);

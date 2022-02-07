@@ -72,6 +72,7 @@ public:
     int32_t pauseAudio();
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
+    void changeWavetable(int iOperatorId, int iWavetableType);
     double getSampleRate() { return kSampleRate; };
     void setOutputType(bool shouldPlayUser) { this->shouldPlayUser = shouldPlayUser; };
     bool isRunning() const { return m_isRunning; };

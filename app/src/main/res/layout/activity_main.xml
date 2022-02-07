@@ -130,7 +130,7 @@
             app:maxValue="100"
             app:minValue="0" />
 
-        <ImageButton
+        <com.johnkasun.patch_matcher.WavetableView
             android:id="@+id/wavetable"
             android:layout_width="172dp"
             android:layout_height="80dp"
@@ -143,7 +143,10 @@
             app:layout_constraintEnd_toStartOf="@+id/view2"
             app:layout_constraintStart_toEndOf="@+id/knob3"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/sinewave" />
+            app:srcCompat="@drawable/sinewave"
+            app:WavetableView_sineDrawable="@drawable/sinewave"
+            app:WavetableView_squareDrawable="@drawable/squarewave"
+            app:WavetableView_customDrawable="@drawable/customwavetable"/>
 
         <com.johnkasun.patch_matcher.PlayButtonView
             android:id="@+id/playButtonUser"

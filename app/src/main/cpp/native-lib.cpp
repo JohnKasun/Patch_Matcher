@@ -90,6 +90,7 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env, jobject thiz,
                                                                      jint operator_id,
-                                                                     jint wavetable) {
-    // TODO: implement ai_onWavetableChange()
+                                                                     jint wavetable_type) {
+    operator_id -= 1;
+    engine.changeWavetable(operator_id, wavetable_type);
 }
