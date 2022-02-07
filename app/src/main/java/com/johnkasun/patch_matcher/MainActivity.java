@@ -152,8 +152,10 @@ public class MainActivity extends AppCompatActivity
     public void updateKnobPositions(OperatorView selectedOperator){
         knob1.setKnobPosition(selectedOperator.getFreqValue());
         knob2.setKnobPosition(selectedOperator.getGainValue());
+        knob3.setKnobPosition(selectedOperator.getFeedbackValue());
         textView1.setText("" + selectedOperator.getFreqValue());
         textView2.setText("" + selectedOperator.getGainValue());
+        textView3.setText("" + selectedOperator.getFeedbackValue());
     }
 
     public void disableKnobs(){
@@ -196,6 +198,8 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case 3:
                     textView3.setText("" + value);
+                    selectedOperator.setFeedbackValue(value);
+                    ai_onChangeFeedback(selectedOperator.getIdentifier(), value);
                     break;
             }
         }
@@ -276,6 +280,7 @@ public class MainActivity extends AppCompatActivity
     public native void ai_onStopAudio();
     public native void ai_onChangeFrequency(int operator_id, int value);
     public native void ai_onChangeGain(int operator_id, int value);
+    public native void ai_onChangeFeedback(int operator_id, int value);
     public native void ai_connect(int ConnectableA_id, int ConnectableB_id);
     public native void ai_disconnect(int ConnectableA_id, int ConnectableB_id);
     public native void ai_resetValues(int operator_id);

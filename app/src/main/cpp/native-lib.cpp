@@ -45,8 +45,17 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeGain(JNIEnv *env, job
                                                                 jint operator_id, jint value) {
     operator_id -= 1;
 
-    double valueScaled = static_cast<double>(value) / 100.0;
+    float valueScaled = static_cast<float>(value) / 100.0f;
     engine.operatorInterface[operator_id]->setGain(valueScaled);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFeedback(JNIEnv *env, jobject thiz,
+                                                                    jint operator_id, jint value) {
+    operator_id -= 1;
+
+    float valueScaled = static_cast<float>(value) / 100.0f;
+    engine.operatorInterface[operator_id]->setFeedbackGain(valueScaled);
 }
 extern "C"
 JNIEXPORT void JNICALL
