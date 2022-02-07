@@ -85,3 +85,11 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onPlayUserAudio(JNIEnv *env, 
     if (!engine.isRunning())
         engine.startAudio();
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env, jobject thiz,
+                                                                     jint operator_id,
+                                                                     jint wavetable) {
+    // TODO: implement ai_onWavetableChange()
+}

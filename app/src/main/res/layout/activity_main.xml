@@ -124,14 +124,14 @@
             app:knobDrawable="@drawable/rotaryknob"
             app:knobEnhancedDrawable="@drawable/rotaryknobenhancedmode"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintEnd_toStartOf="@+id/wavetable"
             app:layout_constraintStart_toEndOf="@+id/knob2"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             app:maxValue="100"
             app:minValue="0" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/wavetable"
             android:layout_width="172dp"
             android:layout_height="80dp"
             android:layout_marginStart="8dp"
@@ -197,7 +197,7 @@
             android:background="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/playButtonUser"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/wavetable"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,7 @@ public class OperatorView extends Connectable {
     private Paint paint;
     private Rect rect;
     private float xOffset = 0, yOffset = 0;
-    private int freqValue = 0, gainValue = 0, feedbackValue = 0;
+    private int freqValue = 0, gainValue = 0, feedbackValue = 0, wavetableType = 0;
     private GestureDetector gestureDetector;
     public OperatorViewListener listener = null;
     static private boolean deleteModeEnabled = false;
@@ -157,9 +157,11 @@ public class OperatorView extends Connectable {
     public int getFreqValue() { return freqValue; };
     public int getGainValue() { return gainValue; };
     public int getFeedbackValue() { return feedbackValue; };
+    public int getWavetableType() { return wavetableType; };
     public void setFreqValue(int newFreqValue) { freqValue = newFreqValue; };
     public void setGainValue(int newGainValue) { gainValue = newGainValue; };
     public void setFeedbackValue(int newFeedbackValue) { feedbackValue = newFeedbackValue; };
+    public void setWavetableType(int newWavetableType) { wavetableType = newWavetableType; };
 
     interface OperatorViewListener {
         void onSelectOperator(OperatorView selectedOperator);

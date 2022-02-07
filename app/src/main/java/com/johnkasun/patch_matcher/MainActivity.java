@@ -34,11 +34,12 @@ public class MainActivity extends AppCompatActivity
         playingTarget
     };
 
+    int currentWavetable = 0;
     state playState = state.notPlaying;
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
     RotaryKnobView knob1, knob2, knob3;
-    ImageButton trashCan;
+    ImageButton trashCan, wavetable;
     PlayButtonView playButtonUser, playButtonTarget;
     ConstraintLayout background;
     List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity
         playButtonTarget.listener = this;
     }
 
+
     public void deselectAll() {
         selectedOperator = null;
         OperatorView.setSelectedOperator(null);
@@ -154,8 +156,8 @@ public class MainActivity extends AppCompatActivity
         knob2.setKnobPosition(selectedOperator.getGainValue());
         knob3.setKnobPosition(selectedOperator.getFeedbackValue());
         textView1.setText("" + selectedOperator.getFreqValue());
-        textView2.setText("" + selectedOperator.getGainValue());
-        textView3.setText("" + selectedOperator.getFeedbackValue());
+        textView2.setText("" + selectedOperator.getGainValue() + "%");
+        textView3.setText("" + selectedOperator.getFeedbackValue() + "%");
     }
 
     public void disableKnobs(){
@@ -192,12 +194,12 @@ public class MainActivity extends AppCompatActivity
                     ai_onChangeFrequency(selectedOperator.getIdentifier(), value);
                     break;
                 case 2:
-                    textView2.setText("" + value);
+                    textView2.setText("" + value + "%");
                     selectedOperator.setGainValue(value);
                     ai_onChangeGain(selectedOperator.getIdentifier(), value);
                     break;
                 case 3:
-                    textView3.setText("" + value);
+                    textView3.setText("" + value + "%");
                     selectedOperator.setFeedbackValue(value);
                     ai_onChangeFeedback(selectedOperator.getIdentifier(), value);
                     break;
@@ -281,6 +283,7 @@ public class MainActivity extends AppCompatActivity
     public native void ai_onChangeFrequency(int operator_id, int value);
     public native void ai_onChangeGain(int operator_id, int value);
     public native void ai_onChangeFeedback(int operator_id, int value);
+    public native void ai_onWavetableChange(int operator_id, int wavetable);
     public native void ai_connect(int ConnectableA_id, int ConnectableB_id);
     public native void ai_disconnect(int ConnectableA_id, int ConnectableB_id);
     public native void ai_resetValues(int operator_id);
