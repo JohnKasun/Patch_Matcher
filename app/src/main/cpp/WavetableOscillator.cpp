@@ -8,7 +8,7 @@ WavetableOscillator::WavetableOscillator(const Wavetable* wavetableToUse) :
         m_iTableSize{wavetableToUse->get_size()},
         m_fAccumulatedPhase(0.0f),
         m_fPhaseDelta(0.0f),
-        m_fGain(0.0f),
+        m_fGain(0.0f * s_fMaxGainScaling),
         m_fCurrentSample(0.0f)
 {
 
@@ -35,7 +35,12 @@ void WavetableOscillator::setWavetable(const Wavetable* newWavetable)
 
 void WavetableOscillator::setGain(float newGain)
 {
-    m_fGain = newGain;
+    m_fGain = newGain * s_fMaxGainScaling;
+}
+
+float WavetableOscillator::getGain() const
+{
+    return m_fGain;
 }
 
 void WavetableOscillator::setSampleRate(float fSampleRate)

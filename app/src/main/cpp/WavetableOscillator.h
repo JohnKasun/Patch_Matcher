@@ -12,6 +12,8 @@
 class WavetableOscillator
 {
 protected:
+    static float constexpr s_fMaxGain = 100.0f;
+    static float constexpr s_fMaxGainScaling = 1.0f / s_fMaxGain;
     static float constexpr kPI = M_PI;
     static float constexpr kTwoPi = kPI * 2.0;
     static float s_fSampleRate;
@@ -35,6 +37,7 @@ public:
     float getFrequency() const;
     void setWavetable(const Wavetable* newWavetable);
     void setGain(float newGain);
+    float getGain() const;
     float getCurrentSample() const { return m_fCurrentSample; };
 
     virtual inline float getNextSample() noexcept = 0;

@@ -92,7 +92,8 @@ void AudioEngine::loadWavetables()
 
 void AudioEngine::initializeOperators()
 {
+    float fMaxGain = Operator::getMaxGain();
     operator1_t.setFrequency(440.0f);
-    operator1_t.setGain(0.5f);
+    operator1_t.setGain(fMaxGain);
     operator1_t.connectTo(&outputTerminal_t);
 }

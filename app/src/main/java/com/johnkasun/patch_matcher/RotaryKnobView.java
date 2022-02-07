@@ -132,6 +132,8 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
             setImageDrawable(knobDrawable);
     }
 
+    public int getMaxValue() { return maxValue; };
+
     interface RotaryKnobListener {
         void onKnobRotate(int identifier, int value);
     }

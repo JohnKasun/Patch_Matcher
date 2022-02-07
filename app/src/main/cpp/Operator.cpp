@@ -73,7 +73,7 @@ void Operator::resetGeneration()
 
 OutputTerminal::OutputTerminal() :
     m_cOutputOperators(s_iMaxOutputOperators),
-    m_fGainNorm(0.0f)
+    m_fGainScaling(0.0f)
 {
 
 }
@@ -86,23 +86,24 @@ OutputTerminal::~OutputTerminal()
 void OutputTerminal::addOperator(Operator* operatorToAdd)
 {
     m_cOutputOperators.push_back(operatorToAdd);
-    updateGainNorm();
+    updateGainScaling();
 };
 
 void OutputTerminal::removeOperator(Operator* operatorToRemove)
 {
     m_cOutputOperators.remove(operatorToRemove);
-    updateGainNorm();
+    updateGainScaling();
 };
 
-void OutputTerminal::updateGainNorm()
+void OutputTerminal::updateGainScaling()
 {
+    float fGainNorm = 0.0f;
     if (m_cOutputOperators.getSize() != 0)
     {
-        m_fGainNorm = 1.0f / static_cast<float>(m_cOutputOperators.getSize());
-    } else
-    {
-        m_fGainNorm = 0.0f;
+        fGainNorm = 1.0f / static_cast<float>(m_cOutputOperators.getSize());
     }
+    m_fGainScaling = fGainNorm * s_fMaxGainScaling;
 };
+
+
 

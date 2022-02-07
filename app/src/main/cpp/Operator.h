@@ -42,6 +42,7 @@ public:
     Operator(const Wavetable* wavetable);
     virtual ~Operator();
 
+    static float getMaxGain() { return s_fMaxGain; };
     void setFeedbackGain(float newFeedbackGain);
     void connectTo(Operator *operatorToModulate);
     void connectTo(OutputTerminal *outputTerminal);
@@ -83,13 +84,15 @@ class OutputTerminal {
     friend class Tester;
 private:
 
+    static float constexpr s_fMaxGain = 1.0f;
+    static float constexpr s_fMaxGainScaling = 1.0f / s_fMaxGain;
     const int s_iMaxOutputOperators = 6;
     COperatorList m_cOutputOperators;
-    float m_fGainNorm;
+    float m_fGainScaling;
 
     void addOperator(Operator* operatorToAdd);
     void removeOperator(Operator* operatorToRemove);
-    void updateGainNorm();
+    void updateGainScaling();
 
 public:
 
@@ -102,7 +105,7 @@ public:
             fCurrentSample += m_cOutputOperators.get(i)->getNextSample();
         for (int i = 0; i < m_cOutputOperators.getSize(); i++)
             m_cOutputOperators.get(i)->resetGeneration();
-        return m_fGainNorm * fCurrentSample;
+        return m_fGainScaling * fCurrentSample;
     }
 };
 
