@@ -20,6 +20,8 @@ public class OperatorView extends Connectable {
 
     private int mColor;
     private Paint paint;
+    private Paint m_pTextPaint;
+    private int m_iTextColor;
     private Rect rect;
     private float xOffset = 0, yOffset = 0;
     private int freqValue = 0, gainValue = 0, feedbackValue = 0, wavetableType = 0;
@@ -52,6 +54,13 @@ public class OperatorView extends Connectable {
             setIdentifier(numOperators);
         else
             setIdentifier(idBacklog.remove());
+
+        m_pTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        m_iTextColor = Color.WHITE;
+        m_pTextPaint.setColor(m_iTextColor);
+        m_pTextPaint.setTextAlign(Paint.Align.CENTER);
+        m_pTextPaint.setTextSize(80.0f);
+
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         rect = new Rect();
         mColor = Color.BLACK;
@@ -112,6 +121,7 @@ public class OperatorView extends Connectable {
         rect.top = 0;
         rect.bottom = getHeight();
         canvas.drawRect(rect, paint);
+        canvas.drawText("" + identifier, getWidth() * 0.5f, getHeight() * 0.6f, m_pTextPaint);
 
     }
 
@@ -142,7 +152,7 @@ public class OperatorView extends Connectable {
         if (selectedOperator != this) {
             if (selectedOperator != null)
                 selectedOperator.deselect();
-            setColor(Color.YELLOW);
+            setColor(Color.BLUE);
             selectedOperator = this;
             listener.onSelectOperator(selectedOperator);
         }
