@@ -152,7 +152,7 @@ public class OperatorView extends Connectable {
         if (selectedOperator != this) {
             if (selectedOperator != null)
                 selectedOperator.deselect();
-            setColor(Color.BLUE);
+            setColor(Color.CYAN);
             selectedOperator = this;
             listener.onSelectOperator(selectedOperator);
         }
