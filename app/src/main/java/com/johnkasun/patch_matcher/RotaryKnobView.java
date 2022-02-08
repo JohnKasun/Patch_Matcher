@@ -21,14 +21,14 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     private int identifier;
     private boolean enhancedPrecision = false;
     public RotaryKnobListener listener;
-    float storedPosition, newPosition;
-    Drawable knobDrawable;
-    Drawable knobEnhancedDrawable;
-    float radius;
-    float maxPosition;
-    float conversionFactor;
-    float conversionFactorFlipped;
-    final float kTwoPi = (float) (2f * Math.PI);
+    private float storedPosition, newPosition;
+    private Drawable knobDrawable;
+    private Drawable knobEnhancedDrawable;
+    private float radius;
+    private float maxPosition;
+    private float conversionFactor;
+    private float conversionFactorFlipped;
+    private final float kTwoPi = (float) (2f * Math.PI);
 
     public RotaryKnobView(@NonNull Context context) {
         super(context);
