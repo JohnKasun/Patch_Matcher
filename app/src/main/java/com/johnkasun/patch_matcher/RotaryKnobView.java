@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
@@ -24,11 +25,15 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     private float storedPosition, newPosition;
     private Drawable knobDrawable;
     private Drawable knobEnhancedDrawable;
-    private float radius;
-    private float maxPosition;
     private float conversionFactor;
     private float conversionFactorFlipped;
+    private float enhancedPrecisionFactor;
     private final float kTwoPi = (float) (2f * Math.PI);
+    private final float m_fWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
+    private final float m_fRadius = m_fWidth / 2.0f;
+    private final float maxPosition = kTwoPi * m_fRadius * 0.75f;
+    private final float POS_TO_ANGLE = (360.0f) / (kTwoPi * m_fRadius);
+    private final float ANGLE_TO_POS = 1.0f / POS_TO_ANGLE;
 
     public RotaryKnobView(@NonNull Context context) {
         super(context);
@@ -51,6 +56,7 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
         TypedArray ta = getContext().obtainStyledAttributes(set, R.styleable.RotaryKnobView);
         minValue = ta.getInt(R.styleable.RotaryKnobView_minValue, 0);
         maxValue = ta.getInt(R.styleable.RotaryKnobView_maxValue, 0);
+        enhancedPrecisionFactor = 10.0f / maxValue;
         identifier = ta.getInteger(R.styleable.RotaryKnobView_identifier, -1);
         conversionFactor = maxValue / 270f;
         conversionFactorFlipped = 1.0f / conversionFactor;
@@ -66,7 +72,7 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 float currentDisplacement = e2.getRawX() - e1.getRawX();
                 if (enhancedPrecision)
-                    currentDisplacement *= 0.01f;
+                    currentDisplacement *= enhancedPrecisionFactor;
                 newPosition = storedPosition + currentDisplacement;
                 if (newPosition > maxPosition)
                     newPosition = maxPosition;
@@ -81,8 +87,6 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
 
             @Override
             public boolean onDown(MotionEvent e) {
-                radius = (float) getLayoutParams().width / 2.0f;
-                maxPosition = kTwoPi*radius*0.75f;
                 return true;
             }
 
@@ -106,7 +110,7 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     }
 
     private float calculateAngle(float newPosition) {
-        float angle = (float) ((360.0 * newPosition) / (kTwoPi * radius));
+        float angle = POS_TO_ANGLE * newPosition;
         return angle;
     }
 
@@ -115,7 +119,7 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
     }
     private int convertValueToAngle(int value) { return (int) (value * conversionFactorFlipped);};
     private int convertAngleToPosition(float angle) {
-        int position = (int) (kTwoPi * radius * angle / 360.0);
+        int position = (int) (ANGLE_TO_POS * angle);
         return position;
     }
     public void setKnobPosition(int value) {
