@@ -11,20 +11,24 @@
 
 class Wavetable {
 protected:
-    static double constexpr kPI = M_PI;
-    static double constexpr kTwoPi = kPI * 2;
+    static float constexpr kPI = M_PI;
+    static float constexpr kTwoPi = kPI * 2;
     static int constexpr size = 1024;
-    double table[size];
+    static int constexpr s_iMaxPartials = size / 2;
+    float table[size];
+
+    void normalize();
+
 public:
     Wavetable();
     virtual ~Wavetable() = default;
 
     int get_size() const ;
-    double operator[](int index) const;
-    double at(int index) const;
+    float operator[](int index) const;
+    float at(int index) const;
 
     virtual void generate() = 0;
-    virtual bool setPatch(std::function<double(double)> new_patch);
+    virtual bool setPatch(std::function<float(float)> new_patch);
 
 };
 
@@ -47,15 +51,33 @@ public:
 
 };
 
+class TriangleWavetable : public Wavetable
+{
+public:
+    TriangleWavetable();
+    ~TriangleWavetable() = default;
+
+    virtual void generate() override;
+};
+
+class SawtoothWavetable : public Wavetable
+{
+public:
+    SawtoothWavetable();
+    ~SawtoothWavetable() = default;
+
+    virtual void generate() override;
+};
+
 class CustomWavetable : public Wavetable
 {
 private:
-    std::function<double(double)> patch;
+    std::function<float(float)> patch;
 public:
-    CustomWavetable(std::function<double(double)> patch = [](double){return -1;});
+    CustomWavetable(std::function<float(float)> patch = [](float){return -1;});
     virtual ~CustomWavetable();
 
-    virtual bool setPatch(std::function<double(double)> new_patch) override;
+    virtual bool setPatch(std::function<float(float)> new_patch) override;
     virtual void generate() override;
 };
 

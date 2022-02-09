@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 public class WavetableView extends androidx.appcompat.widget.AppCompatImageButton
 {
 
-    private final static int s_numWavetableTypes = 3;
+    private final static int s_numWavetableTypes = 5;
     private Drawable m_dSineDrawable;
     private Drawable m_dSquareDrawable;
     private Drawable m_dCustomDrawable;
+    private Drawable m_dTriangleDrawable;
+    private Drawable m_dSawtoothDrawable;
     private GestureDetector m_gGestureDetector;
     private OperatorView selectedOperator = null;
     public WavetableViewListener listener = null;
@@ -43,6 +45,8 @@ public class WavetableView extends androidx.appcompat.widget.AppCompatImageButto
         m_dSineDrawable = ta.getDrawable(R.styleable.WavetableView_WavetableView_sineDrawable);
         m_dSquareDrawable = ta.getDrawable(R.styleable.WavetableView_WavetableView_squareDrawable);
         m_dCustomDrawable = ta.getDrawable(R.styleable.WavetableView_WavetableView_customDrawable);
+        m_dTriangleDrawable = ta.getDrawable(R.styleable.WavetableView_WavetableView_triangleDrawable);
+        m_dSawtoothDrawable = ta.getDrawable(R.styleable.WavetableView_WavetableView_sawtoothDrawable);
         setImageDrawable(m_dSineDrawable);
         ta.recycle();
 
@@ -89,6 +93,12 @@ public class WavetableView extends androidx.appcompat.widget.AppCompatImageButto
                 setImageDrawable(m_dSquareDrawable);
                 return;
             case 2:
+                setImageDrawable(m_dTriangleDrawable);
+                return;
+            case 3:
+                setImageDrawable(m_dSawtoothDrawable);
+                return;
+            case 4:
                 setImageDrawable(m_dCustomDrawable);
                 return;
         }

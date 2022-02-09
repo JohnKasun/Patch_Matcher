@@ -92,6 +92,12 @@ void AudioEngine::changeWavetable(int iOperatorId, int iWavetableType)
             pOperator->setWavetable(&square);
             break;
         case 2:
+            pOperator->setWavetable(&triangle);
+            break;
+        case 3:
+            pOperator->setWavetable(&sawtooth);
+            break;
+        case 4:
             pOperator->setWavetable(&custom);
     }
 }
@@ -100,8 +106,10 @@ void AudioEngine::loadWavetables()
 {
     sine.generate();
     square.generate();
-    custom.setPatch([](double theta) {
-        return (sin(theta) + 0.5 * sin(2.0*theta) * 0.25 * sin(3.0 * theta));
+    triangle.generate();
+    sawtooth.generate();
+    custom.setPatch([](float theta) {
+        return (float)(sin(theta) + 0.5 * sin(2.0*theta) * 0.25 * sin(3.0 * theta));
     });
     custom.generate();
 }

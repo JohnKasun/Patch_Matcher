@@ -20,5 +20,7 @@
         <attr name = "WavetableView_sineDrawable" format = "reference"/>
         <attr name = "WavetableView_squareDrawable" format = "reference"/>
         <attr name = "WavetableView_customDrawable" format = "reference"/>
+        <attr name = "WavetableView_triangleDrawable" format = "reference"/>
+        <attr name = "WavetableView_sawtoothDrawable" format = "reference"/>
     </declare-styleable>
 </resources>

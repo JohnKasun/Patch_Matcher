@@ -25,6 +25,8 @@ private:
     // Wavetables
     SineWavetable sine;
     SquareWavetable square;
+    TriangleWavetable triangle;
+    SawtoothWavetable sawtooth;
     CustomWavetable custom;
 
     // Operators

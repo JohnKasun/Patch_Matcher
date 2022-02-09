@@ -146,7 +146,9 @@
             app:srcCompat="@drawable/sinewave"
             app:WavetableView_sineDrawable="@drawable/sinewave"
             app:WavetableView_squareDrawable="@drawable/squarewave"
-            app:WavetableView_customDrawable="@drawable/customwavetable"/>
+            app:WavetableView_customDrawable="@drawable/customwavetable"
+            app:WavetableView_triangleDrawable="@drawable/trianglewave"
+            app:WavetableView_sawtoothDrawable="@drawable/sawtooth"/>
 
         <com.johnkasun.patch_matcher.PlayButtonView
             android:id="@+id/playButtonUser"
