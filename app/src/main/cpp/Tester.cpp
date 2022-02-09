@@ -41,9 +41,9 @@ void Tester::print(Wavetable& wavetable)
 {
     static int numTables {0};
     if (wav_log){
-        wav_log << "--" << ++numTables << "--";
-        for (int sample {0}; sample < wavetable.get_size(); sample++)
-            wav_log << "," << wavetable[sample];
+        for (int sample {0}; sample < wavetable.get_size() - 1; sample++)
+            wav_log << wavetable[sample] << ",";
+        wav_log << wavetable[wavetable.get_size()-1];
         wav_log << std::endl;
     }
 }
