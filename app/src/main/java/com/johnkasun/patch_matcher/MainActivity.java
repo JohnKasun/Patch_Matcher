@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity
         playingTarget
     };
 
-    int currentWavetable = 0;
     state playState = state.notPlaying;
     OutputTerminalView outputTerminal;
     TextView textView1, textView2, textView3;
@@ -115,6 +114,7 @@ public class MainActivity extends AppCompatActivity
 
 
     public void deselectAll() {
+        disableKnobs();
         selectedOperator = null;
         OperatorView.setSelectedOperator(null);
         OutputTerminalView.setSelectedOperator(null);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity
         knob1.setKnobPosition(selectedOperator.getFreqValue());
         knob2.setKnobPosition(selectedOperator.getGainValue());
         knob3.setKnobPosition(selectedOperator.getFeedbackValue());
-        textView1.setText("" + selectedOperator.getFreqValue());
+        textView1.setText("" + selectedOperator.getFreqValue() + "Hz");
         textView2.setText("" + selectedOperator.getGainValue() + "%");
         textView3.setText("" + selectedOperator.getFeedbackValue() + "%");
     }
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity
         if (selectedOperator != null) {
             switch (identifier) {
                 case 1:
-                    textView1.setText("" + value);
+                    textView1.setText("" + value + "Hz");
                     selectedOperator.setFreqValue(value);
                     ai_onChangeFrequency(selectedOperator.getIdentifier(), value);
                     break;
