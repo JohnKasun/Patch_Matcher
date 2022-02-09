@@ -9,40 +9,6 @@ Tester::Tester()
     out_log.open("log_OutputTerminal.csv");
 }
 
-/*void Tester::runSineDiff(int numTrials, int numSamples, float sampleRate)
-{
-    sine.generate();
-
-    for (auto trial {0}; trial < numTrials; ++trial){
-        oscillator = new Operator(&sine);
-        float randomFreq = (float)(rand()%460 + 20);
-        oscillator->setFrequency(randomFreq, sampleRate);
-        auto ground_func = [sampleRate, randomFreq](int n){
-            float omega { kTwoPi / sampleRate * randomFreq };
-            return sinf( omega * n );
-        };
-
-        std::vector<float> diff_vec;
-        for (auto n {0}; n < numSamples; n++){
-            oscillator->getNextSample();
-            float diff_val = oscillator->getCurrentSample() - ground_func(n);
-            diff_vec.push_back(diff_val);
-        }
-        print(diff_vec);
-
-        delete oscillator;
-    }
-}*/
-
-void Tester::print(const std::vector<double> &vec)
-{
-    if (diff_log){
-        for (size_t i {0}; i < vec.size(); i++)
-            diff_log << vec[i] << ",";
-        diff_log << std::endl;
-    }
-}
-
 void Tester::print(Operator& osc, int numSamples)
 {
     if (osc_log){
@@ -71,7 +37,7 @@ void Tester::print(OutputTerminal &output, int numSamples)
     }
 }
 
-/*void Tester::print(Wavetable& wavetable)
+void Tester::print(Wavetable& wavetable)
 {
     static int numTables {0};
     if (wav_log){
@@ -80,7 +46,7 @@ void Tester::print(OutputTerminal &output, int numSamples)
             wav_log << "," << wavetable[sample];
         wav_log << std::endl;
     }
-}*/
+}
 
 Tester::~Tester()
 {

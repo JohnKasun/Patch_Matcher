@@ -5,12 +5,8 @@
 #ifndef PATCH_MATCHER_AUDIOENGINE_H
 #define PATCH_MATCHER_AUDIOENGINE_H
 #include <oboe/Oboe.h>
-#include <unordered_map>
 #include <string>
 
-#include "SineWavetable.h"
-#include "SquareWavetable.h"
-#include "CustomWavetable.h"
 #include "Operator.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{

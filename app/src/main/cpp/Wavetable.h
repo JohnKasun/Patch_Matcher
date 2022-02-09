@@ -28,5 +28,36 @@ public:
 
 };
 
+class SineWavetable : public Wavetable {
+public:
+
+    SineWavetable();
+    virtual ~SineWavetable() = default;
+
+    virtual void generate() override;
+};
+
+class SquareWavetable : public Wavetable
+{
+public:
+    SquareWavetable();
+    ~SquareWavetable() = default;
+
+    virtual void generate() override;
+
+};
+
+class CustomWavetable : public Wavetable
+{
+private:
+    std::function<double(double)> patch;
+public:
+    CustomWavetable(std::function<double(double)> patch = [](double){return -1;});
+    virtual ~CustomWavetable();
+
+    virtual bool setPatch(std::function<double(double)> new_patch) override;
+    virtual void generate() override;
+};
+
 
 #endif //PATCH_MATCHER_WAVETABLE_H

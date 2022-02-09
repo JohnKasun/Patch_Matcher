@@ -4,6 +4,7 @@
 
 #include "Wavetable.h"
 
+//=======================================================
 Wavetable::Wavetable() : table{}
 {}
 
@@ -27,3 +28,66 @@ bool Wavetable::setPatch(std::function<double(double)>)
 {
     return false;
 }
+//=======================================================
+
+//=======================================================
+SineWavetable::SineWavetable() : Wavetable()
+{}
+void SineWavetable::generate()
+{
+    auto angleDelta = kTwoPi / (double)size;
+    auto currentAngle = 0.0;
+
+    for (int i = 0; i < size; ++i)
+    {
+        table[i] = sin(currentAngle);
+        currentAngle += angleDelta;
+    }
+}
+//=======================================================
+
+//=======================================================
+SquareWavetable::SquareWavetable() : Wavetable()
+{
+}
+
+void SquareWavetable::generate()
+{
+    for (int i {0}; i < size; i++){
+        double sample{};
+        if (i < size/2)
+            sample = 1.0;
+        else
+            sample = -1.0;
+        table[i] = sample;
+    }
+}
+//=======================================================
+
+//=======================================================
+CustomWavetable::CustomWavetable(std::function<double(double)> patch) : Wavetable(), patch{patch}
+{
+}
+
+CustomWavetable::~CustomWavetable()
+{
+}
+
+bool CustomWavetable::setPatch(std::function<double(double)> new_patch)
+{
+    patch = new_patch;
+    return true;
+}
+
+void CustomWavetable::generate()
+{
+    auto angleDelta = kTwoPi / (double)size;
+    auto currentAngle = 0.0;
+
+    for (int i = 0; i < size; ++i)
+    {
+        table[i] = patch(currentAngle);
+        currentAngle += angleDelta;
+    }
+}
+//=======================================================
