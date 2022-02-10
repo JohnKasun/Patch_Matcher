@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     boolean deleteModeEnabled = false;
     OperatorView selectedOperator = null;
     final int maxOperators = 6;
+    Bundle m_outState;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -66,7 +67,15 @@ public class MainActivity extends AppCompatActivity
             ConnectorView currentConnector = connectorList.get(i);
             background.removeView(currentConnector);
         }
+        m_outState = outState;
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onResume() {
+        if (m_outState != null)
+            onRestoreInstanceState(m_outState);
+        super.onResume();
     }
 
     @Override
