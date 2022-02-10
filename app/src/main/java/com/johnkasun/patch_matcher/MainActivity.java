@@ -1,5 +1,6 @@
 package com.johnkasun.patch_matcher;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -7,6 +8,8 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,16 +48,23 @@ public class MainActivity extends AppCompatActivity
     WavetableView wavetableView;
     PlayButtonView playButtonUser, playButtonTarget;
     ConstraintLayout background;
-    List<ConnectorView> connectorList = new ArrayList<ConnectorView>();
-    List<OperatorView> operatorList = new ArrayList<OperatorView>();
+    ArrayList<ConnectorView> connectorList = new ArrayList<ConnectorView>();
+    ArrayList<OperatorView> operatorList = new ArrayList<OperatorView>();
     boolean deleteModeEnabled = false;
     OperatorView selectedOperator = null;
     final int maxOperators = 6;
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 

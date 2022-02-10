@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -16,7 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class OperatorView extends Connectable {
+public class OperatorView extends Connectable implements Parcelable{
 
     private int mColor;
     private Paint paint;
@@ -34,26 +36,40 @@ public class OperatorView extends Connectable {
 
     public OperatorView(Context context) {
         super(context);
-        init(null);
+        init();
     }
 
-    public OperatorView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs);
+    protected OperatorView(Parcel in) {
+        super(OperatorView.selectedOperator.getContext());
+        identifier = in.readInt();
+        freqValue = in.readInt();
+        gainValue = in.readInt();
+        feedbackValue = in.readInt();
+        wavetableType = in.readInt();
+        init();
     }
 
-    public OperatorView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(attrs);
-    }
+    public static final Creator<OperatorView> CREATOR = new Creator<OperatorView>() {
+        @Override
+        public OperatorView createFromParcel(Parcel in) {
+            return new OperatorView(in);
+        }
 
-    private void init(@Nullable AttributeSet set){
+        @Override
+        public OperatorView[] newArray(int size) {
+            return new OperatorView[size];
+        }
+    };
 
-        numOperators++;
-        if (idBacklog.isEmpty())
-            setIdentifier(numOperators);
-        else
-            setIdentifier(idBacklog.remove());
+    private void init(){
+
+        if (identifier == -1) {
+            numOperators++;
+            if (idBacklog.isEmpty())
+                setIdentifier(numOperators);
+            else
+                setIdentifier(idBacklog.remove());
+        }
 
         m_pTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         m_iTextColor = Color.WHITE;
@@ -173,6 +189,20 @@ public class OperatorView extends Connectable {
     public void setFeedbackValue(int newFeedbackValue) { feedbackValue = newFeedbackValue; };
     public void setWavetableType(int newWavetableType) { wavetableType = newWavetableType; };
     public void incrementWavetableType() { wavetableType = ++wavetableType % WavetableView.getNumWavetableTypes(); };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(identifier);
+        dest.writeInt(freqValue);
+        dest.writeInt(gainValue);
+        dest.writeInt(feedbackValue);
+        dest.writeInt(wavetableType);
+    }
 
     interface OperatorViewListener {
         void onSelectOperator(OperatorView selectedOperator);

@@ -1,13 +1,15 @@
 package com.johnkasun.patch_matcher;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
-public class Connectable extends androidx.appcompat.widget.AppCompatImageButton {
+public class Connectable extends androidx.appcompat.widget.AppCompatImageButton{
 
-    protected int identifier;
+    protected int identifier = -1;
 
     public Connectable(Context context) {
         super(context);
@@ -24,5 +26,4 @@ public class Connectable extends androidx.appcompat.widget.AppCompatImageButton 
     public int getIdentifier() {
         return identifier;
     }
-
 }
