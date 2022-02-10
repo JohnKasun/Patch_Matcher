@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -13,7 +15,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class ConnectorView extends View {
+public class ConnectorView extends View implements Parcelable {
 
     private Rect mRect;
     private Path mPath;
@@ -22,8 +24,9 @@ public class ConnectorView extends View {
     private float mPosX, mPosY;
     private int mAngle = 0;
     private Connectable mConnectableStart = null, mConnectableEnd = null;
-    private final int mArrowHeight = 20;
-    private final int mArrowWidth = 50;
+    static private ConnectorView connectorView = null;
+    static private final int mArrowHeight = 20;
+    static private final int mArrowWidth = 50;
     private float m_xDiff = 0;
     private float m_yDiff = 0;
 
@@ -42,6 +45,31 @@ public class ConnectorView extends View {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
+
+    protected ConnectorView(Parcel in) {
+        super(connectorView.getContext());
+        mPosX = in.readFloat();
+        mPosY = in.readFloat();
+        mAngle = in.readInt();
+        m_xDiff = in.readFloat();
+        m_yDiff = in.readFloat();
+        mConnectableStart = in.readParcelable(Connectable.class.getClassLoader());
+        mConnectableEnd = in.readParcelable(Connectable.class.getClassLoader());
+        init(null);
+        updateOrientation();
+    }
+
+    public static final Creator<ConnectorView> CREATOR = new Creator<ConnectorView>() {
+        @Override
+        public ConnectorView createFromParcel(Parcel in) {
+            return new ConnectorView(in);
+        }
+
+        @Override
+        public ConnectorView[] newArray(int size) {
+            return new ConnectorView[size];
+        }
+    };
 
     public void init(AttributeSet set) {
         mRect = new Rect();
@@ -155,5 +183,21 @@ public class ConnectorView extends View {
 
     public boolean isReverseOf(ConnectorView newConnector) {
         return mConnectableStart == newConnector.getEndConnectable() && mConnectableEnd == newConnector.getStartConnectable();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(mPosX);
+        dest.writeFloat(mPosY);
+        dest.writeInt(mAngle);
+        dest.writeFloat(m_xDiff);
+        dest.writeFloat(m_yDiff);
+        dest.writeParcelable(mConnectableStart,0);
+        dest.writeParcelable(mConnectableEnd, 0);
     }
 }

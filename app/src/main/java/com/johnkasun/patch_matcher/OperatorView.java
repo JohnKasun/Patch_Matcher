@@ -26,11 +26,13 @@ public class OperatorView extends Connectable implements Parcelable{
     private int m_iTextColor;
     private Rect rect;
     private float xOffset = 0, yOffset = 0;
+    private float xPos = 0, yPos = 0;
     private int freqValue = 0, gainValue = 0, feedbackValue = 0, wavetableType = 0;
     private GestureDetector gestureDetector;
     public OperatorViewListener listener = null;
     static private boolean deleteModeEnabled = false;
     static private OperatorView selectedOperator = null;
+    static private OperatorView operatorViewContext = null;
     static private int numOperators = 0;
     static private Queue<Integer> idBacklog = new PriorityQueue<Integer>();
 
@@ -40,12 +42,13 @@ public class OperatorView extends Connectable implements Parcelable{
     }
 
     protected OperatorView(Parcel in) {
-        super(OperatorView.selectedOperator.getContext());
+        super(operatorViewContext.getContext());
         identifier = in.readInt();
         freqValue = in.readInt();
         gainValue = in.readInt();
         feedbackValue = in.readInt();
         wavetableType = in.readInt();
+        setPosition(in.readFloat(), in.readFloat());
         init();
     }
 
@@ -202,6 +205,15 @@ public class OperatorView extends Connectable implements Parcelable{
         dest.writeInt(gainValue);
         dest.writeInt(feedbackValue);
         dest.writeInt(wavetableType);
+        dest.writeFloat(xPos);
+        dest.writeFloat(yPos);
+    }
+
+    public void setPosition(float x, float y) {
+        setX(x);
+        setY(y);
+        xPos = x;
+        yPos = y;
     }
 
     interface OperatorViewListener {

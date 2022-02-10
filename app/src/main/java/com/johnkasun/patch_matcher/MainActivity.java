@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements RotaryKnobView.RotaryKnobListener,
@@ -32,7 +30,6 @@ public class MainActivity extends AppCompatActivity
     static {
         System.loadLibrary("patch_matcher");
     }
-
 
     enum state {
         notPlaying,
@@ -55,9 +52,44 @@ public class MainActivity extends AppCompatActivity
     final int maxOperators = 6;
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        deselectAll();
+        outState.putParcelableArrayList("myOperators", operatorList);
+        outState.putParcelableArrayList("myConnectors", connectorList);
+        for (int i = 0; i < operatorList.size(); i++)
+        {
+            OperatorView currentOperator = operatorList.get(i);
+            background.removeView(currentOperator);
+        }
+        for (int i = 0; i < connectorList.size(); i++)
+        {
+            ConnectorView currentConnector = connectorList.get(i);
+            background.removeView(currentConnector);
+        }
+        super.onSaveInstanceState(outState);
+    }
 
-        super.onSaveInstanceState(outState, outPersistentState);
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        if (savedInstanceState != null)
+        {
+            operatorList = savedInstanceState.getParcelableArrayList("myOperators");
+            connectorList = savedInstanceState.getParcelableArrayList("myConnectors");
+            for (int i = 0; i < operatorList.size(); i++)
+            {
+                OperatorView currentOperator = operatorList.get(i);
+                currentOperator.listener = this;
+                background.addView(currentOperator);
+            }
+            for (int i = 0; i < connectorList.size(); i++)
+            {
+                ConnectorView currentConnector = connectorList.get(i);
+                background.addView(currentConnector);
+                currentConnector.getStartConnectable().bringToFront();
+                currentConnector.getEndConnectable().bringToFront();
+            }
+        }
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -141,8 +173,7 @@ public class MainActivity extends AppCompatActivity
         else {
             OperatorView newOperator = new OperatorView(MainActivity.this);
             newOperator.listener = this;
-            newOperator.setX(e.getX());
-            newOperator.setY(e.getY());
+            newOperator.setPosition(e.getX(), e.getY());
             background.addView(newOperator);
             operatorList.add(newOperator);
             Toast.makeText(getApplicationContext(), "Created Operator " + newOperator.getIdentifier(), Toast.LENGTH_SHORT).show();
