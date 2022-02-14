@@ -185,7 +185,6 @@ public class MainActivity extends AppCompatActivity
             newOperator.setPosition(e.getX(), e.getY());
             background.addView(newOperator);
             operatorList.add(newOperator);
-            Toast.makeText(getApplicationContext(), "Created Operator " + newOperator.getIdentifier(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -206,8 +205,6 @@ public class MainActivity extends AppCompatActivity
         ai_disconnect(connectorToDelete.getStartConnectable().getIdentifier(), connectorToDelete.getEndConnectable().getIdentifier());
         background.removeView(connectorToDelete);
         connectorList.remove(connectorToDelete);
-        String connectionInfo = "Operator " + connectorToDelete.getStartConnectable().getIdentifier() + " removed from Operator " + connectorToDelete.getEndConnectable().getIdentifier();
-        Toast.makeText(getApplicationContext(), connectionInfo, Toast.LENGTH_SHORT).show();
     }
 
     public void updateKnobPositions(OperatorView selectedOperator){
@@ -290,7 +287,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
             ai_connect(connectableStart.getIdentifier(), connectableEnd.getIdentifier());
-            Toast.makeText(getApplicationContext(), "Operator " + connectableStart.getIdentifier() + " connected to Operator " + connectableEnd.getIdentifier(), Toast.LENGTH_SHORT).show();
             background.addView(newConnector);
             connectorList.add(newConnector);
             connectableStart.bringToFront();
