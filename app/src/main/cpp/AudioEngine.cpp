@@ -120,4 +120,8 @@ void AudioEngine::initializeOperators()
     operator1_t.setFrequency(440.0f);
     operator1_t.setGain(fMaxGain);
     operator1_t.connectTo(&outputTerminal_t);
+
+    operator2_t.setFrequency(0.0f);
+    operator2_t.setGain(0.0f);
+    operator2_t.connectTo(&outputTerminal_t);
 }

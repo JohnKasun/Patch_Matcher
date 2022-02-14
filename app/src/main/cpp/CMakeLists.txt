@@ -25,7 +25,8 @@ add_library( # Sets the name of the library.
         AudioEngine.cpp
         Wavetable.cpp
         Operator.cpp
-        Tester.cpp)
+        Tester.cpp
+        TargetGenerator.cpp)
 
 include_directories(src/main/cpp)
 
