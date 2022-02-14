@@ -8,6 +8,7 @@
 #include <string>
 
 #include "Operator.h"
+#include "TargetGenerator.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 private:
@@ -59,6 +60,7 @@ private:
     // Startup Functions
     void loadWavetables();
     void initializeOperators();
+    void setParameters(Operator& operatorToSet, const Parameters &stageParameters);
 
 public:
     AudioEngine();

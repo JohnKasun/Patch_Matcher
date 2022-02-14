@@ -116,12 +116,29 @@ void AudioEngine::loadWavetables()
 
 void AudioEngine::initializeOperators()
 {
-    float fMaxGain = Operator::getMaxGain();
-    operator1_t.setFrequency(440.0f);
-    operator1_t.setGain(fMaxGain);
-    operator1_t.connectTo(&outputTerminal_t);
+    TargetGenerator targetGenerator(5000, Operator::getMaxGain());
 
-    operator2_t.setFrequency(0.0f);
-    operator2_t.setGain(0.0f);
-    operator2_t.connectTo(&outputTerminal_t);
+    Parameters operator1Parameters = targetGenerator.getOperatorParameters(1);
+    setParameters(operator1_t, operator1Parameters);
+
+    Parameters operator2Parameters = targetGenerator.getOperatorParameters(2);
+    setParameters(operator2_t, operator2Parameters);
+
+}
+
+void AudioEngine::setParameters(Operator &operatorToSet, const Parameters &stageParameters) {
+    operatorToSet.setFrequency(stageParameters.fFreq);
+    operatorToSet.setGain(stageParameters.fGain);
+    operatorToSet.setFeedbackGain(stageParameters.fFeedback);
+    if (!stageParameters.operatorIds.empty())
+    {
+        for (int operatorId : stageParameters.operatorIds)
+        {
+            operatorId -= 1;
+            if (operatorId == -1)
+                operatorToSet.connectTo(&outputTerminal_t);
+            else
+                operatorToSet.connectTo(operatorInterface_t[operatorId]);
+        }
+    }
 }
