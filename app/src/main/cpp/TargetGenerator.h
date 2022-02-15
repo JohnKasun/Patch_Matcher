@@ -5,6 +5,8 @@
 #ifndef PATCH_MATCHER_TARGETGENERATOR_H
 #define PATCH_MATCHER_TARGETGENERATOR_H
 #include <vector>
+#include <stdlib.h>
+#include <time.h>
 
 struct Parameters
 {
@@ -30,6 +32,8 @@ private:
     Parameters m_pOperator3Parameters;
 
     void generateParameters();
+    float genRandParam(float lowerBound, float upperBound, bool norm = false) const;
+    float genRandEvenParam(float lowerbound, float upperBound) const;
 
 };
 
