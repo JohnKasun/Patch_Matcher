@@ -10,6 +10,7 @@ TargetGenerator::TargetGenerator(float fMaxFreq, float fMaxGain) :
 {
     srand(time(0));
     generateParameters();
+    generateAlgorithms();
 }
 
 TargetGenerator::~TargetGenerator() {
@@ -31,17 +32,23 @@ Parameters TargetGenerator::getOperatorParameters(int iOperator) const {
 void TargetGenerator::generateParameters()
 {
     float fFundFreq = genRandParam(20.0f, 40.0f);
+    Algorithm algorithmToUse = getAlgorithm();
 
     m_pOperator1Parameters.fFreq = genMultiple(fFundFreq, 5, 10);
     m_pOperator1Parameters.fGain = m_fMaxGain;
     m_pOperator1Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
-    m_pOperator1Parameters.operatorIds.push_back(0);
+    m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
 
     m_pOperator2Parameters.fFreq = genMultiple(fFundFreq, 6, 20);
     m_pOperator2Parameters.fGain = genRandParam(m_fMaxGain / 2.0f, m_fMaxGain);
     m_pOperator2Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
-    m_pOperator2Parameters.operatorIds.push_back(1);
-    
+    m_pOperator2Parameters.operatorIds = algorithmToUse.iOperator2Connections;
+
+}
+
+void TargetGenerator::generateAlgorithms()
+{
+
 }
 
 float TargetGenerator::genRandParam(float fLowerBound, float fUpperBound, bool norm) const {
@@ -61,3 +68,22 @@ TargetGenerator::genMultiple(float fFundFreq, int iLowestMultiple, int iHighestM
     float fRandNum = rand() % (iHighestMultiple - iLowestMultiple + 1) + iLowestMultiple;
     return fFundFreq * fRandNum;
 }
+
+Algorithm TargetGenerator::getAlgorithm() const {
+    int sAlgorithmToUse = static_cast<int>(genRandParam(1,5));
+    switch (sAlgorithmToUse)
+    {
+        case 1:
+            return m_sAlgorithm1;
+        case 2:
+            return m_sAlgorithm2;
+        case 3:
+            return m_sAlgorithm3;
+        case 4:
+            return m_sAlgorithm4;
+        default:
+            return m_sAlgorithm5;
+    }
+}
+
+

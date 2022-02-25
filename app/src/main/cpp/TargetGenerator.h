@@ -16,6 +16,14 @@ struct Parameters
     std::vector<int> operatorIds;
 };
 
+struct Algorithm
+{
+    std::vector<int> iOperator1Connections;
+    std::vector<int> iOperator2Connections;
+    std::vector<int> iOperator3Connections;
+    std::vector<int> iOperator4Connections;
+};
+
 class TargetGenerator {
 public:
     TargetGenerator(float fMaxFreq, float fMaxGain);
@@ -32,9 +40,47 @@ private:
     Parameters m_pOperator3Parameters;
 
     void generateParameters();
+    void generateAlgorithms();
+    Algorithm getAlgorithm() const;
     float genRandParam(float lowerBound, float upperBound, bool norm = false) const;
     float genRandEvenParam(float lowerbound, float upperBound) const;
     float genMultiple(float fFundFreq, int iLowestMultiple, int iHighestMultiple) const;
+
+    const Algorithm m_sAlgorithm1 = {
+            std::vector<int>{0},
+            std::vector<int>{1},
+            std::vector<int>{2},
+            std::vector<int>{3}
+    };
+
+    const Algorithm m_sAlgorithm2 = {
+            std::vector<int>{0},
+            std::vector<int>{1},
+            std::vector<int>{2},
+            std::vector<int>{2}
+    };
+
+    const Algorithm m_sAlgorithm3 = {
+            std::vector<int>{0},
+            std::vector<int>{1},
+            std::vector<int>{1},
+            std::vector<int>{2}
+    };
+
+    const Algorithm m_sAlgorithm4 = {
+            std::vector<int>{0},
+            std::vector<int>{0},
+            std::vector<int>{1},
+            std::vector<int>{2}
+    };
+
+    const Algorithm m_sAlgorithm5 = {
+            std::vector<int>{0},
+            std::vector<int>{0},
+            std::vector<int>{0},
+            std::vector<int>{1,2,3}
+    };
+
 
 };
 
