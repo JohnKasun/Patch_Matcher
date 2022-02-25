@@ -27,7 +27,6 @@ struct Algorithm
 class TargetGenerator {
 public:
     TargetGenerator(float fMaxFreq, float fMaxGain);
-    ~TargetGenerator();
 
     Parameters getOperatorParameters(int iOperator) const;
 
@@ -41,10 +40,8 @@ private:
     Parameters m_pOperator4Parameters;
 
     void generateParameters();
-    void generateAlgorithms();
     Algorithm getAlgorithm() const;
     float genRandParam(float lowerBound, float upperBound, bool norm = false) const;
-    float genRandEvenParam(float lowerbound, float upperBound) const;
     float genMultiple(float fFundFreq, int iLowestMultiple, int iHighestMultiple) const;
 
     const Algorithm m_sAlgorithm1 = {

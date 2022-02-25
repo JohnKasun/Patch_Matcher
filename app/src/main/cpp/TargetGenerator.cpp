@@ -10,11 +10,6 @@ TargetGenerator::TargetGenerator(float fMaxFreq, float fMaxGain) :
 {
     srand(time(0));
     generateParameters();
-    generateAlgorithms();
-}
-
-TargetGenerator::~TargetGenerator() {
-
 }
 
 Parameters TargetGenerator::getOperatorParameters(int iOperator) const {
@@ -24,40 +19,37 @@ Parameters TargetGenerator::getOperatorParameters(int iOperator) const {
             return m_pOperator1Parameters;
         case 2:
             return m_pOperator2Parameters;
-        default:
+        case 3:
             return m_pOperator3Parameters;
+        case 4:
+            return m_pOperator4Parameters;
     }
 }
 
 void TargetGenerator::generateParameters()
 {
-    float fFundFreq = genRandParam(20.0f, 40.0f);
+    float fFundFreq = genRandParam(50.0f, 200.0f);
     Algorithm algorithmToUse = getAlgorithm();
 
-    m_pOperator1Parameters.fFreq = genMultiple(fFundFreq, 5, 10);
+    m_pOperator1Parameters.fFreq = genMultiple(fFundFreq, 1, 4);
     m_pOperator1Parameters.fGain = m_fMaxGain;
     m_pOperator1Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
     m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
 
-    m_pOperator2Parameters.fFreq = genMultiple(fFundFreq, 6, 20);
+    m_pOperator2Parameters.fFreq = genMultiple(fFundFreq, 1, 4);
     m_pOperator2Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
     m_pOperator2Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
     m_pOperator2Parameters.operatorIds = algorithmToUse.iOperator2Connections;
 
-    m_pOperator3Parameters.fFreq = genMultiple(fFundFreq, 6, 20);
+    m_pOperator3Parameters.fFreq = genMultiple(fFundFreq, 1, 4);
     m_pOperator3Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
     m_pOperator3Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
     m_pOperator3Parameters.operatorIds = algorithmToUse.iOperator3Connections;
 
-    m_pOperator4Parameters.fFreq = genMultiple(fFundFreq, 6, 20);
+    m_pOperator4Parameters.fFreq = genMultiple(fFundFreq, 1, 4);
     m_pOperator4Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
     m_pOperator4Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
     m_pOperator4Parameters.operatorIds = algorithmToUse.iOperator4Connections;
-
-}
-
-void TargetGenerator::generateAlgorithms()
-{
 
 }
 
@@ -68,15 +60,10 @@ float TargetGenerator::genRandParam(float fLowerBound, float fUpperBound, bool n
     return fRandNum;
 }
 
-float TargetGenerator::genRandEvenParam(float fLowerBound, float fUpperBound) const {
-    float fRandNum = genRandParam(fLowerBound / 2.0f, fUpperBound / 2.0f) * 2.0f;
-    return fRandNum;
-}
-
 float
 TargetGenerator::genMultiple(float fFundFreq, int iLowestMultiple, int iHighestMultiple) const {
-    float fRandNum = rand() % (iHighestMultiple - iLowestMultiple + 1) + iLowestMultiple;
-    return fFundFreq * fRandNum;
+    int fRandNum = rand() % (iHighestMultiple - iLowestMultiple + 1) + iLowestMultiple;
+    return fFundFreq * static_cast<float>(fRandNum);
 }
 
 Algorithm TargetGenerator::getAlgorithm() const {
