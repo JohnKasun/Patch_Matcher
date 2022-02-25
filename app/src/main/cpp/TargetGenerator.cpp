@@ -40,9 +40,19 @@ void TargetGenerator::generateParameters()
     m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
 
     m_pOperator2Parameters.fFreq = genMultiple(fFundFreq, 6, 20);
-    m_pOperator2Parameters.fGain = genRandParam(m_fMaxGain / 2.0f, m_fMaxGain);
+    m_pOperator2Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
     m_pOperator2Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
     m_pOperator2Parameters.operatorIds = algorithmToUse.iOperator2Connections;
+
+    m_pOperator3Parameters.fFreq = genMultiple(fFundFreq, 6, 20);
+    m_pOperator3Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
+    m_pOperator3Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
+    m_pOperator3Parameters.operatorIds = algorithmToUse.iOperator3Connections;
+
+    m_pOperator4Parameters.fFreq = genMultiple(fFundFreq, 6, 20);
+    m_pOperator4Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
+    m_pOperator4Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
+    m_pOperator4Parameters.operatorIds = algorithmToUse.iOperator4Connections;
 
 }
 

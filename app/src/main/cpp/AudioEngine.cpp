@@ -124,6 +124,12 @@ void AudioEngine::initializeOperators()
     Parameters operator2Parameters = targetGenerator.getOperatorParameters(2);
     setParameters(operator2_t, operator2Parameters);
 
+    Parameters operator3Parameters = targetGenerator.getOperatorParameters(3);
+    setParameters(operator3_t, operator3Parameters);
+
+    Parameters operator4Parameters = targetGenerator.getOperatorParameters(4);
+    setParameters(operator4_t, operator4Parameters);
+
 }
 
 void AudioEngine::setParameters(Operator &operatorToSet, const Parameters &stageParameters) {

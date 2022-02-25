@@ -38,6 +38,7 @@ private:
     Parameters m_pOperator1Parameters;
     Parameters m_pOperator2Parameters;
     Parameters m_pOperator3Parameters;
+    Parameters m_pOperator4Parameters;
 
     void generateParameters();
     void generateAlgorithms();
