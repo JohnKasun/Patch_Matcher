@@ -94,3 +94,8 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env
     operator_id -= 1;
     engine.changeWavetable(operator_id, wavetable_type);
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1regenerateTarget(JNIEnv *env, jobject thiz) {
+    engine.regenerateTarget();
+}

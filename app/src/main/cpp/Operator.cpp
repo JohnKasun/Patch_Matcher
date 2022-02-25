@@ -122,6 +122,16 @@ void Operator::resetGeneration()
 
 }
 
+void Operator::reset()
+{
+    resetGeneration();
+    setFrequency(0.0f);
+    setGain(0.0f);
+    setFeedbackGain(0.0f);
+    m_cModOperatorsIn.reset();
+    m_cModOperatorsOut.reset();
+}
+
 //=========================================
 
 OutputTerminal::OutputTerminal() :
@@ -156,6 +166,11 @@ void OutputTerminal::updateGainScaling()
         fGainNorm = 1.0f / static_cast<float>(m_cOutputOperators.getSize());
     }
     m_fGainScaling = fGainNorm * s_fMaxGainScaling;
+}
+
+void OutputTerminal::reset()
+{
+    m_cOutputOperators.reset();
 };
 
 

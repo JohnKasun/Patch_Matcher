@@ -34,6 +34,7 @@
         app:layout_constraintVertical_bias="0.333" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:background="@color/cardview_dark_background"
@@ -139,16 +140,16 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:scaleType="fitXY"
+            app:WavetableView_customDrawable="@drawable/customwavetable"
+            app:WavetableView_sawtoothDrawable="@drawable/sawtooth"
+            app:WavetableView_sineDrawable="@drawable/sinewave"
+            app:WavetableView_squareDrawable="@drawable/squarewave"
+            app:WavetableView_triangleDrawable="@drawable/trianglewave"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view2"
             app:layout_constraintStart_toEndOf="@+id/knob3"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/sinewave"
-            app:WavetableView_sineDrawable="@drawable/sinewave"
-            app:WavetableView_squareDrawable="@drawable/squarewave"
-            app:WavetableView_customDrawable="@drawable/customwavetable"
-            app:WavetableView_triangleDrawable="@drawable/trianglewave"
-            app:WavetableView_sawtoothDrawable="@drawable/sawtooth"/>
+            app:srcCompat="@drawable/sinewave" />
 
         <com.johnkasun.patch_matcher.PlayButtonView
             android:id="@+id/playButtonUser"
@@ -206,6 +207,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/RegenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="188dp"
+        android:layout_marginBottom="4dp"
+        android:text="regenerate"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

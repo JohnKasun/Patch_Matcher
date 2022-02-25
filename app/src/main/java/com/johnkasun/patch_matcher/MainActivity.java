@@ -13,6 +13,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,6 +109,14 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        Button regenButton = findViewById(R.id.RegenButton);
+        regenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ai_regenerateTarget();
+            }
+        });
 
         knob1 = findViewById(R.id.knob1);
         knob2 = findViewById(R.id.knob2);
@@ -350,5 +359,6 @@ public class MainActivity extends AppCompatActivity
     public native void ai_resetValues(int operator_id);
     public native void ai_onPlayTargetAudio();
     public native void ai_onPlayUserAudio();
+    public native void ai_regenerateTarget();
 
 }

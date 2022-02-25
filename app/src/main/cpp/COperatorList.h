@@ -24,13 +24,13 @@ public:
 
     ~COperatorList()
     {
-        delete m_pOperatorList;
+        delete[] m_pOperatorList;
         m_pOperatorList = 0;
     }
 
     void push_back(Operator* pOperatorToAdd)
     {
-        assert(m_iWriteIdx < m_iBufferSize);
+        assert(m_iWriteIdx < m_iBufferSize && m_iWriteIdx >= 0);
         m_pOperatorList[m_iWriteIdx] = pOperatorToAdd;
         m_iWriteIdx++;
         m_iNumOperatorsInBuffer++;
@@ -61,6 +61,14 @@ public:
     int getSize() const
     {
         return m_iNumOperatorsInBuffer;
+    }
+
+    void reset()
+    {
+        m_iNumOperatorsInBuffer = 0;
+        m_iWriteIdx = 0;
+        for (int i = 0; i < m_iBufferSize; i++)
+            m_pOperatorList[i] = 0;
     }
 
 private:

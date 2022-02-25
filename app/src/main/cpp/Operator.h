@@ -85,6 +85,7 @@ public:
     void disconnectFrom(Operator *operatorToDisconnect);
     void disconnectFrom(OutputTerminal *outputTerminal);
     void resetGeneration();
+    void reset();
     inline float getNextSample() noexcept override
     {
         if(!m_bHasBeenGenerated)
@@ -134,6 +135,7 @@ public:
 
     OutputTerminal();
     ~OutputTerminal();
+    void reset();
     inline float getNextSample() noexcept
     {
         float fCurrentSample = 0.0f;

@@ -34,6 +34,7 @@ private:
     void generateParameters();
     float genRandParam(float lowerBound, float upperBound, bool norm = false) const;
     float genRandEvenParam(float lowerbound, float upperBound) const;
+    float genMultiple(float fFundFreq, int iLowestMultiple, int iHighestMultiple) const;
 
 };
 

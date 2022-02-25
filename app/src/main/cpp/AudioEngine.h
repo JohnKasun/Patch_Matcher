@@ -76,6 +76,7 @@ public:
     double getSampleRate() { return kSampleRate; };
     void setOutputType(bool shouldPlayUser) { this->shouldPlayUser = shouldPlayUser; };
     bool isRunning() const { return m_isRunning; };
+    void regenerateTarget();
 
     OutputTerminal outputTerminal;
     Operator* operatorInterface[maxOperators] {
