@@ -116,7 +116,9 @@ void AudioEngine::loadWavetables()
 
 void AudioEngine::initializeOperators()
 {
-    TargetGenerator targetGenerator(5000, Operator::getMaxGain());
+    targetGenerator.setMaxFrequency(5000);
+    targetGenerator.setMaxGain(Operator::getMaxGain());
+    targetGenerator.generateParameters();
 
     Parameters operator1Parameters = targetGenerator.getOperatorParameters(1);
     setParameters(operator1_t, operator1Parameters);
@@ -132,13 +134,13 @@ void AudioEngine::initializeOperators()
 
 }
 
-void AudioEngine::setParameters(Operator &operatorToSet, const Parameters &stageParameters) {
-    operatorToSet.setFrequency(stageParameters.fFreq);
-    operatorToSet.setGain(stageParameters.fGain);
-    operatorToSet.setFeedbackGain(stageParameters.fFeedback);
-    if (!stageParameters.operatorIds.empty())
+void AudioEngine::setParameters(Operator &operatorToSet, const Parameters &opParameters) {
+    operatorToSet.setFrequency(opParameters.fFreq);
+    operatorToSet.setGain(opParameters.fGain);
+    operatorToSet.setFeedbackGain(opParameters.fFeedback);
+    if (!opParameters.operatorIds.empty())
     {
-        for (int operatorId : stageParameters.operatorIds)
+        for (int operatorId : opParameters.operatorIds)
         {
             operatorId -= 1;
             if (operatorId == -1)
@@ -155,4 +157,19 @@ void AudioEngine::regenerateTarget()
     for (Operator* op : operatorInterface_t)
         op->reset();
     initializeOperators();
+}
+
+std::string AudioEngine::getTargetValues() {
+    std::stringstream iss;
+    for (int i = 1; i <= 4; i++)
+    {
+        iss << "Operator " << i << "-";
+        Parameters opParameters = targetGenerator.getOperatorParameters(i);
+        iss << "\n\t " << opParameters.fFreq << "Hz " << opParameters.fGain << " " << opParameters.fFeedback;
+        iss << "\n\tConnected to: ";
+        for (const auto& opId : opParameters.operatorIds)
+            iss << opId << " ";
+        iss << "\n";
+    }
+    return iss.str();
 }

@@ -10,6 +10,7 @@
 
 #include <math.h>
 #include <cmath>
+#include <unordered_set>
 
 class OutputTerminal;
 
@@ -52,8 +53,8 @@ class Operator : public WavetableOscillator {
     friend class Tester;
 private:
     const int s_iMaxModOperators = 5;
-    COperatorList m_cModOperatorsIn;
-    COperatorList m_cModOperatorsOut;
+    std::unordered_set<Operator*> m_cModOperatorsIn;
+    std::unordered_set<Operator*> m_cModOperatorsOut;
     float m_fFeedbackGain;
     float RADIANS_TO_INDEX;
     bool m_bHasBeenGenerated;
@@ -64,8 +65,8 @@ private:
         if (!m_bIsCurrentlyProcessing)
         {
             m_bIsCurrentlyProcessing = true;
-            for (int i = 0; i < m_cModOperatorsIn.getSize(); i++)
-                phase += m_cModOperatorsIn.get(i)->getNextSample();
+            for (Operator* op : m_cModOperatorsIn)
+                phase += op->getNextSample();
         }
         phase += m_fFeedbackGain * m_fCurrentSample;
         return phase;
@@ -79,6 +80,7 @@ public:
     virtual ~Operator();
 
     static float getMaxGain() { return s_fMaxGain; };
+    float getFeedbackGain() const { return m_fFeedbackGain; };
     void setFeedbackGain(float newFeedbackGain);
     void connectTo(Operator *operatorToModulate);
     void connectTo(OutputTerminal *outputTerminal);
@@ -124,7 +126,7 @@ private:
     static float constexpr s_fMaxGain = 1.0f;
     static float constexpr s_fMaxGainScaling = 1.0f / s_fMaxGain;
     const int s_iMaxOutputOperators = 6;
-    COperatorList m_cOutputOperators;
+    std::unordered_set<Operator*> m_cOutputOperators;
     float m_fGainScaling;
 
     void addOperator(Operator* operatorToAdd);
@@ -139,10 +141,10 @@ public:
     inline float getNextSample() noexcept
     {
         float fCurrentSample = 0.0f;
-        for (int i = 0; i < m_cOutputOperators.getSize(); i++)
-            fCurrentSample += m_cOutputOperators.get(i)->getNextSample();
-        for (int i = 0; i < m_cOutputOperators.getSize(); i++)
-            m_cOutputOperators.get(i)->resetGeneration();
+        for (Operator* op : m_cOutputOperators)
+            fCurrentSample += op->getNextSample();
+        for (Operator* op : m_cOutputOperators)
+            op->resetGeneration();
         return m_fGainScaling * fCurrentSample;
     }
 };

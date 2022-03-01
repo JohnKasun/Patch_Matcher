@@ -62,9 +62,7 @@ Operator::Operator(const Wavetable* wavetable) :
     m_fFeedbackGain(0.0f),
     RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)),
     m_bHasBeenGenerated(false),
-    m_bIsCurrentlyProcessing(false),
-    m_cModOperatorsIn(s_iMaxModOperators),
-    m_cModOperatorsOut(s_iMaxModOperators)
+    m_bIsCurrentlyProcessing(false)
 {
 
 }
@@ -76,12 +74,12 @@ Operator::~Operator()
 
 void Operator::registerModulator(Operator *operatorToAdd)
 {
-    m_cModOperatorsIn.push_back(operatorToAdd);
+    m_cModOperatorsIn.insert(operatorToAdd);
 }
 
 void Operator::removeModulator(Operator *operatorToRemove)
 {
-    m_cModOperatorsIn.remove(operatorToRemove);
+    m_cModOperatorsIn.erase(operatorToRemove);
 }
 
 void Operator::setFeedbackGain(float newFeedbackGain)
@@ -92,7 +90,7 @@ void Operator::setFeedbackGain(float newFeedbackGain)
 void Operator::connectTo(Operator *operatorToModulate)
 {
     operatorToModulate->registerModulator(this);
-    m_cModOperatorsOut.push_back(operatorToModulate);
+    m_cModOperatorsOut.insert(operatorToModulate);
 }
 
 void Operator::connectTo(OutputTerminal *outputTerminal)
@@ -103,7 +101,7 @@ void Operator::connectTo(OutputTerminal *outputTerminal)
 void Operator::disconnectFrom(Operator *operatorToDisconnect)
 {
     operatorToDisconnect->removeModulator(this);
-    m_cModOperatorsOut.remove(operatorToDisconnect);
+    m_cModOperatorsOut.insert(operatorToDisconnect);
 }
 
 void Operator::disconnectFrom(OutputTerminal *outputTerminal)
@@ -116,8 +114,8 @@ void Operator::resetGeneration()
     if (m_bHasBeenGenerated)
     {
         m_bHasBeenGenerated = false;
-        for (int i = 0; i < m_cModOperatorsIn.getSize(); i++)
-            m_cModOperatorsIn.get(i)->resetGeneration();
+        for (Operator* op : m_cModOperatorsIn)
+            op->resetGeneration();
     }
 
 }
@@ -128,14 +126,13 @@ void Operator::reset()
     setFrequency(0.0f);
     setGain(0.0f);
     setFeedbackGain(0.0f);
-    m_cModOperatorsIn.reset();
-    m_cModOperatorsOut.reset();
+    m_cModOperatorsIn.clear();
+    m_cModOperatorsOut.clear();
 }
 
 //=========================================
 
 OutputTerminal::OutputTerminal() :
-    m_cOutputOperators(s_iMaxOutputOperators),
     m_fGainScaling(0.0f)
 {
 
@@ -148,29 +145,29 @@ OutputTerminal::~OutputTerminal()
 
 void OutputTerminal::addOperator(Operator* operatorToAdd)
 {
-    m_cOutputOperators.push_back(operatorToAdd);
+    m_cOutputOperators.insert(operatorToAdd);
     updateGainScaling();
 };
 
 void OutputTerminal::removeOperator(Operator* operatorToRemove)
 {
-    m_cOutputOperators.remove(operatorToRemove);
+    m_cOutputOperators.erase(operatorToRemove);
     updateGainScaling();
 };
 
 void OutputTerminal::updateGainScaling()
 {
     float fGainNorm = 0.0f;
-    if (m_cOutputOperators.getSize() != 0)
+    if (!m_cOutputOperators.empty())
     {
-        fGainNorm = 1.0f / static_cast<float>(m_cOutputOperators.getSize());
+        fGainNorm = 1.0f / static_cast<float>(m_cOutputOperators.size());
     }
     m_fGainScaling = fGainNorm * s_fMaxGainScaling;
 }
 
 void OutputTerminal::reset()
 {
-    m_cOutputOperators.reset();
+    m_cOutputOperators.clear();
 };
 
 

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity
 
     state playState = state.notPlaying;
     OutputTerminalView outputTerminal;
-    TextView textView1, textView2, textView3;
+    TextView textView1, textView2, textView3, targetValues;
     RotaryKnobView knob1, knob2, knob3;
     ImageButton trashCan;
     WavetableView wavetableView;
@@ -115,6 +115,17 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 ai_regenerateTarget();
+            }
+        });
+
+        targetValues = findViewById(R.id.TargetValuesText);
+
+        Button showValuesButton = findViewById(R.id.ShowValuesButton);
+        showValuesButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                targetValues.setText(ai_getTargetValues());
             }
         });
 
@@ -360,5 +371,6 @@ public class MainActivity extends AppCompatActivity
     public native void ai_onPlayTargetAudio();
     public native void ai_onPlayUserAudio();
     public native void ai_regenerateTarget();
+    public native String ai_getTargetValues();
 
 }

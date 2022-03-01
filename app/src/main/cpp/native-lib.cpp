@@ -99,3 +99,8 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1regenerateTarget(JNIEnv *env, jobject thiz) {
     engine.regenerateTarget();
 }
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1getTargetValues(JNIEnv *env, jobject thiz) {
+    return env->NewStringUTF(engine.getTargetValues().c_str());
+}

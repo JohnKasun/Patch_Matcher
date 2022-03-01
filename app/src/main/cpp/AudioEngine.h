@@ -46,6 +46,7 @@ private:
     Operator operator5_t;
     Operator operator6_t;
     OutputTerminal outputTerminal_t;
+    TargetGenerator targetGenerator;
 
     // Target Operators Interface
     Operator* operatorInterface_t[maxOperators] {
@@ -77,6 +78,8 @@ public:
     void setOutputType(bool shouldPlayUser) { this->shouldPlayUser = shouldPlayUser; };
     bool isRunning() const { return m_isRunning; };
     void regenerateTarget();
+    std::string getTargetValues();
+
 
     OutputTerminal outputTerminal;
     Operator* operatorInterface[maxOperators] {
