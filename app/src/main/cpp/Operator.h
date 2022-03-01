@@ -79,6 +79,7 @@ public:
     Operator(const Wavetable* wavetable);
     virtual ~Operator();
 
+    float getPhase() const { return m_fAccumulatedPhase; };
     static float getMaxGain() { return s_fMaxGain; };
     float getFeedbackGain() const { return m_fFeedbackGain; };
     void setFeedbackGain(float newFeedbackGain);

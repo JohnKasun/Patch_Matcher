@@ -54,6 +54,8 @@ void WavetableOscillator::setSampleRate(float fSampleRate)
 float WavetableOscillator::s_fSampleRate = 0.0f;
 float WavetableOscillator::s_FREQ_TO_PHASEDELTA = 0.0f;
 float WavetableOscillator::s_PHASEDELTA_TO_FREQ = 0.0f;
+
+
 //=====================================================
 
 //=====================================================
@@ -71,7 +73,6 @@ Operator::~Operator()
 {
 
 }
-
 void Operator::registerModulator(Operator *operatorToAdd)
 {
     m_cModOperatorsIn.insert(operatorToAdd);
@@ -101,7 +102,7 @@ void Operator::connectTo(OutputTerminal *outputTerminal)
 void Operator::disconnectFrom(Operator *operatorToDisconnect)
 {
     operatorToDisconnect->removeModulator(this);
-    m_cModOperatorsOut.insert(operatorToDisconnect);
+    m_cModOperatorsOut.erase(operatorToDisconnect);
 }
 
 void Operator::disconnectFrom(OutputTerminal *outputTerminal)
@@ -126,6 +127,7 @@ void Operator::reset()
     setFrequency(0.0f);
     setGain(0.0f);
     setFeedbackGain(0.0f);
+    m_fAccumulatedPhase = 0.0f;
     m_cModOperatorsIn.clear();
     m_cModOperatorsOut.clear();
 }
