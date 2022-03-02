@@ -62,20 +62,15 @@ int32_t AudioEngine::pauseAudio()
 
 oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) {
     float *floatData = (float *) audioData;
-    if (shouldPlayUser) {
-        for (int i = 0; i < numFrames; ++i) {
-            float sampleValue = (float) outputTerminal.getNextSample();
-            for (int j = 0; j < kChannelCount; j++) {
-                floatData[i * kChannelCount + j] = sampleValue;
-            }
-        }
-    } else {
-        for (int i = 0; i < numFrames; ++i) {
-            float sampleValue = (float) outputTerminal_t.getNextSample();
-            for (int j = 0; j < kChannelCount; j++) {
-                floatData[i * kChannelCount + j] = sampleValue;
-            }
-        }
+    for (int frame = 0; frame < numFrames; frame++)
+    {
+        float fSampleValue{kAmplitude};
+        if (shouldPlayUser)
+            fSampleValue *= outputTerminal.getNextSample();
+        else
+            fSampleValue *= outputTerminal_t.getNextSample();
+        for (int channel = 0; channel < kChannelCount; channel++)
+            floatData[frame * kChannelCount + channel] = fSampleValue;
     }
     return oboe::DataCallbackResult::Continue;
 }
