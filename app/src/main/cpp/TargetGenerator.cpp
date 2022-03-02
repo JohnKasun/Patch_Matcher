@@ -29,7 +29,7 @@ void TargetGenerator::generateParameters()
     m_pOperator1Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
     m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
 
-    m_pOperator2Parameters.fFreq = genMultiple(200, 1, 9);
+    m_pOperator2Parameters.fFreq = genMultiple(fFundFreq, 1, 9);
     m_pOperator2Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
     m_pOperator2Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
     m_pOperator2Parameters.operatorIds = algorithmToUse.iOperator2Connections;

@@ -19,24 +19,24 @@ class WavetableOscillator
 protected:
     static float constexpr s_fMaxGain = 100.0f;
     static float constexpr s_fMaxGainScaling = 1.0f / s_fMaxGain;
-    static float constexpr kPI = M_PI;
-    static float constexpr kTwoPi = kPI * 2.0;
+    static float constexpr kTwoPi = M_PI * 2.0;
     static float s_fSampleRate;
     static float s_FREQ_TO_PHASEDELTA;
     static float s_PHASEDELTA_TO_FREQ;
 
-
     const Wavetable* m_pWavetable;
-
     int m_iTableSize;
-    float m_fAccumulatedPhase;
-    float m_fPhaseDelta;
-    float m_fGain;
-    float m_fCurrentSample;
+    float m_fAccumulatedPhase = 0.0f;
+    float m_fPhaseDelta = 0.0f;
+    float m_fGain = 0.0f;
+    float m_fCurrentSample = 0.0f;
 
 public:
-    WavetableOscillator(const Wavetable* wavetableToUse);
-    virtual ~WavetableOscillator();
+    WavetableOscillator(const Wavetable* wavetableToUse) :
+            m_pWavetable{wavetableToUse},
+            m_iTableSize{wavetableToUse->get_size()} {};
+
+    virtual ~WavetableOscillator() = default;
 
     void setFrequency(float freq);
     float getFrequency() const;
@@ -54,14 +54,15 @@ class Operator : public WavetableOscillator {
 private:
 
     int m_id;
-    const int s_iMaxModOperators = 5;
     std::unordered_set<Operator*> m_cModOperatorsIn;
-    std::unordered_set<Operator*> m_cModOperatorsOut;
-    float m_fFeedbackGain;
     float RADIANS_TO_INDEX;
-    bool m_bHasBeenGenerated;
-    bool m_bIsCurrentlyProcessing;
-    
+    const int s_iMaxModOperators = 5;
+    float m_fFeedbackGain = 0.0f;
+    bool m_bHasBeenGenerated = false;
+    bool m_bIsCurrentlyProcessing = false;
+
+    void registerModulator(Operator *operatorToAdd);
+    void removeModulator(Operator *operatorToRemove);
     inline float modulatePhase(float phase) noexcept
     {
         if (!m_bIsCurrentlyProcessing)
@@ -73,16 +74,17 @@ private:
         phase += m_fFeedbackGain * m_fCurrentSample;
         return phase;
     }
-
-    void registerModulator(Operator *operatorToAdd);
-    void removeModulator(Operator *operatorToRemove);
     
 public:
-    Operator(const Wavetable* wavetable, int id);
-    virtual ~Operator();
+    Operator(const Wavetable* wavetable, int id) :
+            WavetableOscillator(wavetable),
+            m_id(id),
+            RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)) {};
 
-    int getId() const { return m_id; };
+    virtual ~Operator() = default;
+
     static float getMaxGain() { return s_fMaxGain; };
+    int getId() const { return m_id; };
     float getFeedbackGain() const { return m_fFeedbackGain; };
     void setFeedbackGain(float newFeedbackGain);
     void connectTo(Operator *operatorToModulate);
@@ -126,11 +128,11 @@ class OutputTerminal {
     friend class Tester;
 private:
 
+    std::unordered_set<Operator*> m_cOutputOperators;
     static float constexpr s_fMaxGain = 1.0f;
     static float constexpr s_fMaxGainScaling = 1.0f / s_fMaxGain;
     const int s_iMaxOutputOperators = 6;
-    std::unordered_set<Operator*> m_cOutputOperators;
-    float m_fGainScaling;
+    float m_fGainScaling = 0.0f;
 
     void addOperator(Operator* operatorToAdd);
     void removeOperator(Operator* operatorToRemove);
@@ -138,8 +140,8 @@ private:
 
 public:
 
-    OutputTerminal();
-    ~OutputTerminal();
+    OutputTerminal() {};
+    ~OutputTerminal() {};
     void reset();
     inline float getNextSample() noexcept
     {

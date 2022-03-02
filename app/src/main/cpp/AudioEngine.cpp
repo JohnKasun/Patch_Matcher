@@ -181,7 +181,7 @@ std::string AudioEngine::getTargetValues() {
     {
         iss << "Operator " << i << "-";
         Parameters opParameters = targetGenerator.getOperatorParameters(i);
-        iss << "\n\t " << opParameters.fFreq << "Hz " << opParameters.fGain << " " << opParameters.fFeedback;
+        iss << "\n\t " << opParameters.fFreq << "Hz " << opParameters.fGain << " " << opParameters.fFeedback * 100 << "%";
         iss << "\n\tConnected to: ";
         for (const auto& opId : opParameters.operatorIds)
             iss << opId << " ";

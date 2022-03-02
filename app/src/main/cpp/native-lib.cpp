@@ -37,9 +37,8 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeGain(JNIEnv *env, jobject thiz,
                                                                 jint operator_id, jint value) {
     operator_id -= 1;
-    float valueScaled = static_cast<float>(value);
-    engine.operatorInterface[operator_id]->setGain(valueScaled);
-    engine.parameterInterface[operator_id]->fGain = valueScaled;
+    engine.operatorInterface[operator_id]->setGain(value);
+    engine.parameterInterface[operator_id]->fGain = value;
 
 }
 extern "C"
@@ -51,6 +50,26 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFeedback(JNIEnv *env,
     engine.operatorInterface[operator_id]->setFeedbackGain(valueScaled);
     engine.parameterInterface[operator_id]->fFeedback = valueScaled;
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env, jobject thiz,
+                                                                     jint operator_id,
+                                                                     jint wavetable_type) {
+    operator_id -= 1;
+    engine.changeWavetable(operator_id, wavetable_type);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1regenerateTarget(JNIEnv *env, jobject thiz) {
+    engine.regenerateTarget();
+}
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1getTargetValues(JNIEnv *env, jobject thiz) {
+    return env->NewStringUTF(engine.getTargetValues().c_str());
+}
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1resetValues(JNIEnv *env, jobject thiz,
@@ -83,21 +102,3 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onPlayUserAudio(JNIEnv *env, 
         engine.startAudio();
 }
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env, jobject thiz,
-                                                                     jint operator_id,
-                                                                     jint wavetable_type) {
-    operator_id -= 1;
-    engine.changeWavetable(operator_id, wavetable_type);
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1regenerateTarget(JNIEnv *env, jobject thiz) {
-    engine.regenerateTarget();
-}
-extern "C"
-JNIEXPORT jstring JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1getTargetValues(JNIEnv *env, jobject thiz) {
-    return env->NewStringUTF(engine.getTargetValues().c_str());
-}

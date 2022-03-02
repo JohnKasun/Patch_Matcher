@@ -44,8 +44,6 @@ private:
     Parameters m_param5;
     Parameters m_param6;
 
-
-
     // Target Operators
     Operator operator1_t;
     Operator operator2_t;
@@ -98,8 +96,8 @@ public:
         &operator3,
         &operator4,
         &operator5,
-        &operator6,
-        };
+        &operator6
+    };
 
     Parameters* parameterInterface[maxOperators] {
         &m_param1,
