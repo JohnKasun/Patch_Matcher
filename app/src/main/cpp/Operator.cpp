@@ -59,8 +59,9 @@ float WavetableOscillator::s_PHASEDELTA_TO_FREQ = 0.0f;
 //=====================================================
 
 //=====================================================
-Operator::Operator(const Wavetable* wavetable) :
+Operator::Operator(const Wavetable* wavetable, int id) :
     WavetableOscillator(wavetable),
+    m_id(id),
     m_fFeedbackGain(0.0f),
     RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)),
     m_bHasBeenGenerated(false),

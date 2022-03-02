@@ -37,6 +37,14 @@ private:
     Operator operator4;
     Operator operator5;
     Operator operator6;
+    Parameters m_param1;
+    Parameters m_param2;
+    Parameters m_param3;
+    Parameters m_param4;
+    Parameters m_param5;
+    Parameters m_param6;
+
+
 
     // Target Operators
     Operator operator1_t;
@@ -61,7 +69,8 @@ private:
     // Startup Functions
     void loadWavetables();
     void initializeOperators();
-    void setParameters(Operator& operatorToSet, const Parameters &stageParameters);
+    void setTargetParameters(Operator* operatorToSet, const Parameters* parameters);
+    void setUserParameters(Operator* operatorToSet, const Parameters* parameters);
 
 public:
     AudioEngine();
@@ -73,6 +82,7 @@ public:
     int32_t pauseAudio();
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
+    void reinitializeUserPatch();
     void changeWavetable(int iOperatorId, int iWavetableType);
     double getSampleRate() { return kSampleRate; };
     void setOutputType(bool shouldPlayUser) { this->shouldPlayUser = shouldPlayUser; };
@@ -90,6 +100,16 @@ public:
         &operator5,
         &operator6,
         };
+
+    Parameters* parameterInterface[maxOperators] {
+        &m_param1,
+        &m_param2,
+        &m_param3,
+        &m_param4,
+        &m_param5,
+        &m_param6
+    };
+
 
 };
 

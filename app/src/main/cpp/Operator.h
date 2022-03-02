@@ -52,6 +52,8 @@ public:
 class Operator : public WavetableOscillator {
     friend class Tester;
 private:
+
+    int m_id;
     const int s_iMaxModOperators = 5;
     std::unordered_set<Operator*> m_cModOperatorsIn;
     std::unordered_set<Operator*> m_cModOperatorsOut;
@@ -76,10 +78,10 @@ private:
     void removeModulator(Operator *operatorToRemove);
     
 public:
-    Operator(const Wavetable* wavetable);
+    Operator(const Wavetable* wavetable, int id);
     virtual ~Operator();
 
-    float getPhase() const { return m_fAccumulatedPhase; };
+    int getId() const { return m_id; };
     static float getMaxGain() { return s_fMaxGain; };
     float getFeedbackGain() const { return m_fFeedbackGain; };
     void setFeedbackGain(float newFeedbackGain);

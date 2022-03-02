@@ -5,23 +5,25 @@
 #ifndef PATCH_MATCHER_TARGETGENERATOR_H
 #define PATCH_MATCHER_TARGETGENERATOR_H
 #include <vector>
+#include <list>
+#include <set>
 #include <stdlib.h>
 #include <time.h>
 
 struct Parameters
 {
-    float fFreq;
-    float fGain;
-    float fFeedback;
-    std::vector<int> operatorIds;
+    float fFreq = 0;
+    float fGain = 0;
+    float fFeedback = 0;
+    std::set<int> operatorIds;
 };
 
 struct Algorithm
 {
-    std::vector<int> iOperator1Connections;
-    std::vector<int> iOperator2Connections;
-    std::vector<int> iOperator3Connections;
-    std::vector<int> iOperator4Connections;
+    std::set<int> iOperator1Connections;
+    std::set<int> iOperator2Connections;
+    std::set<int> iOperator3Connections;
+    std::set<int> iOperator4Connections;
 };
 
 class TargetGenerator {
@@ -47,38 +49,38 @@ private:
     float genMultiple(float fFundFreq, int iLowestMultiple, int iHighestMultiple) const;
 
     const Algorithm m_sAlgorithm1 = {
-            std::vector<int>{0},
-            std::vector<int>{1},
-            std::vector<int>{2},
-            std::vector<int>{3}
+            std::set<int>{0},
+            std::set<int>{1},
+            std::set<int>{2},
+            std::set<int>{3}
     };
 
     const Algorithm m_sAlgorithm2 = {
-            std::vector<int>{0},
-            std::vector<int>{1},
-            std::vector<int>{2},
-            std::vector<int>{2}
+            std::set<int>{0},
+            std::set<int>{1},
+            std::set<int>{2},
+            std::set<int>{2}
     };
 
     const Algorithm m_sAlgorithm3 = {
-            std::vector<int>{0},
-            std::vector<int>{1},
-            std::vector<int>{1},
-            std::vector<int>{2}
+            std::set<int>{0},
+            std::set<int>{1},
+            std::set<int>{1},
+            std::set<int>{2}
     };
 
     const Algorithm m_sAlgorithm4 = {
-            std::vector<int>{0},
-            std::vector<int>{0},
-            std::vector<int>{1},
-            std::vector<int>{2}
+            std::set<int>{0},
+            std::set<int>{0},
+            std::set<int>{1},
+            std::set<int>{2}
     };
 
     const Algorithm m_sAlgorithm5 = {
-            std::vector<int>{0},
-            std::vector<int>{0},
-            std::vector<int>{0},
-            std::vector<int>{1,2,3}
+            std::set<int>{0},
+            std::set<int>{0},
+            std::set<int>{0},
+            std::set<int>{1,2,3}
     };
 
 
