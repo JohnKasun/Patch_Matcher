@@ -21,7 +21,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1disconnect(JNIEnv *env, jobje
                                                               jint connectable_a_id,
                                                               jint connectable_b_id) {
 
-    engine.parameterInterface[connectable_a_id=1]->operatorIds.erase(connectable_b_id);
+    engine.parameterInterface[connectable_a_id-1]->operatorIds.erase(connectable_b_id);
     engine.reinitializeUserPatch();
 }
 extern "C"
