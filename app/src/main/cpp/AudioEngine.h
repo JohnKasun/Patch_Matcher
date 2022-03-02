@@ -66,7 +66,7 @@ private:
 
     // Startup Functions
     void loadWavetables();
-    void initializeOperators();
+    void initializeTargetOperators();
     void setTargetParameters(Operator* operatorToSet, const Parameters* parameters);
     void setUserParameters(Operator* operatorToSet, const Parameters* parameters);
 
@@ -80,14 +80,13 @@ public:
     int32_t pauseAudio();
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
-    void reinitializeUserPatch();
     void changeWavetable(int iOperatorId, int iWavetableType);
     double getSampleRate() { return kSampleRate; };
     void setOutputType(bool shouldPlayUser) { this->shouldPlayUser = shouldPlayUser; };
     bool isRunning() const { return m_isRunning; };
     void regenerateTarget();
     std::string getTargetValues();
-
+    void initializeUserPatch();
 
     OutputTerminal outputTerminal;
     Operator* operatorInterface[maxOperators] {

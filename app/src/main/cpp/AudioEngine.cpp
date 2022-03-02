@@ -10,7 +10,7 @@ AudioEngine::AudioEngine()
 {
     loadWavetables();
     initializeAudio();
-    initializeOperators();
+    initializeTargetOperators();
 }
 
 AudioEngine::~AudioEngine()
@@ -114,7 +114,7 @@ void AudioEngine::loadWavetables()
     custom.generate();
 }
 
-void AudioEngine::initializeOperators()
+void AudioEngine::initializeTargetOperators()
 {
     targetGenerator.setMaxFrequency(5000);
     targetGenerator.setMaxGain(Operator::getMaxGain());
@@ -150,7 +150,7 @@ void AudioEngine::regenerateTarget()
     outputTerminal_t.reset();
     for (Operator* op : operatorInterface_t)
         op->reset();
-    initializeOperators();
+    initializeTargetOperators();
 }
 
 std::string AudioEngine::getTargetValues() {
@@ -168,7 +168,7 @@ std::string AudioEngine::getTargetValues() {
     return iss.str();
 }
 
-void AudioEngine::reinitializeUserPatch() {
+void AudioEngine::initializeUserPatch() {
     outputTerminal.reset();
     for (Operator* op : operatorInterface)
         op->reset();

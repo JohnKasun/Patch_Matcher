@@ -12,7 +12,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1connect(JNIEnv *env, jobject 
 
 
     engine.parameterInterface[connectable_a_id-1]->operatorIds.insert(connectable_b_id);
-    engine.reinitializeUserPatch();
+    engine.initializeUserPatch();
 }
 
 extern "C"
@@ -22,7 +22,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1disconnect(JNIEnv *env, jobje
                                                               jint connectable_b_id) {
 
     engine.parameterInterface[connectable_a_id-1]->operatorIds.erase(connectable_b_id);
-    engine.reinitializeUserPatch();
+    engine.initializeUserPatch();
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -39,7 +39,6 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeGain(JNIEnv *env, job
     operator_id -= 1;
     engine.operatorInterface[operator_id]->setGain(value);
     engine.parameterInterface[operator_id]->fGain = value;
-
 }
 extern "C"
 JNIEXPORT void JNICALL
