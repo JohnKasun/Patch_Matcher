@@ -10,18 +10,8 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1connect(JNIEnv *env, jobject 
                                                            jint connectable_a_id,
                                                            jint connectable_b_id) {
 
-    connectable_a_id -= 1;
-    connectable_b_id -= 1;
 
-    if (connectable_b_id == -1) {
-        engine.operatorInterface[connectable_a_id]->connectTo(&engine.outputTerminal);
-    }
-    else {
-        engine.operatorInterface[connectable_a_id]->connectTo(engine.operatorInterface[connectable_b_id]);
-    }
-
-    engine.parameterInterface[connectable_a_id]->operatorIds.insert(connectable_b_id+1);
-
+    engine.parameterInterface[connectable_a_id-1]->operatorIds.insert(connectable_b_id);
     engine.reinitializeUserPatch();
 }
 
@@ -30,16 +20,8 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1disconnect(JNIEnv *env, jobject thiz,
                                                               jint connectable_a_id,
                                                               jint connectable_b_id) {
-    connectable_a_id -= 1;
-    connectable_b_id -= 1;
 
-    if (connectable_b_id < 0)
-        engine.operatorInterface[connectable_a_id]->disconnectFrom(&engine.outputTerminal);
-    else
-        engine.operatorInterface[connectable_a_id]->disconnectFrom(engine.operatorInterface[connectable_b_id]);
-
-    engine.parameterInterface[connectable_a_id]->operatorIds.erase(connectable_b_id+1);
-
+    engine.parameterInterface[connectable_a_id=1]->operatorIds.erase(connectable_b_id);
     engine.reinitializeUserPatch();
 }
 extern "C"
@@ -47,7 +29,6 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFrequency(JNIEnv *env, jobject thiz,
                                                                      jint operator_id, jint value) {
     operator_id -= 1;
-
     engine.operatorInterface[operator_id]->setFrequency(value);
     engine.parameterInterface[operator_id]->fFreq = value;
 }
@@ -56,7 +37,6 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeGain(JNIEnv *env, jobject thiz,
                                                                 jint operator_id, jint value) {
     operator_id -= 1;
-
     float valueScaled = static_cast<float>(value);
     engine.operatorInterface[operator_id]->setGain(valueScaled);
     engine.parameterInterface[operator_id]->fGain = valueScaled;
@@ -67,7 +47,6 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFeedback(JNIEnv *env, jobject thiz,
                                                                     jint operator_id, jint value) {
     operator_id -= 1;
-
     float valueScaled = static_cast<float>(value) / 100.0f;
     engine.operatorInterface[operator_id]->setFeedbackGain(valueScaled);
     engine.parameterInterface[operator_id]->fFeedback = valueScaled;
