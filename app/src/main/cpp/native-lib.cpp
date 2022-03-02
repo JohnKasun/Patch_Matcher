@@ -101,3 +101,9 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onPlayUserAudio(JNIEnv *env, 
         engine.startAudio();
 }
 
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1initializeUser(JNIEnv *env, jobject thiz) {
+    engine.initializeUserPatch();
+}

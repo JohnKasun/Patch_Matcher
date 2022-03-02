@@ -96,13 +96,18 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
                 return super.onDoubleTap(e);
             }
 
+
+
         });
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getActionMasked() == MotionEvent.ACTION_UP)
+        {
             storedPosition = newPosition;
+            listener.onKnobUp();
+        }
         if (gestureDetector.onTouchEvent(event))
             return true;
         else
@@ -140,6 +145,7 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
 
     interface RotaryKnobListener {
         void onKnobRotate(int identifier, int value);
+        void onKnobUp();
     }
 }
 

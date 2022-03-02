@@ -284,6 +284,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onKnobUp() {
+        ai_initializeUser();
+    }
+
+    @Override
     public void onSelectOperator(OperatorView selectedOperator){
         this.selectedOperator = selectedOperator;
         OutputTerminalView.setSelectedOperator(selectedOperator);
@@ -371,6 +376,7 @@ public class MainActivity extends AppCompatActivity
     public native void ai_onPlayTargetAudio();
     public native void ai_onPlayUserAudio();
     public native void ai_regenerateTarget();
+    public native void ai_initializeUser();
     public native String ai_getTargetValues();
 
 }
