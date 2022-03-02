@@ -26,6 +26,12 @@ struct Algorithm
     std::set<int> iOperator4Connections;
 };
 
+struct ConnectionSetup
+{
+    Algorithm algorithm;
+    int iNumActiveOperators;
+};
+
 class TargetGenerator {
 public:
     TargetGenerator() { srand(time(0));};
@@ -34,6 +40,7 @@ public:
     void setMaxGain(float fMaxGain) { m_fMaxGain = fMaxGain; };
     void generateParameters();
     Parameters getOperatorParameters(int iOperator) const;
+    ConnectionSetup getConnectionSetup() const;
 
 private:
 
@@ -43,8 +50,9 @@ private:
     Parameters m_pOperator2Parameters;
     Parameters m_pOperator3Parameters;
     Parameters m_pOperator4Parameters;
+    ConnectionSetup m_pConnectionSetup;
 
-    Algorithm getAlgorithm() const;
+    Algorithm generateAlgorithm();
     float genRandParam(float lowerBound, float upperBound, bool norm = false) const;
     float genMultiple(float fFundFreq, int iLowestMultiple, int iHighestMultiple) const;
 

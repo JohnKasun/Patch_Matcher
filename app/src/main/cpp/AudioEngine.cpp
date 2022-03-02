@@ -120,17 +120,11 @@ void AudioEngine::initializeOperators()
     targetGenerator.setMaxGain(Operator::getMaxGain());
     targetGenerator.generateParameters();
 
-    Parameters operator1Parameters = targetGenerator.getOperatorParameters(1);
-    setTargetParameters(&operator1_t, &operator1Parameters);
-
-    Parameters operator2Parameters = targetGenerator.getOperatorParameters(2);
-    setTargetParameters(&operator2_t, &operator2Parameters);
-
-/*    Parameters operator3Parameters = targetGenerator.getOperatorParameters(3);
-    setTargetParameters(&operator3_t, &operator3Parameters);
-
-    Parameters operator4Parameters = targetGenerator.getOperatorParameters(4);
-    setTargetParameters(&operator4_t, &operator4Parameters);*/
+    for (int i = 1; i <= targetGenerator.getConnectionSetup().iNumActiveOperators; i++)
+    {
+        Parameters operatorParameters = targetGenerator.getOperatorParameters(i);
+        setTargetParameters(operatorInterface_t[i-1],&operatorParameters);
+    }
 
 }
 
@@ -150,22 +144,6 @@ void AudioEngine::setTargetParameters(Operator* operatorToSet, const Parameters*
         }
     }
 }
-void AudioEngine::setUserParameters(Operator *operatorToSet, const Parameters *parameters) {
-    operatorToSet->setFrequency(parameters->fFreq);
-    operatorToSet->setGain(parameters->fGain);
-    operatorToSet->setFeedbackGain(parameters->fFeedback);
-    if (!parameters->operatorIds.empty())
-    {
-        for (int operatorId : parameters->operatorIds)
-        {
-            operatorId -= 1;
-            if (operatorId == -1)
-                operatorToSet->connectTo(&outputTerminal);
-            else
-                operatorToSet->connectTo(operatorInterface[operatorId]);
-        }
-    }
-}
 
 void AudioEngine::regenerateTarget()
 {
@@ -177,7 +155,7 @@ void AudioEngine::regenerateTarget()
 
 std::string AudioEngine::getTargetValues() {
     std::stringstream iss;
-    for (int i = 1; i <= 2; i++)
+    for (int i = 1; i <= targetGenerator.getConnectionSetup().iNumActiveOperators; i++)
     {
         iss << "Operator " << i << "-";
         Parameters opParameters = targetGenerator.getOperatorParameters(i);
@@ -196,6 +174,23 @@ void AudioEngine::reinitializeUserPatch() {
         op->reset();
     for (int i = 0; i < maxOperators; i++)
         setUserParameters(operatorInterface[i], parameterInterface[i]);
+}
+
+void AudioEngine::setUserParameters(Operator *operatorToSet, const Parameters *parameters) {
+    operatorToSet->setFrequency(parameters->fFreq);
+    operatorToSet->setGain(parameters->fGain);
+    operatorToSet->setFeedbackGain(parameters->fFeedback);
+    if (!parameters->operatorIds.empty())
+    {
+        for (int operatorId : parameters->operatorIds)
+        {
+            operatorId -= 1;
+            if (operatorId == -1)
+                operatorToSet->connectTo(&outputTerminal);
+            else
+                operatorToSet->connectTo(operatorInterface[operatorId]);
+        }
+    }
 }
 
 
