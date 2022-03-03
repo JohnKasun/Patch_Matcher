@@ -48,7 +48,7 @@ void TargetGenerator::generateParameters()
             m_pOperator2Parameters.operatorIds = algorithmToUse.iOperator2Connections;
         default:
             m_pOperator1Parameters.fFreq = genMultiple(fFundFreq, 1, 4);
-            m_pOperator1Parameters.fGain = m_fMaxGain;
+            m_pOperator1Parameters.fGain = getRandBetween(std::vector<int>{50, 100});
             m_pOperator1Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
             m_pOperator1Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(genRandParam(0, 4));
             m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
@@ -88,6 +88,11 @@ Algorithm TargetGenerator::generateAlgorithm() {
 
 ConnectionSetup TargetGenerator::getConnectionSetup() const {
     return m_pConnectionSetup;
+}
+
+int TargetGenerator::getRandBetween(std::vector<int> &&vec) const {
+    int iRandIndex = static_cast<int>(genRandParam(0, vec.size()-1));
+    return vec[iRandIndex];
 }
 
 

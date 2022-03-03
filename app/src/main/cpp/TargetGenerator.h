@@ -57,6 +57,7 @@ private:
     Algorithm generateAlgorithm();
     float genRandParam(float lowerBound, float upperBound, bool norm = false) const;
     float genMultiple(float fFundFreq, int iLowestMultiple, int iHighestMultiple) const;
+    int getRandBetween(std::vector<int>&&) const;
 
     const Algorithm m_sAlgorithm1 = {
             std::set<int>{0},
