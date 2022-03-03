@@ -14,8 +14,12 @@ Parameters TargetGenerator::getOperatorParameters(int iOperator) const {
             return m_pOperator2Parameters;
         case 3:
             return m_pOperator3Parameters;
-        default:
+        case 4:
             return m_pOperator4Parameters;
+        case 5:
+            return m_pOperator5Parameters;
+        default:
+            return m_pOperator6Parameters;
     }
 }
 
@@ -24,10 +28,22 @@ void TargetGenerator::generateParameters()
     float fFundFreq = genRandParam(50.0f, 200.0f);
     Algorithm algorithmToUse = generateAlgorithm();
     m_pConnectionSetup.algorithm = algorithmToUse;
-    m_pConnectionSetup.iNumActiveOperators = static_cast<int>(genRandParam(2, 4));
+    m_pConnectionSetup.iNumActiveOperators = static_cast<int>(genRandParam(2, 4) + getRandBetween(std::vector<int>{0,0,0,0,1,1,2}));
 
     switch (m_pConnectionSetup.iNumActiveOperators)
     {
+        case 6:
+            m_pOperator6Parameters.fFreq = genRandParam(2, 4);
+            m_pOperator6Parameters.fGain = m_fMaxGain;
+            m_pOperator6Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
+            m_pOperator6Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(getRandBetween(std::vector<int>{0,2,4}));
+            m_pOperator6Parameters.operatorIds = std::set<int>{static_cast<int>(genRandParam(1,2))};
+        case 5:
+            m_pOperator5Parameters.fFreq = genRandParam(2, 4);
+            m_pOperator5Parameters.fGain = m_fMaxGain;
+            m_pOperator5Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
+            m_pOperator5Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(getRandBetween(std::vector<int>{0,2,4}));
+            m_pOperator5Parameters.operatorIds = std::set<int>{static_cast<int>(genRandParam(1,2))};
         case 4:
             m_pOperator4Parameters.fFreq = genMultiple(fFundFreq, 1, 9);
             m_pOperator4Parameters.fGain = genRandParam(0.0f, m_fMaxGain);

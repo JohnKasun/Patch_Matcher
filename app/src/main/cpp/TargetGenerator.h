@@ -52,6 +52,8 @@ private:
     Parameters m_pOperator2Parameters;
     Parameters m_pOperator3Parameters;
     Parameters m_pOperator4Parameters;
+    Parameters m_pOperator5Parameters;
+    Parameters m_pOperator6Parameters;
     ConnectionSetup m_pConnectionSetup;
 
     Algorithm generateAlgorithm();
