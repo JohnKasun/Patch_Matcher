@@ -20,6 +20,17 @@ protected:
     void normalize();
 
 public:
+
+    enum Wavetable_t {
+        kSine,
+        kSquare,
+        kTriangle,
+        kSaw,
+        kCustom,
+
+        kNumTypes
+    };
+
     Wavetable();
     virtual ~Wavetable() = default;
 

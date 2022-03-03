@@ -75,24 +75,24 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
     return oboe::DataCallbackResult::Continue;
 }
 
-void AudioEngine::changeWavetable(int iOperatorId, int iWavetableType)
+void AudioEngine::changeWavetable(int iOperatorId, Wavetable::Wavetable_t eWaveType)
 {
     Operator* pOperator = operatorInterface[iOperatorId];
-    switch(iWavetableType)
+    switch(eWaveType)
     {
-        case 0:
+        case Wavetable::kSine:
             pOperator->setWavetable(&sine);
             break;
-        case 1:
+        case Wavetable::kSquare:
             pOperator->setWavetable(&square);
             break;
-        case 2:
+        case Wavetable::kTriangle:
             pOperator->setWavetable(&triangle);
             break;
-        case 3:
+        case Wavetable::kSaw:
             pOperator->setWavetable(&sawtooth);
             break;
-        case 4:
+        default:
             pOperator->setWavetable(&custom);
     }
 }

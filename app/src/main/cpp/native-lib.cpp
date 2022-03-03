@@ -67,7 +67,26 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env
                                                                      jint operator_id,
                                                                      jint wavetable_type) {
     operator_id -= 1;
-    engine.changeWavetable(operator_id, wavetable_type);
+    Wavetable::Wavetable_t eWaveType;
+    switch (wavetable_type)
+    {
+        case 0:
+            eWaveType = Wavetable::kSine;
+            break;
+        case 1:
+            eWaveType = Wavetable::kSquare;
+            break;
+        case 2:
+            eWaveType = Wavetable::kTriangle;
+            break;
+        case 3:
+            eWaveType = Wavetable::kSaw;
+            break;
+        default:
+            eWaveType = Wavetable::kCustom;
+    }
+    engine.changeWavetable(operator_id, eWaveType);
+    engine.parameterInterface[operator_id]->eWaveType = eWaveType;
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -84,6 +103,7 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1resetValues(JNIEnv *env, jobject thiz,
                                                                jint operator_id) {
+
     operator_id -= 1;
     engine.operatorInterface[operator_id]->reset();
     engine.parameterInterface[operator_id]->fFreq = 0;

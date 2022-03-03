@@ -9,12 +9,14 @@
 #include <set>
 #include <stdlib.h>
 #include <time.h>
+#include "Wavetable.h"
 
 struct Parameters
 {
     float fFreq = 0;
     float fGain = 0;
     float fFeedback = 0;
+    Wavetable::Wavetable_t eWaveType = Wavetable::Wavetable_t::kSine;
     std::set<int> operatorIds;
 };
 
