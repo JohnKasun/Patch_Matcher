@@ -70,6 +70,8 @@ private:
     void setTargetParameters(Operator* operatorToSet, const Parameters* parameters);
     void setUserParameters(Operator* operatorToSet, const Parameters* parameters);
 
+    const char* wavetableToString(const Wavetable::Wavetable_t eWaveType) const;
+
 public:
     AudioEngine();
     virtual ~AudioEngine();

@@ -152,7 +152,10 @@ std::string AudioEngine::getTargetValues() {
     {
         iss << "Operator " << i << "-";
         Parameters opParameters = targetGenerator.getOperatorParameters(i);
-        iss << "\n\t " << opParameters.fFreq << "Hz " << opParameters.fGain << " " << opParameters.fFeedback * 100 << "%";
+        iss << "\n\t " << opParameters.fFreq << "Hz "
+                        << opParameters.fGain << " "
+                        << opParameters.fFeedback * 100 << "% "
+                        << wavetableToString(opParameters.eWaveType);
         iss << "\n\tConnected to: ";
         for (const auto& opId : opParameters.operatorIds)
             iss << opId << " ";
@@ -180,6 +183,22 @@ void AudioEngine::setUserParameters(Operator *operatorToSet, const Parameters *p
             else
                 operatorToSet->connectTo(operatorInterface[operatorId]);
         }
+    }
+}
+
+const char* AudioEngine::wavetableToString(const Wavetable::Wavetable_t eWaveType) const {
+    switch (eWaveType)
+    {
+        case Wavetable::kSine:
+            return "Sine";
+        case Wavetable::kSquare:
+            return "Square";
+        case Wavetable::kTriangle:
+            return "Triangle";
+        case Wavetable::kSaw:
+            return "Sawtooth";
+        default:
+            return "Custom";
     }
 }
 
