@@ -24,7 +24,7 @@ int32_t AudioEngine::initializeAudio()
     oboe::AudioStreamBuilder builder;
     // The builder set methods can be chained for convenience.
     oboe::Result result = builder.setSharingMode(oboe::SharingMode::Exclusive)
-            ->setPerformanceMode(oboe::PerformanceMode::LowLatency)
+            ->setPerformanceMode(oboe::PerformanceMode::PowerSaving)
             ->setChannelCount(kChannelCount)
             ->setSampleRate(kSampleRate)
             ->setSampleRateConversionQuality(oboe::SampleRateConversionQuality::Medium)
