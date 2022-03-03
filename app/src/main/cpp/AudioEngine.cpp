@@ -103,9 +103,7 @@ void AudioEngine::loadWavetables()
     square.generate();
     triangle.generate();
     sawtooth.generate();
-    custom.setPatch([](float theta) {
-        return (float)(sin(theta) + 0.5 * sin(2.0*theta) * 0.25 * sin(3.0 * theta));
-    });
+    custom.setPatch([](float theta) { return (float)(sin(theta) + 0.5 * sin(2.0*theta) * 0.25 * sin(3.0 * theta));});
     custom.generate();
 }
 
@@ -164,11 +162,8 @@ std::string AudioEngine::getTargetValues() {
 }
 
 void AudioEngine::initializeUserPatch() {
-    outputTerminal.reset();
     for (Operator* op : operatorInterface)
-        op->reset();
-    for (int i = 0; i < maxOperators; i++)
-        setUserParameters(operatorInterface[i], parameterInterface[i]);
+        op->resetPhase();
 }
 
 void AudioEngine::setUserParameters(Operator *operatorToSet, const Parameters *parameters) {

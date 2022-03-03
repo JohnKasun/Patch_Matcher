@@ -102,6 +102,10 @@ void Operator::reset()
     m_cModOperatorsIn.clear();
 }
 
+void Operator::resetPhase() {
+    m_fAccumulatedPhase = 0.0f;
+}
+
 //=========================================
 
 void OutputTerminal::addOperator(Operator* operatorToAdd)

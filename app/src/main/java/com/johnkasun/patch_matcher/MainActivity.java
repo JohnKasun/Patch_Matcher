@@ -284,8 +284,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onKnobUp() {
-        ai_initializeUser();
+    public void onKnobUp(int identifier) {
+        if (identifier ==1 ) ai_initializeUser();
     }
 
     @Override

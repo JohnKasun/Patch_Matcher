@@ -16,6 +16,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView {
 
+    private MotionEvent lastAction;
     private GestureDetectorCompat gestureDetector;
     private int maxValue;
     private int minValue;
@@ -96,8 +97,6 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
                 return super.onDoubleTap(e);
             }
 
-
-
         });
     }
 
@@ -106,8 +105,9 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
         if (event.getActionMasked() == MotionEvent.ACTION_UP)
         {
             storedPosition = newPosition;
-            listener.onKnobUp();
+            listener.onKnobUp(identifier);
         }
+        lastAction = event;
         if (gestureDetector.onTouchEvent(event))
             return true;
         else
@@ -145,7 +145,7 @@ public class RotaryKnobView extends androidx.appcompat.widget.AppCompatImageView
 
     interface RotaryKnobListener {
         void onKnobRotate(int identifier, int value);
-        void onKnobUp();
+        void onKnobUp(int identifier);
     }
 }
 

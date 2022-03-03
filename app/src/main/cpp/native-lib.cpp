@@ -10,8 +10,13 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1connect(JNIEnv *env, jobject 
                                                            jint connectable_a_id,
                                                            jint connectable_b_id) {
 
-
-    engine.parameterInterface[connectable_a_id-1]->operatorIds.insert(connectable_b_id);
+    int operatorIdA = connectable_a_id - 1;
+    int operatorIdB = connectable_b_id - 1;
+    if (operatorIdB == -1)
+        engine.operatorInterface[operatorIdA]->connectTo(&engine.outputTerminal);
+    else
+        engine.operatorInterface[operatorIdA]->connectTo(engine.operatorInterface[operatorIdB]);
+    engine.parameterInterface[operatorIdA]->operatorIds.insert(connectable_b_id);
     engine.initializeUserPatch();
 }
 
@@ -21,7 +26,13 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1disconnect(JNIEnv *env, jobje
                                                               jint connectable_a_id,
                                                               jint connectable_b_id) {
 
-    engine.parameterInterface[connectable_a_id-1]->operatorIds.erase(connectable_b_id);
+    int operatorIdA = connectable_a_id - 1;
+    int operatorIdB = connectable_b_id - 1;
+    if (operatorIdB == -1)
+        engine.operatorInterface[operatorIdA]->disconnectFrom(&engine.outputTerminal);
+    else
+        engine.operatorInterface[operatorIdA]->disconnectFrom(engine.operatorInterface[operatorIdB]);
+    engine.parameterInterface[operatorIdA]->operatorIds.erase(connectable_b_id);
     engine.initializeUserPatch();
 }
 extern "C"

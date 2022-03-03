@@ -79,7 +79,7 @@ public:
     Operator(const Wavetable* wavetable, int id) :
             WavetableOscillator(wavetable),
             m_id(id),
-            RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)) {};
+            RADIANS_TO_INDEX(wavetable->get_size()/(kTwoPi)){};
 
     virtual ~Operator() = default;
 
@@ -121,6 +121,8 @@ public:
         m_bIsCurrentlyProcessing = false;
         return m_fCurrentSample;
     }
+
+    void resetPhase();
 };
 
 class OutputTerminal {
