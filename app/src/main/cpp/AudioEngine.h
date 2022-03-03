@@ -71,6 +71,7 @@ private:
     void setUserParameters(Operator* operatorToSet, const Parameters* parameters);
 
     const char* wavetableToString(const Wavetable::Wavetable_t eWaveType) const;
+    Wavetable& getWavetableReference(const Wavetable::Wavetable_t eWaveType);
 
 public:
     AudioEngine();

@@ -125,6 +125,7 @@ void AudioEngine::setTargetParameters(Operator* operatorToSet, const Parameters*
     operatorToSet->setFrequency(opParameters->fFreq);
     operatorToSet->setGain(opParameters->fGain);
     operatorToSet->setFeedbackGain(opParameters->fFeedback);
+    operatorToSet->setWavetable(&getWavetableReference(opParameters->eWaveType));
     if (!opParameters->operatorIds.empty())
     {
         for (int operatorId : opParameters->operatorIds)
@@ -173,6 +174,7 @@ void AudioEngine::setUserParameters(Operator *operatorToSet, const Parameters *p
     operatorToSet->setFrequency(parameters->fFreq);
     operatorToSet->setGain(parameters->fGain);
     operatorToSet->setFeedbackGain(parameters->fFeedback);
+    operatorToSet->setWavetable(&getWavetableReference(parameters->eWaveType));
     if (!parameters->operatorIds.empty())
     {
         for (int operatorId : parameters->operatorIds)
@@ -199,6 +201,22 @@ const char* AudioEngine::wavetableToString(const Wavetable::Wavetable_t eWaveTyp
             return "Sawtooth";
         default:
             return "Custom";
+    }
+}
+
+Wavetable& AudioEngine::getWavetableReference(const Wavetable::Wavetable_t eWaveType) {
+    switch (eWaveType)
+    {
+        case Wavetable::kSine:
+            return sine;
+        case Wavetable::kSquare:
+            return square;
+        case Wavetable::kTriangle:
+            return triangle;
+        case Wavetable::kSaw:
+            return sawtooth;
+        default:
+            return custom;
     }
 }
 
