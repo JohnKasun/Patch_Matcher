@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EvaluationActivity">
+
+    <Button
+        android:id="@+id/RestartButton"
+        android:layout_width="105dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="139dp"
+        android:onClick="restartGame"
+        android:text="Restart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ScoreView" />
+
+    <TextView
+        android:id="@+id/ScoreView"
+        android:layout_width="122dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="143dp"
+        android:layout_marginBottom="11dp"
+        android:justificationMode="none"
+        android:text="Score Goes Here"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/RestartButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

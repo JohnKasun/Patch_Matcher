@@ -90,6 +90,7 @@ public:
     void regenerateTarget();
     std::string getTargetValues();
     void initializeUserPatch();
+    void reset();
 
     OutputTerminal outputTerminal;
     Operator* operatorInterface[maxOperators] {

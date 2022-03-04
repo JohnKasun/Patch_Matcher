@@ -138,3 +138,8 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1initializeUser(JNIEnv *env, jobject thiz) {
     engine.initializeUserPatch();
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onResetActivity(JNIEnv *env, jobject thiz) {
+    engine.reset();
+}

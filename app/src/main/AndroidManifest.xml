@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Patch_Matcher">
         <activity
-            android:name="com.johnkasun.patch_matcher.MainActivity"
-            android:screenOrientation="landscape"
-            android:exported="true">
+            android:name=".EvaluationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

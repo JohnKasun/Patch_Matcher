@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -183,6 +184,26 @@ public class MainActivity extends AppCompatActivity
         playButtonTarget = findViewById(R.id.playButtonTarget);
         playButtonUser.listener = this;
         playButtonTarget.listener = this;
+    }
+
+    public void evaluatePatch(View view)
+    {
+        resetActivity();
+        Intent intent = new Intent(this, EvaluationActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void resetActivity()
+    {
+        deselectAll();
+        for (int i = 0; i < operatorList.size(); i++)
+        {
+            OperatorView currentOperator = operatorList.get(i);
+            onDeleteOperator(currentOperator);
+        }
+        OperatorView.resetNumOperators();
+        ai_onResetActivity();
     }
 
 
@@ -374,6 +395,7 @@ public class MainActivity extends AppCompatActivity
     public native void ai_disconnect(int ConnectableA_id, int ConnectableB_id);
     public native void ai_resetValues(int operator_id);
     public native void ai_onPlayTargetAudio();
+    public native void ai_onResetActivity();
     public native void ai_onPlayUserAudio();
     public native void ai_regenerateTarget();
     public native void ai_initializeUser();

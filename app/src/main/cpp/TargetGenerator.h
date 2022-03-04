@@ -18,6 +18,14 @@ struct Parameters
     float fFeedback = 0;
     Wavetable::Wavetable_t eWaveType = Wavetable::Wavetable_t::kSine;
     std::set<int> operatorIds;
+    void reset()
+    {
+        fFreq = 0;
+        fGain = 0;
+        fFeedback = 0;
+        eWaveType = Wavetable::kSine;
+        operatorIds.clear();
+    }
 };
 
 struct Algorithm

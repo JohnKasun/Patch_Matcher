@@ -220,4 +220,16 @@ Wavetable& AudioEngine::getWavetableReference(const Wavetable::Wavetable_t eWave
     }
 }
 
+void AudioEngine::reset()
+{
+    outputTerminal.reset();
+    for (Operator* op : operatorInterface)
+        op->reset();
+    outputTerminal_t.reset();
+    for (Operator* op : operatorInterface_t)
+        op->reset();
+    for (Parameters* params : parameterInterface)
+        params->reset();
+}
+
 
