@@ -404,6 +404,6 @@ public class MainActivity extends AppCompatActivity
     public native void ai_regenerateTarget();
     public native void ai_initializeUser();
     public native String ai_getTargetValues();
-    public native float ai_onEvaluatePatch();
+    public native int ai_onEvaluatePatch();
 
 }

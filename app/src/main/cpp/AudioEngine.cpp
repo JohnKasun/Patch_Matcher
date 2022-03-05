@@ -234,9 +234,22 @@ void AudioEngine::reset()
         params->reset();
 }
 
-float AudioEngine::evaluatePatch()
+int AudioEngine::evaluatePatch()
 {
     while (m_bIsProcessing);
+
+    if (outputTerminal.isEmpty())
+        return 0;
+
+    int numZero = 0;
+    for (Parameters* param : parameterInterface)
+    {
+        if (param->fFreq == 0 || param->fGain == 0 || param->operatorIds.empty())
+            numZero++;
+    }
+    if (numZero == maxOperators)
+        return 0;
+
     float fLowestFreq = operator1_t.getFrequency();
     for (Operator* op : operatorInterface)
     {
@@ -255,14 +268,15 @@ float AudioEngine::evaluatePatch()
     }
 
     float fPeriod = 1.0f / fLowestFreq;
-    int fNumSamples = static_cast<int>(2.0f * fPeriod * kSampleRate);
+    int fNumSamples = static_cast<int>(10.0f * fPeriod * kSampleRate);
     float fSum = 0.0f;
     for (int sample = 0; sample < fNumSamples; sample++)
     {
-        fSum += outputTerminal.getNextSample() - outputTerminal_t.getNextSample();
+        fSum += abs(outputTerminal.getNextSample() - outputTerminal_t.getNextSample());
     }
     float fMean = fSum / fNumSamples;
-    return fMean;
+    int iScore = static_cast<int>((1.0f - fMean)*100);
+    return iScore;
 }
 
 

@@ -15,9 +15,9 @@ public class EvaluationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_evaluation);
 
         Intent intent = getIntent();
-        float iEvaluationValue = intent.getFloatExtra("Result", -1);
+        float iEvaluationValue = intent.getIntExtra("Result", -1);
         TextView scoreView = findViewById(R.id.ScoreView);
-        scoreView.setText(""+iEvaluationValue);
+        scoreView.setText(iEvaluationValue+"%");
     }
 
     public void restartGame(View view)

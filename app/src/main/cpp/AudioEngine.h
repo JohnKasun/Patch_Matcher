@@ -92,7 +92,7 @@ public:
     void regenerateTarget();
     std::string getTargetValues();
     void initializeUserPatch();
-    float evaluatePatch();
+    int evaluatePatch();
     void reset();
 
     OutputTerminal outputTerminal;
