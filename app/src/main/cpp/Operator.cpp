@@ -34,7 +34,7 @@ void WavetableOscillator::setSampleRate(float fSampleRate)
 {
     s_fSampleRate = fSampleRate;
     s_FREQ_TO_PHASEDELTA = kTwoPi / s_fSampleRate;
-    s_PHASEDELTA_TO_FREQ = 1.0f / kTwoPi;
+    s_PHASEDELTA_TO_FREQ = s_fSampleRate / kTwoPi;
 }
 
 float WavetableOscillator::s_fSampleRate = 0.0f;

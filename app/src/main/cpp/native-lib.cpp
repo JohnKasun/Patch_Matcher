@@ -143,3 +143,8 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onResetActivity(JNIEnv *env, jobject thiz) {
     engine.reset();
 }
+extern "C"
+JNIEXPORT jfloat JNICALL
+Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onEvaluatePatch(JNIEnv *env, jobject thiz) {
+    return engine.evaluatePatch();
+}

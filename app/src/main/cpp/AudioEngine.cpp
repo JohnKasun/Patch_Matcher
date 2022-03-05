@@ -10,7 +10,6 @@ AudioEngine::AudioEngine()
 {
     loadWavetables();
     initializeAudio();
-    initializeTargetOperators();
 }
 
 AudioEngine::~AudioEngine()
@@ -57,11 +56,13 @@ void AudioEngine::stopAudio()
 int32_t AudioEngine::pauseAudio()
 {
     m_isRunning = false;
+    mStream->requestFlush();
     return static_cast<int32_t>(mStream->requestPause());
 }
 
 oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) {
     float *floatData = (float *) audioData;
+    m_bIsProcessing = true;
     for (int frame = 0; frame < numFrames; frame++)
     {
         float fSampleValue{kAmplitude};
@@ -72,6 +73,7 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
         for (int channel = 0; channel < kChannelCount; channel++)
             floatData[frame * kChannelCount + channel] = fSampleValue;
     }
+    m_bIsProcessing = false;
     return oboe::DataCallbackResult::Continue;
 }
 
@@ -230,6 +232,37 @@ void AudioEngine::reset()
         op->reset();
     for (Parameters* params : parameterInterface)
         params->reset();
+}
+
+float AudioEngine::evaluatePatch()
+{
+    while (m_bIsProcessing);
+    float fLowestFreq = operator1_t.getFrequency();
+    for (Operator* op : operatorInterface)
+    {
+        op->resetPhase();
+        float fFreq = op->getFrequency();
+        if (fFreq < fLowestFreq && fFreq > 0)
+            fLowestFreq = fFreq;
+    }
+
+    for (Operator* op : operatorInterface_t)
+    {
+        op->resetPhase();
+        float fFreq = op->getFrequency();
+        if (fFreq < fLowestFreq && fFreq > 0)
+            fLowestFreq = fFreq;
+    }
+
+    float fPeriod = 1.0f / fLowestFreq;
+    int fNumSamples = static_cast<int>(2.0f * fPeriod * kSampleRate);
+    float fSum = 0.0f;
+    for (int sample = 0; sample < fNumSamples; sample++)
+    {
+        fSum += outputTerminal.getNextSample() - outputTerminal_t.getNextSample();
+    }
+    float fMean = fSum / fNumSamples;
+    return fMean;
 }
 
 

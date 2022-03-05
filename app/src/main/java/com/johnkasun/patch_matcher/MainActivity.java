@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ai_regenerateTarget();
+
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -186,10 +188,12 @@ public class MainActivity extends AppCompatActivity
         playButtonTarget.listener = this;
     }
 
-    public void evaluatePatch(View view)
+    public void finishButtonPressed(View view)
     {
-        resetActivity();
+        ai_onStopAudio();
         Intent intent = new Intent(this, EvaluationActivity.class);
+        intent.putExtra("Result", ai_onEvaluatePatch());
+        resetActivity();
         startActivity(intent);
         finish();
     }
@@ -400,5 +404,6 @@ public class MainActivity extends AppCompatActivity
     public native void ai_regenerateTarget();
     public native void ai_initializeUser();
     public native String ai_getTargetValues();
+    public native float ai_onEvaluatePatch();
 
 }

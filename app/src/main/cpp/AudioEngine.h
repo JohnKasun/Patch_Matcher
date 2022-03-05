@@ -73,6 +73,8 @@ private:
     const char* wavetableToString(const Wavetable::Wavetable_t eWaveType) const;
     Wavetable& getWavetableReference(const Wavetable::Wavetable_t eWaveType);
 
+    bool m_bIsProcessing = false;
+
 public:
     AudioEngine();
     virtual ~AudioEngine();
@@ -90,6 +92,7 @@ public:
     void regenerateTarget();
     std::string getTargetValues();
     void initializeUserPatch();
+    float evaluatePatch();
     void reset();
 
     OutputTerminal outputTerminal;
