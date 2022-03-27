@@ -192,7 +192,8 @@ public class MainActivity extends AppCompatActivity
     {
         ai_onStopAudio();
         Intent intent = new Intent(this, EvaluationActivity.class);
-        intent.putExtra("Result", ai_onEvaluatePatch());
+        float value = ai_onEvaluatePatch();
+        intent.putExtra("Result", value);
         resetActivity();
         startActivity(intent);
         finish();
@@ -404,6 +405,6 @@ public class MainActivity extends AppCompatActivity
     public native void ai_regenerateTarget();
     public native void ai_initializeUser();
     public native String ai_getTargetValues();
-    public native int ai_onEvaluatePatch();
+    public native float ai_onEvaluatePatch();
 
 }

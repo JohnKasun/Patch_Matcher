@@ -234,49 +234,62 @@ void AudioEngine::reset()
         params->reset();
 }
 
-int AudioEngine::evaluatePatch()
+float AudioEngine::evaluatePatch()
 {
     while (m_bIsProcessing);
 
-    if (outputTerminal.isEmpty())
-        return 0;
-
-    int numZero = 0;
-    for (Parameters* param : parameterInterface)
-    {
-        if (param->fFreq == 0 || param->fGain == 0 || param->operatorIds.empty())
-            numZero++;
-    }
-    if (numZero == maxOperators)
-        return 0;
-
-    float fLowestFreq = operator1_t.getFrequency();
+    // Reset Phase of all operators
     for (Operator* op : operatorInterface)
-    {
         op->resetPhase();
-        float fFreq = op->getFrequency();
-        if (fFreq < fLowestFreq && fFreq > 0)
-            fLowestFreq = fFreq;
-    }
-
     for (Operator* op : operatorInterface_t)
-    {
         op->resetPhase();
-        float fFreq = op->getFrequency();
-        if (fFreq < fLowestFreq && fFreq > 0)
-            fLowestFreq = fFreq;
+
+    int numSamples = 1000;
+/*    float* userSamples = new float[numSamples];
+    float* targetSamples = new float[numSamples];*/
+    std::vector<float> userSamples;
+    std::vector<float> targetSamples;
+
+    // Generate samples and place into buffer for processing
+    for (int sample = 0; sample < numSamples; sample++)
+    {
+        userSamples.push_back(outputTerminal.getNextSample());
+        targetSamples.push_back(outputTerminal_t.getNextSample());
     }
 
-    float fPeriod = 1.0f / fLowestFreq;
-    int fNumSamples = static_cast<int>(10.0f * fPeriod * kSampleRate);
-    float fSum = 0.0f;
-    for (int sample = 0; sample < fNumSamples; sample++)
+    // Find max value for each buffer
+    float userMax = userSamples[0];
+    float targetMax = targetSamples[0];
+    for (int sample = 0; sample < numSamples; sample++)
     {
-        fSum += abs(outputTerminal.getNextSample() - outputTerminal_t.getNextSample());
+        if (userSamples[sample] > userMax)
+            userMax = userSamples[sample];
+
+        if (targetSamples[sample] > targetMax)
+            targetMax = targetSamples[sample];
     }
-    float fMean = fSum / fNumSamples;
-    int iScore = static_cast<int>((1.0f - fMean)*100);
-    return iScore;
+
+    // Normalize each buffer
+    for (int sample = 0; sample < numSamples; sample++)
+    {
+        if (userMax != 0)
+            userSamples[sample] /= userMax;
+        targetSamples[sample] /= targetMax;
+    }
+
+    // Calculate mean diff
+    float diffSum = 0;
+    for (int sample = 0; sample < numSamples; sample++)
+    {
+        diffSum += abs(userSamples[sample] - targetSamples[sample]);
+    }
+    float diffMean = diffSum / numSamples;
+
+/*    delete[] userSamples;
+    delete[] targetSamples;*/
+
+    return diffMean;
+
 }
 
 
