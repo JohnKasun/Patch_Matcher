@@ -300,7 +300,7 @@ float AudioEngine::evaluatePatch()
 
     // Scores the patch
     const float iLowerBound = 5E-3;
-    const float iUpperBound = 0.3;
+    const float iUpperBound = 1.0;
     if (diffMean <= iLowerBound)
         return 100.0f;
     else if (diffMean >= iUpperBound)
