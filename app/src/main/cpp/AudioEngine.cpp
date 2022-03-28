@@ -149,7 +149,11 @@ void AudioEngine::regenerateTarget()
 {
     outputTerminal_t.reset();
     for (Operator* op : operatorInterface_t)
+    {
         op->reset();
+        op->setWavetable(&sine);
+    }
+
     initializeTargetOperators();
 }
 
@@ -230,10 +234,16 @@ void AudioEngine::reset()
 {
     outputTerminal.reset();
     for (Operator* op : operatorInterface)
+    {
         op->reset();
+        op->setWavetable(&sine);
+    }
     outputTerminal_t.reset();
     for (Operator* op : operatorInterface_t)
+    {
         op->reset();
+        op->setWavetable(&sine);
+    }
     for (Parameters* params : parameterInterface)
         params->reset();
 }
@@ -248,7 +258,7 @@ float AudioEngine::evaluatePatch()
     for (Operator* op : operatorInterface_t)
         op->resetPhase();
 
-    int numSamples = 1000;
+    int numSamples = 100000;
     std::vector<float> userSamples;
     std::vector<float> targetSamples;
 
@@ -289,8 +299,8 @@ float AudioEngine::evaluatePatch()
     float diffMean = diffSum / numSamples;
 
     // Scores the patch
-    const float iLowerBound = 1E-3;
-    const float iUpperBound = 0.5;
+    const float iLowerBound = 5E-3;
+    const float iUpperBound = 0.3;
     if (diffMean <= iLowerBound)
         return 100.0f;
     else if (diffMean >= iUpperBound)

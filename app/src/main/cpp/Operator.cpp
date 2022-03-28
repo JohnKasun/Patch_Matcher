@@ -99,11 +99,14 @@ void Operator::reset()
     setGain(0.0f);
     setFeedbackGain(0.0f);
     m_fAccumulatedPhase = 0.0f;
+    m_fCurrentSample = 0.0f;
     m_cModOperatorsIn.clear();
 }
 
 void Operator::resetPhase() {
     m_fAccumulatedPhase = 0.0f;
+    m_fCurrentSample = 0.0f;
+    resetGeneration();
 }
 
 //=========================================
