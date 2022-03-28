@@ -56,24 +56,28 @@ void AudioEngine::stopAudio()
 int32_t AudioEngine::pauseAudio()
 {
     m_isRunning = false;
+    oboe::Result result = mStream->requestPause();
     mStream->requestFlush();
-    return static_cast<int32_t>(mStream->requestPause());
+    return static_cast<int32_t>(result);
 }
 
 oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) {
     float *floatData = (float *) audioData;
-    m_bIsProcessing = true;
-    for (int frame = 0; frame < numFrames; frame++)
-    {
-        float fSampleValue{kAmplitude};
-        if (shouldPlayUser)
-            fSampleValue *= outputTerminal.getNextSample();
-        else
-            fSampleValue *= outputTerminal_t.getNextSample();
-        for (int channel = 0; channel < kChannelCount; channel++)
-            floatData[frame * kChannelCount + channel] = fSampleValue;
+    if (shouldPlayUser) {
+        for (int i = 0; i < numFrames; ++i) {
+            float sampleValue = (float) outputTerminal.getNextSample();
+            for (int j = 0; j < kChannelCount; j++) {
+                floatData[i * kChannelCount + j] = sampleValue / kChannelCount;
+            }
+        }
+    } else {
+        for (int i = 0; i < numFrames; ++i) {
+            float sampleValue = (float) outputTerminal_t.getNextSample();
+            for (int j = 0; j < kChannelCount; j++) {
+                floatData[i * kChannelCount + j] = sampleValue / kChannelCount;
+            }
+        }
     }
-    m_bIsProcessing = false;
     return oboe::DataCallbackResult::Continue;
 }
 
@@ -245,8 +249,6 @@ float AudioEngine::evaluatePatch()
         op->resetPhase();
 
     int numSamples = 1000;
-/*    float* userSamples = new float[numSamples];
-    float* targetSamples = new float[numSamples];*/
     std::vector<float> userSamples;
     std::vector<float> targetSamples;
 
@@ -268,12 +270,13 @@ float AudioEngine::evaluatePatch()
         if (targetSamples[sample] > targetMax)
             targetMax = targetSamples[sample];
     }
+    if (userMax == 0)
+        return 0;
 
     // Normalize each buffer
     for (int sample = 0; sample < numSamples; sample++)
     {
-        if (userMax != 0)
-            userSamples[sample] /= userMax;
+        userSamples[sample] /= userMax;
         targetSamples[sample] /= targetMax;
     }
 
@@ -285,10 +288,18 @@ float AudioEngine::evaluatePatch()
     }
     float diffMean = diffSum / numSamples;
 
-/*    delete[] userSamples;
-    delete[] targetSamples;*/
+    // Scores the patch
+    const float iLowerBound = 1E-3;
+    const float iUpperBound = 0.5;
+    if (diffMean <= iLowerBound)
+        return 100.0f;
+    else if (diffMean >= iUpperBound)
+        return 0.0f;
+    else
+    {
+        return (diffMean - iUpperBound) / (iLowerBound - iUpperBound) * 100.0f;
+    }
 
-    return diffMean;
 
 }
 
