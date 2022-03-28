@@ -26,17 +26,18 @@ Parameters TargetGenerator::getOperatorParameters(int iOperator) const {
 void TargetGenerator::generateParameters()
 {
 
+    float fFundFreq = genRandParam(50, 200);
     Algorithm algorithmToUse = m_sAlgorithm1;
     m_pConnectionSetup.algorithm = algorithmToUse;
     m_pConnectionSetup.iNumActiveOperators = 2;
 
-    m_pOperator2Parameters.fFreq = 300;
+    m_pOperator2Parameters.fFreq = fFundFreq;
     m_pOperator2Parameters.fGain = 100;
     m_pOperator2Parameters.fFeedback = 0;
     m_pOperator2Parameters.eWaveType = Wavetable::kSine;
     m_pOperator2Parameters.operatorIds = algorithmToUse.iOperator2Connections;
 
-    m_pOperator1Parameters.fFreq = 150;
+    m_pOperator1Parameters.fFreq = genMultiple(fFundFreq, 1, 4);
     m_pOperator1Parameters.fGain = 100;
     m_pOperator1Parameters.fFeedback = 0;
     m_pOperator1Parameters.eWaveType = Wavetable::kSine;

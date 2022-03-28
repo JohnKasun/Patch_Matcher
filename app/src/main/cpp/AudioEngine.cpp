@@ -258,7 +258,12 @@ float AudioEngine::evaluatePatch()
     for (Operator* op : operatorInterface_t)
         op->resetPhase();
 
-    int numSamples = 100000;
+    float fLowestFreq = std::min(outputTerminal.getLowestFrequency(), outputTerminal_t.getLowestFrequency());
+    if (fLowestFreq == 0)
+        return 0;
+
+    float fSmallestPeriod = 1.0f / fLowestFreq;
+    int numSamples = static_cast<int>(fSmallestPeriod * kSampleRate);
     std::vector<float> userSamples;
     std::vector<float> targetSamples;
 
@@ -301,14 +306,16 @@ float AudioEngine::evaluatePatch()
     // Scores the patch
     const float iLowerBound = 5E-3;
     const float iUpperBound = 1.0;
+    float fScore = 0;
     if (diffMean <= iLowerBound)
-        return 100.0f;
+        fScore = 100.0f;
     else if (diffMean >= iUpperBound)
-        return 0.0f;
+        fScore = 0.0f;
     else
     {
-        return (diffMean - iUpperBound) / (iLowerBound - iUpperBound) * 100.0f;
+        fScore = (diffMean - iUpperBound) / (iLowerBound - iUpperBound) * 100.0f;
     }
+    return fScore;
 
 
 }

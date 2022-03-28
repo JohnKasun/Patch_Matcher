@@ -146,6 +146,7 @@ public:
     ~OutputTerminal() {};
     void reset();
     bool isEmpty() { return m_cOutputOperators.size() == 0; };
+    float getLowestFrequency() const;
     inline float getNextSample() noexcept
     {
         float fCurrentSample = 0.0f;

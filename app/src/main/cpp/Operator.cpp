@@ -136,6 +136,19 @@ void OutputTerminal::updateGainScaling()
 void OutputTerminal::reset()
 {
     m_cOutputOperators.clear();
+}
+
+float OutputTerminal::getLowestFrequency() const
+{
+    if (m_cOutputOperators.empty())
+        return 0;
+
+    float fLowestFreq = (*m_cOutputOperators.begin())->getFrequency();
+    for (Operator* op : m_cOutputOperators)
+    {
+        fLowestFreq = std::min(fLowestFreq, op->getFrequency());
+    }
+    return fLowestFreq;
 };
 
 
