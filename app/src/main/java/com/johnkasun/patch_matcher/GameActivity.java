@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
+public class GameActivity extends AppCompatActivity
         implements RotaryKnobView.RotaryKnobListener,
                     OutputTerminalView.OutputTerminalListener,
                     OperatorView.OperatorViewListener,
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity
 
         ai_regenerateTarget();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         Button regenButton = findViewById(R.id.RegenButton);
@@ -199,6 +198,15 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
+    public void menuButtonPressed(View view)
+    {
+        ai_onStopAudio();
+        Intent intent = new Intent(this, MenuActivity.class);
+        resetActivity();
+        startActivity(intent);
+        finish();
+    }
+
     private void resetActivity()
     {
         deselectAll();
@@ -226,7 +234,7 @@ public class MainActivity extends AppCompatActivity
         if (operatorList.size() >= maxOperators)
             Toast.makeText(getApplicationContext(), "Max Operator Limit Reached", Toast.LENGTH_SHORT).show();
         else {
-            OperatorView newOperator = new OperatorView(MainActivity.this);
+            OperatorView newOperator = new OperatorView(GameActivity.this);
             newOperator.listener = this;
             newOperator.setPosition(e.getX(), e.getY());
             background.addView(newOperator);
@@ -325,7 +333,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMakeConnection(Connectable connectableStart, Connectable connectableEnd) {
         if (connectableStart != connectableEnd && connectableStart != null && connectableEnd != null) {
-            ConnectorView newConnector = new ConnectorView(MainActivity.this);
+            ConnectorView newConnector = new ConnectorView(GameActivity.this);
             newConnector.registerConnectables(connectableStart, connectableEnd);
             for (int i = 0; i < connectorList.size(); i++) {
                 ConnectorView currentConnector = connectorList.get(i);

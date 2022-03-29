@@ -6,7 +6,7 @@ AudioEngine engine;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1connect(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1connect(JNIEnv *env, jobject thiz,
                                                            jint connectable_a_id,
                                                            jint connectable_b_id) {
 
@@ -22,7 +22,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1connect(JNIEnv *env, jobject 
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1disconnect(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1disconnect(JNIEnv *env, jobject thiz,
                                                               jint connectable_a_id,
                                                               jint connectable_b_id) {
 
@@ -37,7 +37,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1disconnect(JNIEnv *env, jobje
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFrequency(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onChangeFrequency(JNIEnv *env, jobject thiz,
                                                                      jint operator_id, jint value) {
     operator_id -= 1;
     engine.operatorInterface[operator_id]->setFrequency(value);
@@ -45,7 +45,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFrequency(JNIEnv *env
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeGain(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onChangeGain(JNIEnv *env, jobject thiz,
                                                                 jint operator_id, jint value) {
     operator_id -= 1;
     engine.operatorInterface[operator_id]->setGain(value);
@@ -53,7 +53,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeGain(JNIEnv *env, job
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFeedback(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onChangeFeedback(JNIEnv *env, jobject thiz,
                                                                     jint operator_id, jint value) {
     operator_id -= 1;
     float valueScaled = static_cast<float>(value) / 100.0f;
@@ -63,7 +63,7 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onChangeFeedback(JNIEnv *env,
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onWavetableChange(JNIEnv *env, jobject thiz,
                                                                      jint operator_id,
                                                                      jint wavetable_type) {
     operator_id -= 1;
@@ -90,18 +90,18 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onWavetableChange(JNIEnv *env
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1regenerateTarget(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1regenerateTarget(JNIEnv *env, jobject thiz) {
     engine.regenerateTarget();
 }
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1getTargetValues(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1getTargetValues(JNIEnv *env, jobject thiz) {
     return env->NewStringUTF(engine.getTargetValues().c_str());
 }
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1resetValues(JNIEnv *env, jobject thiz,
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1resetValues(JNIEnv *env, jobject thiz,
                                                                jint operator_id) {
 
     operator_id -= 1;
@@ -114,19 +114,19 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1resetValues(JNIEnv *env, jobj
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onStopAudio(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onStopAudio(JNIEnv *env, jobject thiz) {
     engine.pauseAudio();
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onPlayTargetAudio(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onPlayTargetAudio(JNIEnv *env, jobject thiz) {
     engine.setOutputType(false);
     if (!engine.isRunning())
         engine.startAudio();
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onPlayUserAudio(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onPlayUserAudio(JNIEnv *env, jobject thiz) {
     engine.setOutputType(true);
     if (!engine.isRunning())
         engine.startAudio();
@@ -135,16 +135,16 @@ Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onPlayUserAudio(JNIEnv *env, 
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1initializeUser(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1initializeUser(JNIEnv *env, jobject thiz) {
     engine.initializeUserPatch();
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onResetActivity(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onResetActivity(JNIEnv *env, jobject thiz) {
     engine.reset();
 }
 extern "C"
 JNIEXPORT jfloat JNICALL
-Java_com_johnkasun_patch_1matcher_MainActivity_ai_1onEvaluatePatch(JNIEnv *env, jobject thiz) {
+Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onEvaluatePatch(JNIEnv *env, jobject thiz) {
     return engine.evaluatePatch();
 }

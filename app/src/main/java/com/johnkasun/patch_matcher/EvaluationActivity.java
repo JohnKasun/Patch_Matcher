@@ -22,7 +22,13 @@ public class EvaluationActivity extends AppCompatActivity {
 
     public void restartGame(View view)
     {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+    }
+
+    public void toMenu(View view)
+    {
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 }
