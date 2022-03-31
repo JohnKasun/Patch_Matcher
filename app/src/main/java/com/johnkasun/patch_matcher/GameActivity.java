@@ -325,7 +325,7 @@ public class GameActivity extends AppCompatActivity
     private void doEvaluation()
     {
         float value = ai_onEvaluatePatch();
-        liveScoreView.setText("" + (int)value);
+        liveScoreView.setText((int)value+"%");
     }
 
     @Override
