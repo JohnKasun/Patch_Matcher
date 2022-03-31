@@ -117,6 +117,7 @@ public class GameActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 ai_regenerateTarget();
+                doEvaluation();
             }
         });
 
@@ -194,8 +195,6 @@ public class GameActivity extends AppCompatActivity
     {
         //ai_onStopAudio();
         //Intent intent = new Intent(this, EvaluationActivity.class);
-        float value = ai_onEvaluatePatch();
-        liveScoreView.setText("" + (int)value);
         //intent.putExtra("Result", value);
         //resetActivity();
         //startActivity(intent);
@@ -263,6 +262,7 @@ public class GameActivity extends AppCompatActivity
         ai_disconnect(connectorToDelete.getStartConnectable().getIdentifier(), connectorToDelete.getEndConnectable().getIdentifier());
         background.removeView(connectorToDelete);
         connectorList.remove(connectorToDelete);
+        doEvaluation();
     }
 
     public void updateKnobPositions(OperatorView selectedOperator){
@@ -318,7 +318,14 @@ public class GameActivity extends AppCompatActivity
                     ai_onChangeFeedback(selectedOperator.getIdentifier(), value);
                     break;
             }
+            doEvaluation();
         }
+    }
+
+    private void doEvaluation()
+    {
+        float value = ai_onEvaluatePatch();
+        liveScoreView.setText("" + (int)value);
     }
 
     @Override
@@ -343,6 +350,7 @@ public class GameActivity extends AppCompatActivity
                 ConnectorView currentConnector = connectorList.get(i);
                 if (newConnector.isEqualTo(currentConnector)) {
                     deleteConnector(currentConnector);
+                    doEvaluation();
                     return;
                 } else if (newConnector.isReverseOf(currentConnector)) {
                     Toast.makeText(getApplicationContext(), "Connection already exists", Toast.LENGTH_SHORT).show();
@@ -354,6 +362,7 @@ public class GameActivity extends AppCompatActivity
             connectorList.add(newConnector);
             connectableStart.bringToFront();
             connectableEnd.bringToFront();
+            doEvaluation();
         }
     }
 
@@ -401,6 +410,7 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onWavetableChange(OperatorView operatorToChangeWavetable) {
         ai_onWavetableChange(operatorToChangeWavetable.getIdentifier(), operatorToChangeWavetable.getWavetableType());
+        doEvaluation();
     }
 
     public native void ai_onStopAudio();
