@@ -51,6 +51,13 @@ private:
     Operator operator4_t;
     Operator operator5_t;
     Operator operator6_t;
+    Parameters m_param1_t;
+    Parameters m_param2_t;
+    Parameters m_param3_t;
+    Parameters m_param4_t;
+    Parameters m_param5_t;
+    Parameters m_param6_t;
+
     OutputTerminal outputTerminal_t;
     TargetGenerator targetGenerator;
 
@@ -64,11 +71,19 @@ private:
             &operator6_t,
     };
 
+    Parameters* parameterInterface_t[maxOperators] {
+            &m_param1_t,
+            &m_param2_t,
+            &m_param3_t,
+            &m_param4_t,
+            &m_param5_t,
+            &m_param6_t
+    };
+
     // Startup Functions
     void loadWavetables();
     void initializeTargetOperators();
-    void setTargetParameters(Operator* operatorToSet, const Parameters* parameters);
-    void setUserParameters(Operator* operatorToSet, const Parameters* parameters);
+    void setOperatorParameters(Operator* operators[maxOperators], Parameters* parameters[maxOperators], OutputTerminal* outputTerminal);
 
     const char* wavetableToString(const Wavetable::Wavetable_t eWaveType) const;
     Wavetable& getWavetableReference(const Wavetable::Wavetable_t eWaveType);

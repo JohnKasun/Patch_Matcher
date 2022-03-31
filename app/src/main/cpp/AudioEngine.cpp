@@ -81,6 +81,33 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
     return oboe::DataCallbackResult::Continue;
 }
 
+void AudioEngine::setOperatorParameters(Operator* allOperators[maxOperators], Parameters* allParameters[maxOperators], OutputTerminal *outputTerminal)
+{
+    for (int i = 0; i < maxOperators; i++)
+    {
+        Operator* operatorToSet = allOperators[i];
+        Parameters* parameters = allParameters[i];
+
+        operatorToSet->setFrequency(parameters->fFreq);
+        operatorToSet->setGain(parameters->fGain);
+        operatorToSet->setFeedbackGain(parameters->fFeedback);
+        operatorToSet->setWavetable(&getWavetableReference(parameters->eWaveType));
+        if (!parameters->operatorIds.empty())
+        {
+            for (int operatorId : parameters->operatorIds)
+            {
+                operatorId -= 1;
+                if (operatorId == -1)
+                    operatorToSet->connectTo(outputTerminal);
+                else
+                    operatorToSet->connectTo(allOperators[operatorId]);
+            }
+        }
+
+    }
+
+}
+
 void AudioEngine::changeWavetable(int iOperatorId, Wavetable::Wavetable_t eWaveType)
 {
     Operator* pOperator = operatorInterface[iOperatorId];
@@ -118,31 +145,12 @@ void AudioEngine::initializeTargetOperators()
     targetGenerator.setMaxFrequency(5000);
     targetGenerator.setMaxGain(Operator::getMaxGain());
     targetGenerator.generateParameters();
-
-    for (int i = 1; i <= targetGenerator.getConnectionSetup().iNumActiveOperators; i++)
+    for (int i = 0; i < maxOperators; i++)
     {
-        Parameters operatorParameters = targetGenerator.getOperatorParameters(i);
-        setTargetParameters(operatorInterface_t[i-1],&operatorParameters);
+        *parameterInterface_t[i] = targetGenerator.getOperatorParameters(i+1);
     }
+    setOperatorParameters(operatorInterface_t, parameterInterface_t, &outputTerminal_t);
 
-}
-
-void AudioEngine::setTargetParameters(Operator* operatorToSet, const Parameters* opParameters) {
-    operatorToSet->setFrequency(opParameters->fFreq);
-    operatorToSet->setGain(opParameters->fGain);
-    operatorToSet->setFeedbackGain(opParameters->fFeedback);
-    operatorToSet->setWavetable(&getWavetableReference(opParameters->eWaveType));
-    if (!opParameters->operatorIds.empty())
-    {
-        for (int operatorId : opParameters->operatorIds)
-        {
-            operatorId -= 1;
-            if (operatorId == -1)
-                operatorToSet->connectTo(&outputTerminal_t);
-            else
-                operatorToSet->connectTo(operatorInterface_t[operatorId]);
-        }
-    }
 }
 
 void AudioEngine::regenerateTarget()
@@ -178,24 +186,6 @@ std::string AudioEngine::getTargetValues() {
 void AudioEngine::initializeUserPatch() {
     for (Operator* op : operatorInterface)
         op->resetPhase();
-}
-
-void AudioEngine::setUserParameters(Operator *operatorToSet, const Parameters *parameters) {
-    operatorToSet->setFrequency(parameters->fFreq);
-    operatorToSet->setGain(parameters->fGain);
-    operatorToSet->setFeedbackGain(parameters->fFeedback);
-    operatorToSet->setWavetable(&getWavetableReference(parameters->eWaveType));
-    if (!parameters->operatorIds.empty())
-    {
-        for (int operatorId : parameters->operatorIds)
-        {
-            operatorId -= 1;
-            if (operatorId == -1)
-                operatorToSet->connectTo(&outputTerminal);
-            else
-                operatorToSet->connectTo(operatorInterface[operatorId]);
-        }
-    }
 }
 
 const char* AudioEngine::wavetableToString(const Wavetable::Wavetable_t eWaveType) const {
@@ -251,6 +241,8 @@ void AudioEngine::reset()
 float AudioEngine::evaluatePatch()
 {
     while (m_bIsProcessing);
+
+
 
     // Reset Phase of all operators
     for (Operator* op : operatorInterface)

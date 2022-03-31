@@ -40,7 +40,7 @@ public class GameActivity extends AppCompatActivity
 
     state playState = state.notPlaying;
     OutputTerminalView outputTerminal;
-    TextView textView1, textView2, textView3, targetValues;
+    TextView textView1, textView2, textView3, targetValues, liveScoreView;
     RotaryKnobView knob1, knob2, knob3;
     ImageButton trashCan;
     WavetableView wavetableView;
@@ -131,6 +131,8 @@ public class GameActivity extends AppCompatActivity
             }
         });
 
+        liveScoreView = findViewById(R.id.LiveScoreView);
+
         knob1 = findViewById(R.id.knob1);
         knob2 = findViewById(R.id.knob2);
         knob3 = findViewById(R.id.knob3);
@@ -141,6 +143,7 @@ public class GameActivity extends AppCompatActivity
         textView1 = findViewById(R.id.textView1);
         textView2 = findViewById(R.id.textView2);
         textView3 = findViewById(R.id.textView3);
+
 
         outputTerminal = findViewById(R.id.outputTerminalView);
         outputTerminal.listener = this;
