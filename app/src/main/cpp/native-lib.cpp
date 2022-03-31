@@ -13,10 +13,10 @@ Java_com_johnkasun_patch_1matcher_GameActivity_ai_1connect(JNIEnv *env, jobject 
     int operatorIdA = connectable_a_id - 1;
     int operatorIdB = connectable_b_id - 1;
     if (operatorIdB == -1)
-        engine.operatorInterface[operatorIdA]->connectTo(&engine.outputTerminal);
+        engine.operatorInterface[operatorIdA].connectTo(&engine.outputTerminal);
     else
-        engine.operatorInterface[operatorIdA]->connectTo(engine.operatorInterface[operatorIdB]);
-    engine.parameterInterface[operatorIdA]->operatorIds.insert(connectable_b_id);
+        engine.operatorInterface[operatorIdA].connectTo(&engine.operatorInterface[operatorIdB]);
+    engine.parameterInterface[operatorIdA].operatorIds.insert(connectable_b_id);
     engine.initializeUserPatch();
 }
 
@@ -29,10 +29,10 @@ Java_com_johnkasun_patch_1matcher_GameActivity_ai_1disconnect(JNIEnv *env, jobje
     int operatorIdA = connectable_a_id - 1;
     int operatorIdB = connectable_b_id - 1;
     if (operatorIdB == -1)
-        engine.operatorInterface[operatorIdA]->disconnectFrom(&engine.outputTerminal);
+        engine.operatorInterface[operatorIdA].disconnectFrom(&engine.outputTerminal);
     else
-        engine.operatorInterface[operatorIdA]->disconnectFrom(engine.operatorInterface[operatorIdB]);
-    engine.parameterInterface[operatorIdA]->operatorIds.erase(connectable_b_id);
+        engine.operatorInterface[operatorIdA].disconnectFrom(&engine.operatorInterface[operatorIdB]);
+    engine.parameterInterface[operatorIdA].operatorIds.erase(connectable_b_id);
     engine.initializeUserPatch();
 }
 extern "C"
@@ -40,16 +40,16 @@ JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onChangeFrequency(JNIEnv *env, jobject thiz,
                                                                      jint operator_id, jint value) {
     operator_id -= 1;
-    engine.operatorInterface[operator_id]->setFrequency(value);
-    engine.parameterInterface[operator_id]->fFreq = value;
+    engine.operatorInterface[operator_id].setFrequency(value);
+    engine.parameterInterface[operator_id].fFreq = value;
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onChangeGain(JNIEnv *env, jobject thiz,
                                                                 jint operator_id, jint value) {
     operator_id -= 1;
-    engine.operatorInterface[operator_id]->setGain(value);
-    engine.parameterInterface[operator_id]->fGain = value;
+    engine.operatorInterface[operator_id].setGain(value);
+    engine.parameterInterface[operator_id].fGain = value;
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -57,8 +57,8 @@ Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onChangeFeedback(JNIEnv *env,
                                                                     jint operator_id, jint value) {
     operator_id -= 1;
     float valueScaled = static_cast<float>(value) / 100.0f;
-    engine.operatorInterface[operator_id]->setFeedbackGain(valueScaled);
-    engine.parameterInterface[operator_id]->fFeedback = valueScaled;
+    engine.operatorInterface[operator_id].setFeedbackGain(valueScaled);
+    engine.parameterInterface[operator_id].fFeedback = valueScaled;
 }
 
 extern "C"
@@ -86,7 +86,7 @@ Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onWavetableChange(JNIEnv *env
             eWaveType = Wavetable::kCustom;
     }
     engine.changeWavetable(operator_id, eWaveType);
-    engine.parameterInterface[operator_id]->eWaveType = eWaveType;
+    engine.parameterInterface[operator_id].eWaveType = eWaveType;
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -105,11 +105,11 @@ Java_com_johnkasun_patch_1matcher_GameActivity_ai_1resetValues(JNIEnv *env, jobj
                                                                jint operator_id) {
 
     operator_id -= 1;
-    engine.operatorInterface[operator_id]->reset();
-    engine.parameterInterface[operator_id]->fFreq = 0;
-    engine.parameterInterface[operator_id]->fGain = 0;
-    engine.parameterInterface[operator_id]->fFeedback = 0;
-    engine.parameterInterface[operator_id]->operatorIds.clear();
+    engine.operatorInterface[operator_id].reset();
+    engine.parameterInterface[operator_id].fFreq = 0;
+    engine.parameterInterface[operator_id].fGain = 0;
+    engine.parameterInterface[operator_id].fFeedback = 0;
+    engine.parameterInterface[operator_id].operatorIds.clear();
 }
 
 extern "C"

@@ -38,7 +38,6 @@ public:
     float operator[](int index) const;
     float at(int index) const;
 
-    virtual void generate() = 0;
     virtual bool setPatch(std::function<float(float)> new_patch);
 
 };
@@ -47,9 +46,7 @@ class SineWavetable : public Wavetable {
 public:
 
     SineWavetable();
-    virtual ~SineWavetable() = default;
-
-    virtual void generate() override;
+    ~SineWavetable() = default;
 };
 
 class SquareWavetable : public Wavetable
@@ -57,9 +54,6 @@ class SquareWavetable : public Wavetable
 public:
     SquareWavetable();
     ~SquareWavetable() = default;
-
-    virtual void generate() override;
-
 };
 
 class TriangleWavetable : public Wavetable
@@ -67,8 +61,6 @@ class TriangleWavetable : public Wavetable
 public:
     TriangleWavetable();
     ~TriangleWavetable() = default;
-
-    virtual void generate() override;
 };
 
 class SawtoothWavetable : public Wavetable
@@ -76,20 +68,13 @@ class SawtoothWavetable : public Wavetable
 public:
     SawtoothWavetable();
     ~SawtoothWavetable() = default;
-
-    virtual void generate() override;
 };
 
 class CustomWavetable : public Wavetable
 {
-private:
-    std::function<float(float)> patch;
 public:
-    CustomWavetable(std::function<float(float)> patch = [](float){return -1;});
-    virtual ~CustomWavetable();
-
-    virtual bool setPatch(std::function<float(float)> new_patch) override;
-    virtual void generate() override;
+    CustomWavetable();
+    ~CustomWavetable() = default;
 };
 
 

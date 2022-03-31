@@ -5,10 +5,7 @@
 #include "AudioEngine.h"
 
 AudioEngine::AudioEngine()
-    : operator1(&sine, 1), operator2(&sine, 2), operator3(&sine, 3), operator4(&sine, 4), operator5(&sine, 5), operator6(&sine, 6),
-    operator1_t(&sine, 1), operator2_t(&sine, 2), operator3_t(&sine, 3), operator4_t(&sine, 4), operator5_t(&sine, 5),operator6_t(&sine, 6)
 {
-    loadWavetables();
     initializeAudio();
 }
 
@@ -81,26 +78,26 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
     return oboe::DataCallbackResult::Continue;
 }
 
-void AudioEngine::setOperatorParameters(Operator* allOperators[maxOperators], Parameters* allParameters[maxOperators], OutputTerminal *outputTerminal)
+void AudioEngine::setOperatorParameters(Operator (&allOperators)[maxOperators], Parameters (&allParameters)[maxOperators], OutputTerminal *outputTerminal)
 {
     for (int i = 0; i < maxOperators; i++)
     {
-        Operator* operatorToSet = allOperators[i];
-        Parameters* parameters = allParameters[i];
+        Operator& operatorToSet = allOperators[i];
+        Parameters& parameters = allParameters[i];
 
-        operatorToSet->setFrequency(parameters->fFreq);
-        operatorToSet->setGain(parameters->fGain);
-        operatorToSet->setFeedbackGain(parameters->fFeedback);
-        operatorToSet->setWavetable(&getWavetableReference(parameters->eWaveType));
-        if (!parameters->operatorIds.empty())
+        operatorToSet.setFrequency(parameters.fFreq);
+        operatorToSet.setGain(parameters.fGain);
+        operatorToSet.setFeedbackGain(parameters.fFeedback);
+        operatorToSet.setWavetable(&getWavetableReference(parameters.eWaveType));
+        if (!parameters.operatorIds.empty())
         {
-            for (int operatorId : parameters->operatorIds)
+            for (int operatorId : parameters.operatorIds)
             {
                 operatorId -= 1;
                 if (operatorId == -1)
-                    operatorToSet->connectTo(outputTerminal);
+                    operatorToSet.connectTo(outputTerminal);
                 else
-                    operatorToSet->connectTo(allOperators[operatorId]);
+                    operatorToSet.connectTo(&allOperators[operatorId]);
             }
         }
 
@@ -110,34 +107,24 @@ void AudioEngine::setOperatorParameters(Operator* allOperators[maxOperators], Pa
 
 void AudioEngine::changeWavetable(int iOperatorId, Wavetable::Wavetable_t eWaveType)
 {
-    Operator* pOperator = operatorInterface[iOperatorId];
+    Operator& pOperator = operatorInterface[iOperatorId];
     switch(eWaveType)
     {
         case Wavetable::kSine:
-            pOperator->setWavetable(&sine);
+            pOperator.setWavetable(&sine);
             break;
         case Wavetable::kSquare:
-            pOperator->setWavetable(&square);
+            pOperator.setWavetable(&square);
             break;
         case Wavetable::kTriangle:
-            pOperator->setWavetable(&triangle);
+            pOperator.setWavetable(&triangle);
             break;
         case Wavetable::kSaw:
-            pOperator->setWavetable(&sawtooth);
+            pOperator.setWavetable(&sawtooth);
             break;
         default:
-            pOperator->setWavetable(&custom);
+            pOperator.setWavetable(&custom);
     }
-}
-
-void AudioEngine::loadWavetables()
-{
-    sine.generate();
-    square.generate();
-    triangle.generate();
-    sawtooth.generate();
-    custom.setPatch([](float theta) { return (float)(sin(theta) + 0.5 * sin(2.0*theta) * 0.25 * sin(3.0 * theta));});
-    custom.generate();
 }
 
 void AudioEngine::initializeTargetOperators()
@@ -147,7 +134,7 @@ void AudioEngine::initializeTargetOperators()
     targetGenerator.generateParameters();
     for (int i = 0; i < maxOperators; i++)
     {
-        *parameterInterface_t[i] = targetGenerator.getOperatorParameters(i+1);
+        parameterInterface_t[i] = targetGenerator.getOperatorParameters(i+1);
     }
     setOperatorParameters(operatorInterface_t, parameterInterface_t, &outputTerminal_t);
 
@@ -156,10 +143,10 @@ void AudioEngine::initializeTargetOperators()
 void AudioEngine::regenerateTarget()
 {
     outputTerminal_t.reset();
-    for (Operator* op : operatorInterface_t)
+    for (Operator& op : operatorInterface_t)
     {
-        op->reset();
-        op->setWavetable(&sine);
+        op.reset();
+        op.setWavetable(&sine);
     }
 
     initializeTargetOperators();
@@ -184,8 +171,8 @@ std::string AudioEngine::getTargetValues() {
 }
 
 void AudioEngine::initializeUserPatch() {
-    for (Operator* op : operatorInterface)
-        op->resetPhase();
+    for (Operator& op : operatorInterface)
+        op.resetPhase();
 }
 
 const char* AudioEngine::wavetableToString(const Wavetable::Wavetable_t eWaveType) const {
@@ -223,19 +210,19 @@ Wavetable& AudioEngine::getWavetableReference(const Wavetable::Wavetable_t eWave
 void AudioEngine::reset()
 {
     outputTerminal.reset();
-    for (Operator* op : operatorInterface)
+    for (Operator& op : operatorInterface)
     {
-        op->reset();
-        op->setWavetable(&sine);
+        op.reset();
+        op.setWavetable(&sine);
     }
     outputTerminal_t.reset();
-    for (Operator* op : operatorInterface_t)
+    for (Operator& op : operatorInterface_t)
     {
-        op->reset();
-        op->setWavetable(&sine);
+        op.reset();
+        op.setWavetable(&sine);
     }
-    for (Parameters* params : parameterInterface)
-        params->reset();
+    for (Parameters& params : parameterInterface)
+        params.reset();
 }
 
 float AudioEngine::evaluatePatch()
@@ -245,10 +232,10 @@ float AudioEngine::evaluatePatch()
 
 
     // Reset Phase of all operators
-    for (Operator* op : operatorInterface)
-        op->resetPhase();
-    for (Operator* op : operatorInterface_t)
-        op->resetPhase();
+    for (Operator& op : operatorInterface)
+        op.resetPhase();
+    for (Operator& op : operatorInterface_t)
+        op.resetPhase();
 
     float fLowestFreq = std::min(outputTerminal.getLowestFrequency(), outputTerminal_t.getLowestFrequency());
     if (fLowestFreq == 0)

@@ -6,7 +6,7 @@
 
 //=======================================================
 Wavetable::Wavetable() : table{}
-{}
+{ }
 
 int Wavetable::get_size() const
 {
@@ -48,8 +48,6 @@ void Wavetable::normalize()
 
 //=======================================================
 SineWavetable::SineWavetable() : Wavetable()
-{}
-void SineWavetable::generate()
 {
     float angleDelta = kTwoPi / (float)size;
     float currentAngle = 0.0;
@@ -64,10 +62,6 @@ void SineWavetable::generate()
 
 //=======================================================
 SquareWavetable::SquareWavetable() : Wavetable()
-{
-}
-
-void SquareWavetable::generate()
 {
     float angleDelta = kTwoPi / (float)size;
     float currentAngle = 0.0;
@@ -89,11 +83,6 @@ void SquareWavetable::generate()
 
 //=======================================================
 TriangleWavetable::TriangleWavetable() :Wavetable()
-{
-
-}
-
-void TriangleWavetable::generate()
 {
     float angleDelta = kTwoPi / (float)size;
     float currentAngle = 0.0;
@@ -117,11 +106,6 @@ void TriangleWavetable::generate()
 //=======================================================
 SawtoothWavetable::SawtoothWavetable() : Wavetable()
 {
-
-}
-
-void SawtoothWavetable::generate()
-{
     float angleDelta = kTwoPi / (float)size;
     float currentAngle = 0.0;
 
@@ -142,28 +126,14 @@ void SawtoothWavetable::generate()
 //=======================================================
 
 //=======================================================
-CustomWavetable::CustomWavetable(std::function<float(float)> patch) : Wavetable(), patch{patch}
-{
-}
-
-CustomWavetable::~CustomWavetable()
-{
-}
-
-bool CustomWavetable::setPatch(std::function<float(float)> new_patch)
-{
-    patch = new_patch;
-    return true;
-}
-
-void CustomWavetable::generate()
+CustomWavetable::CustomWavetable() : Wavetable()
 {
     float angleDelta = kTwoPi / (float)size;
     float currentAngle = 0.0;
 
     for (int i = 0; i < size; ++i)
     {
-        table[i] = patch(currentAngle);
+        table[i] = (float)(sin(currentAngle) + 0.5 * sin(2.0*currentAngle) * 0.25 * sin(3.0 * currentAngle));
         currentAngle += angleDelta;
     }
 
