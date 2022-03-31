@@ -192,13 +192,14 @@ public class GameActivity extends AppCompatActivity
 
     public void finishButtonPressed(View view)
     {
-        ai_onStopAudio();
-        Intent intent = new Intent(this, EvaluationActivity.class);
+        //ai_onStopAudio();
+        //Intent intent = new Intent(this, EvaluationActivity.class);
         float value = ai_onEvaluatePatch();
-        intent.putExtra("Result", value);
-        resetActivity();
-        startActivity(intent);
-        finish();
+        liveScoreView.setText("" + (int)value);
+        //intent.putExtra("Result", value);
+        //resetActivity();
+        //startActivity(intent);
+        //finish();
     }
 
     public void menuButtonPressed(View view)

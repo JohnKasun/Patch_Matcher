@@ -229,15 +229,30 @@ float AudioEngine::evaluatePatch()
 {
     while (m_bIsProcessing);
 
+    OutputTerminal outputTerminalUser;
+    Operator operatorInterfaceUser[maxOperators] {
+            Operator(&sine, 1),
+            Operator(&sine, 2),
+            Operator(&sine, 3),
+            Operator(&sine, 4),
+            Operator(&sine, 5),
+            Operator(&sine, 6)
+    };
 
+    OutputTerminal outputTerminalTarget;
+    Operator operatorInterfaceTarget[maxOperators] {
+            Operator(&sine, 1),
+            Operator(&sine, 2),
+            Operator(&sine, 3),
+            Operator(&sine, 4),
+            Operator(&sine, 5),
+            Operator(&sine, 6)
+    };
 
-    // Reset Phase of all operators
-    for (Operator& op : operatorInterface)
-        op.resetPhase();
-    for (Operator& op : operatorInterface_t)
-        op.resetPhase();
+    setOperatorParameters(operatorInterfaceUser, parameterInterface, &outputTerminalUser);
+    setOperatorParameters(operatorInterfaceTarget, parameterInterface_t, &outputTerminalTarget);
 
-    float fLowestFreq = std::min(outputTerminal.getLowestFrequency(), outputTerminal_t.getLowestFrequency());
+    float fLowestFreq = std::min(outputTerminalUser.getLowestFrequency(), outputTerminalTarget.getLowestFrequency());
     if (fLowestFreq == 0)
         return 0;
 
@@ -249,8 +264,8 @@ float AudioEngine::evaluatePatch()
     // Generate samples and place into buffer for processing
     for (int sample = 0; sample < numSamples; sample++)
     {
-        userSamples.push_back(outputTerminal.getNextSample());
-        targetSamples.push_back(outputTerminal_t.getNextSample());
+        userSamples.push_back(outputTerminalUser.getNextSample());
+        targetSamples.push_back(outputTerminalTarget.getNextSample());
     }
 
     // Find max value for each buffer
