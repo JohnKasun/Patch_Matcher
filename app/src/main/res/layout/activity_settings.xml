@@ -6,32 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
-    <LinearLayout
-        android:layout_width="729dp"
-        android:layout_height="409dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+    <Button
+        android:id="@+id/MenuButton1"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:onClick="onMenuButtonPressed"
+        android:text="Menu"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/MenuButton1"
-            android:layout_width="match_parent"
-            android:layout_height="101dp"
-            android:onClick="onMenuButtonPressed"
-            android:text="Menu" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:onClick="onRegenerateButtonPressed"
+        android:text="Regenerate Target"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MenuButton1" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="96dp"
-            android:onClick="onRegenerateButtonPressed"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="102dp"
-            android:onClick="onShowValuesButtonPressed"
-            android:text="Button" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:onClick="onShowValuesButtonPressed"
+        android:text="Show Target Values"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
