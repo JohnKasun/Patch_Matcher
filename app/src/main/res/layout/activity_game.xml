@@ -208,37 +208,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/RegenButton"
-        android:layout_width="105dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="2dp"
-        android:text="regenerate"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintStart_toEndOf="@+id/ShowValuesButton" />
-
-    <Button
-        android:id="@+id/ShowValuesButton"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="2dp"
-        android:text="Show Values"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/TargetValuesText"
         android:layout_width="206dp"
         android:layout_height="143dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginTop="12dp"
         android:textSize="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/ShowValuesButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
@@ -252,17 +228,6 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/outputTerminalView"
         app:layout_constraintTop_toBottomOf="@+id/LiveScoreView" />
-
-    <Button
-        android:id="@+id/menuButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
-        android:onClick="menuButtonPressed"
-        android:text="Menu"
-        app:layout_constraintEnd_toStartOf="@+id/SettingsButton"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/LiveScoreView"
@@ -282,16 +247,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/SettingsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
+        android:layout_width="76dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
         android:onClick="settingsButtonPressed"
-        android:text="Settings"
-        app:layout_constraintEnd_toStartOf="@+id/LiveScoreView"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/settingswheel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

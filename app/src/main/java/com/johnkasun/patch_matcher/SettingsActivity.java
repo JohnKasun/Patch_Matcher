@@ -18,6 +18,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onMenuButtonPressed(View view)
     {
+        Intent resetGameIntent = new Intent("finish_activity");
+        sendBroadcast(resetGameIntent);
+
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();
@@ -25,11 +28,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onRegenerateButtonPressed(View view)
     {
-
+        Intent regenerateIntent = new Intent("regenerate");
+        sendBroadcast(regenerateIntent);
+        finish();
     }
 
     public void onShowValuesButtonPressed(View view)
     {
-
+        Intent showValuesIntent = new Intent("show_values");
+        sendBroadcast(showValuesIntent);
+        finish();
     }
 }

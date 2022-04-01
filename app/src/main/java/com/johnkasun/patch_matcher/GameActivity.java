@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -52,6 +55,7 @@ public class GameActivity extends AppCompatActivity
     OperatorView selectedOperator = null;
     final int maxOperators = 6;
     Bundle m_outState;
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -112,25 +116,25 @@ public class GameActivity extends AppCompatActivity
         setContentView(R.layout.activity_game);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        Button regenButton = findViewById(R.id.RegenButton);
+/*        Button regenButton = findViewById(R.id.RegenButton);
         regenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ai_regenerateTarget();
                 doEvaluation();
             }
-        });
+        });*/
 
         targetValues = findViewById(R.id.TargetValuesText);
 
-        Button showValuesButton = findViewById(R.id.ShowValuesButton);
+/*        Button showValuesButton = findViewById(R.id.ShowValuesButton);
         showValuesButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 targetValues.setText(ai_getTargetValues());
             }
-        });
+        });*/
 
         liveScoreView = findViewById(R.id.LiveScoreView);
 
@@ -189,6 +193,28 @@ public class GameActivity extends AppCompatActivity
         playButtonTarget = findViewById(R.id.playButtonTarget);
         playButtonUser.listener = this;
         playButtonTarget.listener = this;
+
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("finish_activity")) {
+                    ai_onStopAudio();
+                    resetActivity();
+                    unregisterReceiver(broadcastReceiver);
+                    finish();
+                } else if (action.equals("regenerate")) {
+                    regenerateTarget();
+
+                } else if (action.equals("show_values")) {
+                    targetValues.setText(ai_getTargetValues());
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
+        registerReceiver(broadcastReceiver, new IntentFilter("regenerate"));
+        registerReceiver(broadcastReceiver, new IntentFilter("show_values"));
     }
 
     public void finishButtonPressed(View view)
@@ -201,19 +227,16 @@ public class GameActivity extends AppCompatActivity
         //finish();
     }
 
-    public void menuButtonPressed(View view)
-    {
-        ai_onStopAudio();
-        Intent intent = new Intent(this, MenuActivity.class);
-        resetActivity();
-        startActivity(intent);
-        finish();
-    }
-
     public void settingsButtonPressed(View view)
     {
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void regenerateTarget()
+    {
+        ai_regenerateTarget();
+        doEvaluation();
     }
 
     private void resetActivity()
