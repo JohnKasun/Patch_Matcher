@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Patch_Matcher">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            />
+        <activity
             android:name=".MenuActivity"
             android:exported="true"
             android:screenOrientation="landscape">
@@ -22,11 +28,12 @@
         <activity
             android:name=".EvaluationActivity"
             android:exported="true"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".GameActivity"
             android:exported="true"
             android:screenOrientation="landscape">
+
         </activity>
     </application>
 

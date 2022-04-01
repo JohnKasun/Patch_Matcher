@@ -210,6 +210,12 @@ public class GameActivity extends AppCompatActivity
         finish();
     }
 
+    public void settingsButtonPressed(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
     private void resetActivity()
     {
         deselectAll();
