@@ -27,7 +27,17 @@ import java.util.ArrayList;
 public class TutorialActivity extends GameActivity
 {
 
+    enum Scene {
+        Scene0,
+        Scene1,
+        Scene2,
+        Scene3,
+        Scene4
+    }
+
     TextView infoTitle, infoBody;
+    Scene mCurrentScene = Scene.Scene0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +49,68 @@ public class TutorialActivity extends GameActivity
         infoTitle = findViewById(R.id.infoTitle);
         infoBody = findViewById(R.id.infoBody);
 
-        infoTitle.setText("Welcome!");
-        infoBody.setText("Double tap in the middle of the screen to begin the tutorial...");
+        setScene(mCurrentScene);
     }
 
+    protected void setScene(Scene scene)
+    {
+        switch (scene)
+        {
+            case Scene0:
+                setScene0();
+                break;
+            case Scene1:
+                setScene1();
+                break;
+            case Scene2:
+                setScene2();
+                break;
+            case Scene3:
+                setScene3();
+                break;
+            case Scene4:
+                setScene4();
+                break;
+            default:
+
+        }
+        mCurrentScene = scene;
+    }
+
+    private void setScene0()
+    {
+        infoTitle.setText("Welcome!");
+        infoBody.setText("Double Tap in the middle of the screen to begin...");
+        maxOperators = 1;
+    }
+
+    private void setScene1()
+    {
+        infoTitle.setText("Intro");
+        infoBody.setText("Well done");
+    }
+
+    private void setScene2()
+    {
+
+    }
+
+    private void setScene3()
+    {
+
+    }
+
+    private void setScene4()
+    {
+
+    }
+
+    @Override
+    public void generateOperator(MotionEvent e)
+    {
+        super.generateOperator(e);
+        if (mCurrentScene == Scene.Scene0)
+            setScene(Scene.Scene1);
+    }
 
 }

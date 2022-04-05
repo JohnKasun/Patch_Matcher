@@ -36,6 +36,11 @@ public class OperatorView extends Connectable implements Parcelable{
     static private int numOperators = 0;
     static private Queue<Integer> idBacklog = new PriorityQueue<Integer>();
 
+    static public int getNumOperators()
+    {
+        return numOperators;
+    }
+
     static public void resetNumOperators()
     {
         numOperators = 0;

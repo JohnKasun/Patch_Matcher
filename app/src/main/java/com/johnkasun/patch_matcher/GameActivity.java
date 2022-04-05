@@ -53,7 +53,7 @@ public class GameActivity extends AppCompatActivity
     ArrayList<OperatorView> operatorList = new ArrayList<OperatorView>();
     boolean deleteModeEnabled = false;
     OperatorView selectedOperator = null;
-    final int maxOperators = 6;
+    int maxOperators = 6;
     Bundle m_outState;
     BroadcastReceiver broadcastReceiver;
 
