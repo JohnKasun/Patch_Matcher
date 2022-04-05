@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class TutorialActivity extends GameActivity
 {
@@ -36,8 +37,10 @@ public class TutorialActivity extends GameActivity
     }
 
     TextView infoTitle, infoBody;
+    Button infoPreviousButton, infoNextButton;
     Scene mCurrentScene = Scene.Scene0;
-
+    int mCurrentPage;
+    Vector<String> mPages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,45 @@ public class TutorialActivity extends GameActivity
         infoTitle = findViewById(R.id.infoTitle);
         infoBody = findViewById(R.id.infoBody);
 
+        infoNextButton = findViewById(R.id.InfoNextButton);
+        infoPreviousButton = findViewById(R.id.InfoPrevButton);
+
         setScene(mCurrentScene);
+    }
+
+    public void setPages(Vector<String> pages)
+    {
+        mCurrentPage = 0;
+        mPages = pages;
+    }
+
+    public void onNextButtonClicked(View view)
+    {
+        mCurrentPage++;
+        if (mCurrentPage < mPages.size()) {
+            infoBody.setText(mPages.get(mCurrentPage));
+            if ((mCurrentPage + 1) >= mPages.size()) {
+                infoNextButton.setEnabled(false);
+                infoPreviousButton.setEnabled(true);
+            }
+        }
+
+
+    }
+
+    public void onBackButtonClicked(View view)
+    {
+
+        mCurrentPage--;
+        if (mCurrentPage >= 0) {
+            infoBody.setText(mPages.get(mCurrentPage));
+            if ((mCurrentPage - 1) < 0) {
+                infoNextButton.setEnabled(true);
+                infoPreviousButton.setEnabled(false);
+            }
+        }
+
+
     }
 
     protected void setScene(Scene scene)
@@ -81,13 +122,24 @@ public class TutorialActivity extends GameActivity
     {
         infoTitle.setText("Welcome!");
         infoBody.setText("Double Tap in the middle of the screen to begin...");
+        infoNextButton.setEnabled(false);
+        infoPreviousButton.setEnabled(false);
         maxOperators = 1;
     }
 
     private void setScene1()
     {
+        String body1 = "Well done -- You just created an Operator!";
+        String body2 = "An Operator is a building block for FM synthesis.";
+        Vector<String> pages = new Vector<>();
+        pages.add(body1);
+        pages.add(body2);
+        setPages(pages);
+
         infoTitle.setText("Intro");
-        infoBody.setText("Well done");
+        infoBody.setText(body1);
+        infoNextButton.setEnabled(true);
+        infoPreviousButton.setEnabled(false);
     }
 
     private void setScene2()
