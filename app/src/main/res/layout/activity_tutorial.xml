@@ -208,17 +208,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/TargetValuesText"
-        android:layout_width="150dp"
-        android:layout_height="180dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:background="#49423A"
-        android:textSize="8sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
-
     <Button
         android:id="@+id/FinishButton"
         android:layout_width="80dp"
@@ -260,6 +249,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/settingswheel" />
+
+    <LinearLayout
+        android:id="@+id/InfoBackground"
+        android:layout_width="143dp"
+        android:layout_height="174dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="33dp"
+        android:background="#887C7C"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton">
+
+        <TextView
+            android:id="@+id/infoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:text="Title"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"
+            android:backgroundTint="#F8ECEC" />
+
+        <TextView
+            android:id="@+id/infoBody"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:text="Body"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

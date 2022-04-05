@@ -26,10 +26,22 @@ import java.util.ArrayList;
 
 public class TutorialActivity extends GameActivity
 {
+
+    TextView infoTitle, infoBody;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+
+        init();
+
+        infoTitle = findViewById(R.id.infoTitle);
+        infoBody = findViewById(R.id.infoBody);
+
+        infoTitle.setText("Welcome!");
+        infoBody.setText("Double tap in the middle of the screen to begin the tutorial...");
     }
+
 
 }

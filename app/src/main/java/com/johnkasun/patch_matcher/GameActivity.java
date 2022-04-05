@@ -110,11 +110,16 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ai_regenerateTarget();
-
         setContentView(R.layout.activity_game);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        init();
+        registerActivityBroadcastReceiver();
+    }
+
+    public void init()
+    {
+        ai_regenerateTarget();
 
         targetValues = findViewById(R.id.TargetValuesText);
         liveScoreView = findViewById(R.id.LiveScoreView);
@@ -175,6 +180,10 @@ public class GameActivity extends AppCompatActivity
         playButtonUser.listener = this;
         playButtonTarget.listener = this;
 
+    }
+
+    public void registerActivityBroadcastReceiver()
+    {
         broadcastReceiver = new BroadcastReceiver() {
 
             @Override
@@ -210,7 +219,7 @@ public class GameActivity extends AppCompatActivity
         doEvaluation();
     }
 
-    private void resetActivity()
+    public void resetActivity()
     {
         deselectAll();
         for (int i = 0; i < operatorList.size(); i++)
