@@ -69,6 +69,12 @@ public class TutorialActivity extends GameActivity
     {
         mCurrentPage = 0;
         mPages = pages;
+        if (mPages.size() > 1)
+            infoNextButton.setEnabled(true);
+        else
+            infoNextButton.setEnabled(false);
+        infoPreviousButton.setEnabled(false);
+        infoBody.setText(mPages.get(0));
     }
 
     public void onNextButtonClicked(View view)
@@ -128,9 +134,11 @@ public class TutorialActivity extends GameActivity
     private void setScene0()
     {
         infoTitle.setText("Welcome!");
-        infoBody.setText("Double Tap in the middle of the screen to begin...");
-        infoNextButton.setEnabled(false);
-        infoPreviousButton.setEnabled(false);
+        String body1 = "Double Tap in the middle of the screen to begin...";
+        Vector<String> pages = new Vector<>();
+        pages.add(body1);
+        setPages(pages);
+
         maxOperators = 1;
 
         trashCan.setEnabled(false);
@@ -150,8 +158,6 @@ public class TutorialActivity extends GameActivity
         setPages(pages);
 
         infoTitle.setText("Operators");
-        infoBody.setText(body1);
-        infoNextButton.setEnabled(true);
 
     }
 
@@ -160,18 +166,17 @@ public class TutorialActivity extends GameActivity
         String body1 = "You just selected an Operator for editting.\n\n"
                 + "You can now adjust its parameters as well as connect it to other Operators.";
         String body2 = "Use the control panel to adjust the Operator's frequency, gain, feedback percentage, and waveform.";
-        String body3 = "To proceed, set the Operator's frequency to 440Hz and its gain to 100."
+        String body3 = "TIP:\nDouble Tap on any knob toggle between Enhanced Precision or Normal mode";
+        String body4 = "To proceed, set the Operator's frequency to 440Hz and its gain to 100."
                 + "  Then, Double tap on the Output Terminal...";
         Vector<String> pages = new Vector<String>();
         pages.add(body1);
         pages.add(body2);
         pages.add(body3);
+        pages.add(body4);
         setPages(pages);
 
         infoTitle.setText("Operators");
-        infoBody.setText(body1);
-        infoNextButton.setEnabled(true);
-        infoPreviousButton.setEnabled(false);
 
         controlPanelView.setVisibility(View.VISIBLE);
         outputTerminalView.setVisibility(View.VISIBLE);
@@ -202,6 +207,14 @@ public class TutorialActivity extends GameActivity
         super.onSelectOperator(selectedOperator);
         if (mCurrentScene == Scene.Scene1)
             setScene(Scene.Scene2);
+    }
+
+    @Override
+    public void onMakeConnection(Connectable connectableStart, Connectable connectableEnd)
+    {
+        super.onMakeConnection(connectableStart, connectableEnd);
+        if (mCurrentScene == Scene.Scene2)
+            setScene(Scene.Scene3);
     }
 
 }
