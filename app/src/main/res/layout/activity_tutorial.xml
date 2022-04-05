@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.johnkasun.patch_matcher.GameActivity">
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/SettingsButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/trashcan"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.johnkasun.patch_matcher.OutputTerminalView
+        android:id="@+id/outputTerminalView"
+        android:layout_width="24dp"
+        android:layout_height="194dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:OutputTerminalDrawable="@drawable/outputterminal"
+        app:OutputTerminalIdentifier="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:justificationMode="inter_word"
+            android:text="Frequency"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/knob1"
+            app:layout_constraintEnd_toEndOf="@+id/knob1"
+            app:layout_constraintStart_toStartOf="@+id/knob1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.johnkasun.patch_matcher.RotaryKnobView
+            android:id="@+id/knob1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:identifier="1"
+            app:initialValue="0"
+            app:knobDrawable="@drawable/rotaryknob"
+            app:knobEnhancedDrawable="@drawable/rotaryknobenhancedmode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/knob2"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/textView1"
+            app:maxValue="2000"
+            app:minValue="0" />
+
+        <com.johnkasun.patch_matcher.RotaryKnobView
+            android:id="@+id/knob2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:identifier="2"
+            app:initialValue="0"
+            app:knobDrawable="@drawable/rotaryknob"
+            app:knobEnhancedDrawable="@drawable/rotaryknobenhancedmode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/knob3"
+            app:layout_constraintStart_toEndOf="@+id/knob1"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:maxValue="100"
+            app:minValue="0" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="Gain"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/knob2"
+            app:layout_constraintEnd_toEndOf="@+id/knob2"
+            app:layout_constraintStart_toStartOf="@+id/knob2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="Feedback"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/knob3"
+            app:layout_constraintEnd_toEndOf="@+id/knob3"
+            app:layout_constraintStart_toStartOf="@+id/knob3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.johnkasun.patch_matcher.RotaryKnobView
+            android:id="@+id/knob3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:identifier="3"
+            app:initialValue="0"
+            app:knobDrawable="@drawable/rotaryknob"
+            app:knobEnhancedDrawable="@drawable/rotaryknobenhancedmode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/wavetable"
+            app:layout_constraintStart_toEndOf="@+id/knob2"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:maxValue="100"
+            app:minValue="0" />
+
+        <com.johnkasun.patch_matcher.WavetableView
+            android:id="@+id/wavetable"
+            android:layout_width="172dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="fitXY"
+            app:WavetableView_customDrawable="@drawable/customwavetable"
+            app:WavetableView_sawtoothDrawable="@drawable/sawtooth"
+            app:WavetableView_sineDrawable="@drawable/sinewave"
+            app:WavetableView_squareDrawable="@drawable/squarewave"
+            app:WavetableView_triangleDrawable="@drawable/trianglewave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view2"
+            app:layout_constraintStart_toEndOf="@+id/knob3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/sinewave" />
+
+        <com.johnkasun.patch_matcher.PlayButtonView
+            android:id="@+id/playButtonUser"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:PlayButtonView_playDrawable="@drawable/playbutton"
+            app:PlayButtonView_stopDrawable="@drawable/stopbutton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.johnkasun.patch_matcher.PlayButtonView
+            android:id="@+id/playButtonTarget"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:PlayButtonView_playDrawable="@drawable/playbutton"
+            app:PlayButtonView_stopDrawable="@drawable/stopbutton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="6dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/knob1"
+            app:layout_constraintStart_toEndOf="@+id/playButtonTarget"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="6dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/playButtonUser"
+            app:layout_constraintStart_toEndOf="@+id/wavetable"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/TargetValuesText"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:background="#49423A"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
+    <Button
+        android:id="@+id/FinishButton"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="finishButtonPressed"
+        android:text="Done"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/outputTerminalView"
+        app:layout_constraintTop_toBottomOf="@+id/LiveScoreView" />
+
+    <TextView
+        android:id="@+id/LiveScoreView"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:autoSizeTextType="uniform"
+        android:background="#8E8989"
+        android:backgroundTint="@color/material_on_primary_disabled"
+        android:backgroundTintMode="add"
+        android:justificationMode="none"
+        android:text="0%"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/SettingsButton"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:onClick="settingsButtonPressed"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/settingswheel" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

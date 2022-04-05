@@ -24,12 +24,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity
+public class TutorialActivity extends AppCompatActivity
         implements RotaryKnobView.RotaryKnobListener,
-                    OutputTerminalView.OutputTerminalListener,
-                    OperatorView.OperatorViewListener,
-                    PlayButtonView.PlayButtonListener,
-                    WavetableView.WavetableViewListener {
+        OutputTerminalView.OutputTerminalListener,
+        OperatorView.OperatorViewListener,
+        PlayButtonView.PlayButtonListener,
+        WavetableView.WavetableViewListener {
 
     static {
         System.loadLibrary("patch_matcher");
@@ -185,17 +185,20 @@ public class GameActivity extends AppCompatActivity
                     resetActivity();
                     unregisterReceiver(broadcastReceiver);
                     finish();
-                } else if (action.equals("regenerate")) {
-                    regenerateTarget();
-
-                } else if (action.equals("show_values")) {
-                    targetValues.setText(ai_getTargetValues());
                 }
             }
         };
         registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
-        registerReceiver(broadcastReceiver, new IntentFilter("regenerate"));
-        registerReceiver(broadcastReceiver, new IntentFilter("show_values"));
+    }
+
+    public void nextScene()
+    {
+
+    }
+
+    public void previousScene()
+    {
+
     }
 
     public void settingsButtonPressed(View view)
@@ -237,7 +240,7 @@ public class GameActivity extends AppCompatActivity
         if (operatorList.size() >= maxOperators)
             Toast.makeText(getApplicationContext(), "Max Operator Limit Reached", Toast.LENGTH_SHORT).show();
         else {
-            OperatorView newOperator = new OperatorView(GameActivity.this);
+            OperatorView newOperator = new OperatorView(TutorialActivity.this);
             newOperator.listener = this;
             newOperator.setPosition(e.getX(), e.getY());
             background.addView(newOperator);
@@ -344,7 +347,7 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onMakeConnection(Connectable connectableStart, Connectable connectableEnd) {
         if (connectableStart != connectableEnd && connectableStart != null && connectableEnd != null) {
-            ConnectorView newConnector = new ConnectorView(GameActivity.this);
+            ConnectorView newConnector = new ConnectorView(TutorialActivity.this);
             newConnector.registerConnectables(connectableStart, connectableEnd);
             for (int i = 0; i < connectorList.size(); i++) {
                 ConnectorView currentConnector = connectorList.get(i);
