@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class TutorialActivity extends GameActivity
         Scene4
     }
 
+    ImageView controlPanelView, outputTerminalView;
     TextView infoTitle, infoBody;
     Button infoPreviousButton, infoNextButton;
     Scene mCurrentScene = Scene.Scene0;
@@ -54,6 +56,11 @@ public class TutorialActivity extends GameActivity
 
         infoNextButton = findViewById(R.id.InfoNextButton);
         infoPreviousButton = findViewById(R.id.InfoPrevButton);
+
+        controlPanelView = findViewById(R.id.ControlPanelLabel);
+        outputTerminalView = findViewById(R.id.OutputTerminalLabel);
+        controlPanelView.setVisibility(View.INVISIBLE);
+        outputTerminalView.setVisibility(View.INVISIBLE);
 
         setScene(mCurrentScene);
     }
@@ -125,31 +132,55 @@ public class TutorialActivity extends GameActivity
         infoNextButton.setEnabled(false);
         infoPreviousButton.setEnabled(false);
         maxOperators = 1;
+
+        trashCan.setEnabled(false);
+        playButtonUser.setEnabled(false);
+        playButtonTarget.setEnabled(false);
     }
 
     private void setScene1()
     {
-        String body1 = "Well done -- You just created an Operator!";
-        String body2 = "An Operator is a building block for FM synthesis.";
-        Vector<String> pages = new Vector<>();
+        String body1 = "Well done -- You just created an Operator!\n\n"
+                + "These will be the building blocks of our FM synthesis!";
+
+        String body2 = "Tap on the Operator that you just created to proceed...";
+        Vector<String> pages = new Vector<String>();
         pages.add(body1);
         pages.add(body2);
         setPages(pages);
 
-        infoTitle.setText("Intro");
+        infoTitle.setText("Operators");
         infoBody.setText(body1);
         infoNextButton.setEnabled(true);
-        infoPreviousButton.setEnabled(false);
+
     }
 
     private void setScene2()
     {
+        String body1 = "You just selected an Operator for editting.\n\n"
+                + "You can now adjust its parameters as well as connect it to other Operators.";
+        String body2 = "Use the control panel to adjust the Operator's frequency, gain, feedback percentage, and waveform.";
+        String body3 = "To proceed, set the Operator's frequency to 440Hz and its gain to 100."
+                + "  Then, Double tap on the Output Terminal...";
+        Vector<String> pages = new Vector<String>();
+        pages.add(body1);
+        pages.add(body2);
+        pages.add(body3);
+        setPages(pages);
 
+        infoTitle.setText("Operators");
+        infoBody.setText(body1);
+        infoNextButton.setEnabled(true);
+        infoPreviousButton.setEnabled(false);
+
+        controlPanelView.setVisibility(View.VISIBLE);
+        outputTerminalView.setVisibility(View.VISIBLE);
     }
 
     private void setScene3()
     {
-
+        controlPanelView.setVisibility(View.INVISIBLE);
+        outputTerminalView.setVisibility(View.INVISIBLE);
     }
 
     private void setScene4()
@@ -163,6 +194,14 @@ public class TutorialActivity extends GameActivity
         super.generateOperator(e);
         if (mCurrentScene == Scene.Scene0)
             setScene(Scene.Scene1);
+    }
+
+    @Override
+    public void onSelectOperator(OperatorView selectedOperator)
+    {
+        super.onSelectOperator(selectedOperator);
+        if (mCurrentScene == Scene.Scene1)
+            setScene(Scene.Scene2);
     }
 
 }

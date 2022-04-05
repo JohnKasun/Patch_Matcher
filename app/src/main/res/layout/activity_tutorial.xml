@@ -139,6 +139,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
             app:WavetableView_customDrawable="@drawable/customwavetable"
             app:WavetableView_sawtoothDrawable="@drawable/sawtooth"
@@ -216,7 +217,7 @@
         android:onClick="finishButtonPressed"
         android:text="Done"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/outputTerminalView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LiveScoreView" />
 
     <TextView
@@ -311,6 +312,30 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ControlPanelLabel"
+        android:layout_width="401dp"
+        android:layout_height="34dp"
+        android:adjustViewBounds="false"
+        android:background="@android:color/transparent"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/controlpanellabel" />
+
+    <ImageButton
+        android:id="@+id/OutputTerminalLabel"
+        android:layout_width="190dp"
+        android:layout_height="78dp"
+        android:layout_marginEnd="4dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FinishButton"
+        app:srcCompat="@drawable/outputterminallabel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
