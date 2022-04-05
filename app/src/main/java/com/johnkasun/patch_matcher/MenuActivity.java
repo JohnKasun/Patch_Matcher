@@ -23,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void startTutorial(View view)
     {
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
     }
 }
