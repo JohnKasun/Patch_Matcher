@@ -38,6 +38,7 @@ public class TutorialActivity extends GameActivity
     }
 
     ImageView controlPanelView, outputTerminalView;
+    TextView tempFreqLabel, tempGainLabel, tempFeedbackLabel, tempWaveLabel;
     TextView infoTitle, infoBody;
     Button infoPreviousButton, infoNextButton;
     Scene mCurrentScene = Scene.Scene0;
@@ -62,6 +63,16 @@ public class TutorialActivity extends GameActivity
         controlPanelView.setVisibility(View.INVISIBLE);
         outputTerminalView.setVisibility(View.INVISIBLE);
 
+        tempFreqLabel = findViewById(R.id.tempFrequencyLabel);
+        tempGainLabel = findViewById(R.id.tempGainLabel);
+        tempFeedbackLabel = findViewById(R.id.tempFeedback);
+        tempWaveLabel = findViewById(R.id.tempWaveformLabel);
+
+        tempFreqLabel.setVisibility(View.INVISIBLE);
+        tempGainLabel.setVisibility(View.INVISIBLE);
+        tempFeedbackLabel.setVisibility(View.INVISIBLE);
+        tempWaveLabel.setVisibility(View.INVISIBLE);
+
         setScene(mCurrentScene);
     }
 
@@ -82,12 +93,11 @@ public class TutorialActivity extends GameActivity
         mCurrentPage++;
         if (mCurrentPage < mPages.size()) {
             infoBody.setText(mPages.get(mCurrentPage));
-            if ((mCurrentPage + 1) >= mPages.size()) {
-                infoNextButton.setEnabled(false);
-                infoPreviousButton.setEnabled(true);
-            }
+            infoPreviousButton.setEnabled(true);
         }
-
+        if ((mCurrentPage + 1) >= mPages.size()) {
+            infoNextButton.setEnabled(false);
+        }
 
     }
 
@@ -97,12 +107,11 @@ public class TutorialActivity extends GameActivity
         mCurrentPage--;
         if (mCurrentPage >= 0) {
             infoBody.setText(mPages.get(mCurrentPage));
-            if ((mCurrentPage - 1) < 0) {
-                infoNextButton.setEnabled(true);
-                infoPreviousButton.setEnabled(false);
-            }
+            infoNextButton.setEnabled(true);
         }
-
+        if ((mCurrentPage - 1) < 0) {
+            infoPreviousButton.setEnabled(false);
+        }
 
     }
 
@@ -164,28 +173,56 @@ public class TutorialActivity extends GameActivity
     private void setScene2()
     {
         String body1 = "You just selected an Operator for editting.\n\n"
-                + "You can now adjust its parameters as well as connect it to other Operators.";
-        String body2 = "Use the control panel to adjust the Operator's frequency, gain, feedback percentage, and waveform.";
-        String body3 = "TIP:\nDouble Tap on any knob toggle between Enhanced Precision or Normal mode";
-        String body4 = "To proceed, set the Operator's frequency to 440Hz and its gain to 100."
+                + "You can now adjust its parameters as well as connect it to other Operators."
+                + "\n\nLet's discuss the parameters...";
+        String body2 = "Use the control panel to adjust the Operator's frequency, gain, feedback, and waveform.";
+        String body3 = "Frequency is the pitch of the Operator.";
+        String body4 = "Gain is the volume of the Operator.";
+        String body5 = "Feedback determines by how much the current Operator's output is being used to modulate its own frequency.";
+        String body6 = "Waveform is the shape of the audio signal being created\n\n"
+                + "To change this, simply tap on the waveform icon";
+        String body7 = "TIP:\nDouble Tap on any knob toggle between Enhanced Precision or Normal mode";
+        String body8 = "To proceed, set the Operator's frequency to 440Hz and its gain to 100."
                 + "  Then, Double tap on the Output Terminal...";
         Vector<String> pages = new Vector<String>();
         pages.add(body1);
         pages.add(body2);
         pages.add(body3);
         pages.add(body4);
+        pages.add(body5);
+        pages.add(body6);
+        pages.add(body7);
+        pages.add(body8);
         setPages(pages);
 
-        infoTitle.setText("Operators");
+        infoTitle.setText("Parameters");
 
         controlPanelView.setVisibility(View.VISIBLE);
         outputTerminalView.setVisibility(View.VISIBLE);
+        tempFreqLabel.setVisibility(View.VISIBLE);
+        tempGainLabel.setVisibility(View.VISIBLE);
+        tempFeedbackLabel.setVisibility(View.VISIBLE);
+        tempWaveLabel.setVisibility(View.VISIBLE);
+
     }
 
     private void setScene3()
     {
+
+        String body1 = "Great! Your Operator will now generate audio output."
+                + "Turn up your phone volume and press the RIGHT play button to hear it...";
+        Vector<String> pages = new Vector<String>();
+        pages.add(body1);
+        setPages(pages);
+
+        infoTitle.setText("Operators");
+
         controlPanelView.setVisibility(View.INVISIBLE);
         outputTerminalView.setVisibility(View.INVISIBLE);
+        tempFreqLabel.setVisibility(View.INVISIBLE);
+        tempGainLabel.setVisibility(View.INVISIBLE);
+        tempFeedbackLabel.setVisibility(View.INVISIBLE);
+        tempWaveLabel.setVisibility(View.INVISIBLE);
     }
 
     private void setScene4()
@@ -215,6 +252,14 @@ public class TutorialActivity extends GameActivity
         super.onMakeConnection(connectableStart, connectableEnd);
         if (mCurrentScene == Scene.Scene2)
             setScene(Scene.Scene3);
+    }
+
+    @Override
+    public void onPlayButtonClicked(PlayButtonView playButtonView)
+    {
+        super.onPlayButtonClicked(playButtonView);
+        if (mCurrentScene == Scene.Scene3)
+            setScene(Scene.Scene4);
     }
 
 }

@@ -207,6 +207,61 @@
             app:layout_constraintStart_toEndOf="@+id/wavetable"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tempFrequencyLabel"
+            android:layout_width="42dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:text="Frequency"
+            android:textAlignment="center"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/knob1"
+            app:layout_constraintStart_toStartOf="@+id/knob1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.538" />
+
+        <TextView
+            android:id="@+id/tempGainLabel"
+            android:layout_width="30dp"
+            android:layout_height="13dp"
+            android:layout_marginBottom="32dp"
+            android:text="Gain"
+            android:textAlignment="center"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/knob2"
+            app:layout_constraintStart_toStartOf="@+id/knob2"
+            app:layout_constraintTop_toTopOf="@+id/knob2"
+            app:layout_constraintVertical_bias="0.914" />
+
+        <TextView
+            android:id="@+id/tempFeedback"
+            android:layout_width="41dp"
+            android:layout_height="14dp"
+            android:text="Feedback"
+            android:textAlignment="textStart"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/knob3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/tempWaveformLabel"
+            android:layout_width="41dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="4dp"
+            android:text="Waveform"
+            android:textAlignment="textStart"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/wavetable"
+            app:layout_constraintStart_toStartOf="@+id/wavetable"
+            app:layout_constraintTop_toTopOf="@+id/wavetable"
+            app:layout_constraintVertical_bias="1.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
@@ -214,7 +269,6 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
-        android:onClick="finishButtonPressed"
         android:text="Done"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
