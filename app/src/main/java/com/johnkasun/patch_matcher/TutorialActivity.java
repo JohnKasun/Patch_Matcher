@@ -40,7 +40,8 @@ public class TutorialActivity extends GameActivity
         Scene7,
         Scene8,
         Scene9,
-        Scene10
+        Scene10,
+        Scene11
     }
 
     ImageView controlPanelView, outputTerminalView, similarityScoreView;
@@ -125,8 +126,8 @@ public class TutorialActivity extends GameActivity
 
     public void onProceedButtonClicked(View view)
     {
-        if (mCurrentScene == Scene.Scene8)
-            setScene(Scene.Scene9);
+        if (mCurrentScene == Scene.Scene9)
+            setScene(Scene.Scene10);
     }
 
     protected void setScene(Scene scene)
@@ -166,6 +167,8 @@ public class TutorialActivity extends GameActivity
             case Scene10:
                 setScene10();
                 break;
+            case Scene11:
+                setScene11();
             default:
 
         }
@@ -192,10 +195,16 @@ public class TutorialActivity extends GameActivity
         String body1 = "Well done -- You just created an Operator!\n\n"
                 + "These will be the building blocks of our FM synthesis!";
 
-        String body2 = "Tap on the Operator that you just created to proceed...";
+        String body2 = "Operators represent a single instance of a sinusoid with adjustable parameters.";
+        String body3 = "In this app, Operators will be chained together to form a patch.";
+        String body4 = "Try dragging on this Operator and see that you can move it around the screen.";
+        String body5 = "When ready, tap on the Operator that you just created to proceed...";
         Vector<String> pages = new Vector<String>();
         pages.add(body1);
         pages.add(body2);
+        pages.add(body3);
+        pages.add(body4);
+        pages.add(body5);
         setPages(pages);
 
         infoTitle.setText("Operators");
@@ -311,7 +320,7 @@ public class TutorialActivity extends GameActivity
     private void setScene7()
     {
         String body1 = "Set this Operator's gain to 100% and its frequency to a value between 1Hz and 5Hz";
-        String body2 = "Now, connect this Operator to Operator 1...";
+        String body2 = "Now, connect this Operator to Operator 2...";
         Vector<String> pages = new Vector<>();
         pages.add(body1);
         pages.add(body2);
@@ -320,10 +329,11 @@ public class TutorialActivity extends GameActivity
 
     private void setScene8()
     {
-        String body1 = "You should now hear a vibrato applied to the sound you had before";
-        String body2 = "Experiment with different parameter values for each Operator and see how the outputting sound is affected.";
-        String body3 = "Don't forget about the Feedback and Waveform parameters as they can have drastic effects!";
-        String body4 = "When you'd like to continue, click the Proceed button...";
+        String body1 = "Whoops! I meant to say Operator 1!"
+                + "Looks like we need to erase the connection from Operator 3 to Operator 2!";
+        String body2 = "To do so, select Operator 3 and double-tap Operator 2.";
+        String body3 = "You may notice this is the same gesture used to CREATE the connection.";
+        String body4 = "Once you delete that connection, connect Operator 3 to Operator 1;";
         Vector<String> pages = new Vector<>();
         pages.add(body1);
         pages.add(body2);
@@ -333,6 +343,26 @@ public class TutorialActivity extends GameActivity
     }
 
     private void setScene9()
+    {
+        String body1 = "You should now hear a vibrato applied to the sound you had before";
+        String body2 = "Experiment with different parameter values for each Operator and see how the outputting sound is affected.";
+        String body3 = "Don't forget about the Feedback and Waveform parameters as they can have drastic effects!";
+        String body4 = "Also, click the Trashcan icon in the top left to toggle DELETE MODE.";
+        String body5 = "When in DELETE MODE, tap on any Operator to delete it. To disable DELETE MODE, simply tap again on the trashcan.";
+        String body6 = "When you'd like to continue, click the Proceed button...";
+        Vector<String> pages = new Vector<>();
+        pages.add(body1);
+        pages.add(body2);
+        pages.add(body3);
+        pages.add(body4);
+        pages.add(body5);
+        pages.add(body6);
+        setPages(pages);
+
+        trashCan.setEnabled(true);
+    }
+
+    private void setScene10()
     {
         infoTitle.setText("The Game");
 
@@ -344,7 +374,7 @@ public class TutorialActivity extends GameActivity
         setPages(pages);
     }
 
-    private void setScene10()
+    private void setScene11()
     {
         String body1 = "This is the sound that you must match!\n\nLet's call this the Target Patch";
         String body2 = "You can toggle between hearing your on-screen patch or the Target Patch by clicking the appropriate play button.";
@@ -388,8 +418,10 @@ public class TutorialActivity extends GameActivity
             setScene(Scene.Scene3);
         else if (mCurrentScene == Scene.Scene5)
             setScene(Scene.Scene6);
-        else if (mCurrentScene == Scene.Scene7)
+        else if (mCurrentScene == Scene.Scene7 && connectableStart.getIdentifier() == 3 && connectableEnd.getIdentifier() == 2)
             setScene(Scene.Scene8);
+        else if (mCurrentScene == Scene.Scene8 && connectableStart.getIdentifier() == 3 && connectableEnd.getIdentifier() == 1)
+            setScene(Scene.Scene9);
     }
 
     @Override
@@ -398,8 +430,8 @@ public class TutorialActivity extends GameActivity
         super.onPlayButtonClicked(playButtonView);
         if (mCurrentScene == Scene.Scene3 && playButtonView == playButtonUser)
             setScene(Scene.Scene4);
-        else if (mCurrentScene == Scene.Scene9 && playButtonView == playButtonTarget)
-            setScene(Scene.Scene10);
+        else if (mCurrentScene == Scene.Scene10 && playButtonView == playButtonTarget)
+            setScene(Scene.Scene11);
     }
 
 }
