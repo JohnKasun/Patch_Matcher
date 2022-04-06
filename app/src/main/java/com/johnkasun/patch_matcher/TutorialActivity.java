@@ -34,7 +34,9 @@ public class TutorialActivity extends GameActivity
         Scene1,
         Scene2,
         Scene3,
-        Scene4
+        Scene4,
+        Scene5,
+        Scene6,
     }
 
     ImageView controlPanelView, outputTerminalView;
@@ -134,6 +136,12 @@ public class TutorialActivity extends GameActivity
             case Scene4:
                 setScene4();
                 break;
+            case Scene5:
+                setScene5();
+                break;
+            case Scene6:
+                setScene6();
+                break;
             default:
 
         }
@@ -227,8 +235,51 @@ public class TutorialActivity extends GameActivity
 
     private void setScene4()
     {
+        String body1 = "Now, let's discuss FM synthesis!";
+        String body2 = "FM is short for frequency modulation, which is a type of synthesis where a sinusoid's "
+                + "frequency is being changed by another sinusoid.";
+        String body3 = "If done correctly, this can lead to very interesting and complex timbres";
+        String body4 = "Let's create an FM patch of our own!";
+        String body5 = "Create another Operator by double clicking anywhere on screen...";
+        Vector<String> pages = new Vector<String>();
+        pages.add(body1);
+        pages.add(body2);
+        pages.add(body3);
+        pages.add(body4);
+        pages.add(body5);
+        setPages(pages);
 
+        infoTitle.setText("FM");
+
+        maxOperators = 2;
     }
+
+
+    private void setScene5()
+    {
+        String body1 = "Great!\n\nSelect this new Operator, and set its frequency to half of Operator 1's frequency and set its gain to 100.";
+        String body2 = "Then, Double click on Operator1...";
+        Vector<String> pages = new Vector<String>();
+        pages.add(body1);
+        pages.add(body2);
+        setPages(pages);
+    }
+
+    private void setScene6()
+    {
+        String body1 = "You just created a connection from Operator 2 to Operator 1!\n\n";
+        String body2 = "You would verbalize this setup as: Operator 2 is modulating Operator 1.";
+        String body3 = "On a mathematical level, the output values of Operator 2 are being added to the frequency of Operator 1";
+        String body4 = "If you haven't already, press the RIGHT Play button again and listen to the result\n\n"
+                + "The Timbre is almost horn-like";
+        Vector<String> pages = new Vector<String>();
+        pages.add(body1);
+        pages.add(body2);
+        pages.add(body3);
+        pages.add(body4);
+        setPages(pages);
+    }
+
 
     @Override
     public void generateOperator(MotionEvent e)
@@ -236,6 +287,8 @@ public class TutorialActivity extends GameActivity
         super.generateOperator(e);
         if (mCurrentScene == Scene.Scene0)
             setScene(Scene.Scene1);
+        else if (mCurrentScene == Scene.Scene4)
+            setScene(Scene.Scene5);
     }
 
     @Override
@@ -252,6 +305,8 @@ public class TutorialActivity extends GameActivity
         super.onMakeConnection(connectableStart, connectableEnd);
         if (mCurrentScene == Scene.Scene2)
             setScene(Scene.Scene3);
+        else if (mCurrentScene == Scene.Scene5)
+            setScene(Scene.Scene6);
     }
 
     @Override
