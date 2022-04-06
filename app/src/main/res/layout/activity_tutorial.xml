@@ -260,6 +260,8 @@
         android:layout_marginBottom="20dp"
         android:background="#887C7C"
         android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton">
@@ -267,7 +269,8 @@
         <TextView
             android:id="@+id/infoTitle"
             android:layout_width="match_parent"
-            android:layout_height="41dp"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
             android:text="Title"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -282,20 +285,21 @@
         <TextView
             android:id="@+id/infoBody"
             android:layout_width="match_parent"
-            android:layout_height="113dp"
+            android:layout_height="114dp"
+            android:autoSizeMaxTextSize="16dp"
+            android:autoSizeTextType="uniform"
             android:text="Body"
             android:textColor="@color/white" />
 
         <LinearLayout
-            android:layout_width="117dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="128dp"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/InfoPrevButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onBackButtonClicked"
                 android:text="Back"
