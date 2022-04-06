@@ -37,9 +37,13 @@ public class TutorialActivity extends GameActivity
         Scene4,
         Scene5,
         Scene6,
+        Scene7,
+        Scene8,
+        Scene9,
+        Scene10
     }
 
-    ImageView controlPanelView, outputTerminalView;
+    ImageView controlPanelView, outputTerminalView, similarityScoreView;
     TextView tempFreqLabel, tempGainLabel, tempFeedbackLabel, tempWaveLabel;
     TextView infoTitle, infoBody;
     Button infoPreviousButton, infoNextButton;
@@ -62,8 +66,10 @@ public class TutorialActivity extends GameActivity
 
         controlPanelView = findViewById(R.id.ControlPanelLabel);
         outputTerminalView = findViewById(R.id.OutputTerminalLabel);
+        similarityScoreView = findViewById(R.id.SimilarityScoreView);
         controlPanelView.setVisibility(View.INVISIBLE);
         outputTerminalView.setVisibility(View.INVISIBLE);
+        similarityScoreView.setVisibility(View.INVISIBLE);
 
         tempFreqLabel = findViewById(R.id.tempFrequencyLabel);
         tempGainLabel = findViewById(R.id.tempGainLabel);
@@ -117,6 +123,12 @@ public class TutorialActivity extends GameActivity
 
     }
 
+    public void onProceedButtonClicked(View view)
+    {
+        if (mCurrentScene == Scene.Scene8)
+            setScene(Scene.Scene9);
+    }
+
     protected void setScene(Scene scene)
     {
         switch (scene)
@@ -141,6 +153,18 @@ public class TutorialActivity extends GameActivity
                 break;
             case Scene6:
                 setScene6();
+                break;
+            case Scene7:
+                setScene7();
+                break;
+            case Scene8:
+                setScene8();
+                break;
+            case Scene9:
+                setScene9();
+                break;
+            case Scene10:
+                setScene10();
                 break;
             default:
 
@@ -227,10 +251,6 @@ public class TutorialActivity extends GameActivity
 
         controlPanelView.setVisibility(View.INVISIBLE);
         outputTerminalView.setVisibility(View.INVISIBLE);
-        tempFreqLabel.setVisibility(View.INVISIBLE);
-        tempGainLabel.setVisibility(View.INVISIBLE);
-        tempFeedbackLabel.setVisibility(View.INVISIBLE);
-        tempWaveLabel.setVisibility(View.INVISIBLE);
     }
 
     private void setScene4()
@@ -238,7 +258,7 @@ public class TutorialActivity extends GameActivity
         String body1 = "Now, let's discuss FM synthesis!";
         String body2 = "FM is short for frequency modulation, which is a type of synthesis where a sinusoid's "
                 + "frequency is being changed by another sinusoid.";
-        String body3 = "If done correctly, this can lead to very interesting and complex timbres";
+        String body3 = "Doing so creates sidebands in the frequency domain, which can lead to very interesting and complex timbres";
         String body4 = "Let's create an FM patch of our own!";
         String body5 = "Create another Operator by double clicking anywhere on screen...";
         Vector<String> pages = new Vector<String>();
@@ -257,7 +277,7 @@ public class TutorialActivity extends GameActivity
 
     private void setScene5()
     {
-        String body1 = "Great!\n\nSelect this new Operator, and set its frequency to half of Operator 1's frequency and set its gain to 100.";
+        String body1 = "Great!\n\nSelect this new Operator and set its frequency to half of Operator 1's frequency and set its gain to 100.";
         String body2 = "Then, Double click on Operator1...";
         Vector<String> pages = new Vector<String>();
         pages.add(body1);
@@ -269,10 +289,42 @@ public class TutorialActivity extends GameActivity
     {
         String body1 = "You just created a connection from Operator 2 to Operator 1!\n\n";
         String body2 = "You would verbalize this setup as: Operator 2 is modulating Operator 1.";
-        String body3 = "On a mathematical level, the output values of Operator 2 are being added to the frequency of Operator 1";
-        String body4 = "If you haven't already, press the RIGHT Play button again and listen to the result\n\n"
+        String body3 = "- Operator 1 is considered a CARRIER\n\n- Operator 2 is considered a MODULATOR";
+        String body4 = "On a mathematical level, the output values of Operator 2 are being added to the frequency of Operator 1";
+        String body5 = "If you haven't already, press the RIGHT Play button again and listen to the result\n\n"
                 + "The Timbre is almost horn-like";
+        String body6 = "FM works best when connected Operators' frequencies are integer multiples of each other...";
+        String body7 = "...But it doesn't have to be that way!\n\nLet's make a vibrato. Create another Operator to proceed...";
         Vector<String> pages = new Vector<String>();
+        pages.add(body1);
+        pages.add(body2);
+        pages.add(body3);
+        pages.add(body4);
+        pages.add(body5);
+        pages.add(body6);
+        pages.add(body7);
+        setPages(pages);
+
+        maxOperators = 3;
+    }
+
+    private void setScene7()
+    {
+        String body1 = "Set this Operator's gain to 100% and its frequency to a value between 1Hz and 5Hz";
+        String body2 = "Now, connect this Operator to Operator 1...";
+        Vector<String> pages = new Vector<>();
+        pages.add(body1);
+        pages.add(body2);
+        setPages(pages);
+    }
+
+    private void setScene8()
+    {
+        String body1 = "You should now hear a vibrato applied to the sound you had before";
+        String body2 = "Experiment with different parameter values for each Operator and see how the outputting sound is affected.";
+        String body3 = "Don't forget about the Feedback and Waveform parameters as they can have drastic effects!";
+        String body4 = "When you'd like to continue, click the Proceed button...";
+        Vector<String> pages = new Vector<>();
         pages.add(body1);
         pages.add(body2);
         pages.add(body3);
@@ -280,6 +332,33 @@ public class TutorialActivity extends GameActivity
         setPages(pages);
     }
 
+    private void setScene9()
+    {
+        infoTitle.setText("The Game");
+
+        String body1 = "The goal of Patch Matcher is for you to try to replicate a generated sound using FM synthesis.";
+        String body2 = "Press the LEFT play button...";
+        Vector<String> pages = new Vector<>();
+        pages.add(body1);
+        pages.add(body2);
+        setPages(pages);
+    }
+
+    private void setScene10()
+    {
+        String body1 = "This is the sound that you must match!\n\nLet's call this the Target Patch";
+        String body2 = "You can toggle between hearing your on-screen patch or the Target Patch by clicking the appropriate play button.";
+        String body3 = "The percentage value in the top right of the screen is your Similarity Score.";
+        String body4 = "This updates live as you work and represents how close your patch is to the Target Patch.";
+        Vector<String> pages = new Vector<>();
+        pages.add(body1);
+        pages.add(body2);
+        pages.add(body3);
+        pages.add(body4);
+        setPages(pages);
+
+        similarityScoreView.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void generateOperator(MotionEvent e)
@@ -289,6 +368,8 @@ public class TutorialActivity extends GameActivity
             setScene(Scene.Scene1);
         else if (mCurrentScene == Scene.Scene4)
             setScene(Scene.Scene5);
+        else if (mCurrentScene == Scene.Scene6)
+            setScene(Scene.Scene7);
     }
 
     @Override
@@ -307,14 +388,18 @@ public class TutorialActivity extends GameActivity
             setScene(Scene.Scene3);
         else if (mCurrentScene == Scene.Scene5)
             setScene(Scene.Scene6);
+        else if (mCurrentScene == Scene.Scene7)
+            setScene(Scene.Scene8);
     }
 
     @Override
     public void onPlayButtonClicked(PlayButtonView playButtonView)
     {
         super.onPlayButtonClicked(playButtonView);
-        if (mCurrentScene == Scene.Scene3)
+        if (mCurrentScene == Scene.Scene3 && playButtonView == playButtonUser)
             setScene(Scene.Scene4);
+        else if (mCurrentScene == Scene.Scene9 && playButtonView == playButtonTarget)
+            setScene(Scene.Scene10);
     }
 
 }

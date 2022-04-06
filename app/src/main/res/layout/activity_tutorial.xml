@@ -395,5 +395,30 @@
         app:layout_constraintTop_toBottomOf="@+id/FinishButton"
         app:srcCompat="@drawable/outputterminallabel" />
 
+    <Button
+        android:id="@+id/ProceedButton"
+        android:layout_width="88dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="8dp"
+        android:autoSizeMinTextSize="8dp"
+        android:autoSizeTextType="uniform"
+        android:onClick="onProceedButtonClicked"
+        android:text="Proceed"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/SimilarityScoreView"
+        android:layout_width="260dp"
+        android:layout_height="79dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/LiveScoreView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/similarityscorelabel" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
