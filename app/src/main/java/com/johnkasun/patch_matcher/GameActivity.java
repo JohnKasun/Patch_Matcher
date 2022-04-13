@@ -56,6 +56,9 @@ public class GameActivity extends AppCompatActivity
     int maxOperators = 6;
     Bundle m_outState;
     BroadcastReceiver broadcastReceiver;
+    float mCurrentScore = 0;
+    private final float mScoreThreshold = 90;
+    private Button mNextLevelButton;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -120,6 +123,9 @@ public class GameActivity extends AppCompatActivity
     public void init()
     {
         ai_regenerateTarget();
+
+        mNextLevelButton = findViewById(R.id.NextLevelButton);
+        mNextLevelButton.setEnabled(false);
 
         targetValues = findViewById(R.id.TargetValuesText);
         liveScoreView = findViewById(R.id.LiveScoreView);
@@ -207,6 +213,12 @@ public class GameActivity extends AppCompatActivity
         registerReceiver(broadcastReceiver, new IntentFilter("show_values"));
     }
 
+    public void onNextLevelButtonClicked(View view)
+    {
+        resetActivity();
+        regenerateTarget();
+    }
+
     public void settingsButtonPressed(View view)
     {
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -226,20 +238,22 @@ public class GameActivity extends AppCompatActivity
         {
             OperatorView currentOperator = operatorList.get(i);
             onDeleteOperator(currentOperator);
+            i--;
         }
         OperatorView.resetNumOperators();
+        mNextLevelButton.setEnabled(false);
         ai_onResetActivity();
     }
 
 
     public void deselectAll() {
+        for (int i = 0; i < operatorList.size(); i++)
+            operatorList.get(i).deselect();
         disableKnobs();
         selectedOperator = null;
         OperatorView.setSelectedOperator(null);
         OutputTerminalView.setSelectedOperator(null);
         wavetableView.setSelectedOperator(null);
-        for (int i = 0; i < operatorList.size(); i++)
-            operatorList.get(i).deselect();
     }
 
     public void generateOperator(MotionEvent e) {
@@ -333,8 +347,10 @@ public class GameActivity extends AppCompatActivity
 
     private void doEvaluation()
     {
-        float value = ai_onEvaluatePatch();
-        liveScoreView.setText((int)value+"%");
+        mCurrentScore = ai_onEvaluatePatch();
+        if (mCurrentScore >= mScoreThreshold)
+            mNextLevelButton.setEnabled(true);
+        liveScoreView.setText((int)mCurrentScore+"%");
     }
 
     @Override

@@ -27,6 +27,7 @@ public class CampaignActivity extends GameActivity {
         setLevel(mCurrentLevel);
     }
 
+    @Override
     public void onNextLevelButtonClicked(View view)
     {
         if (mCurrentLevel + 1 <= mMaxLevel)
@@ -36,7 +37,6 @@ public class CampaignActivity extends GameActivity {
     public void setLevel(int level)
     {
         resetActivity();
-        //mNextLevelButton.setEnabled(false);
         mLevelText.setText("Level " + level);
         ai_setLevel(level);
     }
