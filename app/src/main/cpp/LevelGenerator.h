@@ -63,6 +63,36 @@ private:
         Parameters(340, 100, 0, Wavetable::kSine, {0}),
         Parameters(341, 100, 0, Wavetable::kCustom, {0})
     };
+
+    const LevelParameters Level7
+    {
+        Parameters(400, 100, 0.5, Wavetable::kSine, {0}),
+        Parameters(500, 50, 0, Wavetable::kSine, {1}),
+        Parameters(600, 75, 0, Wavetable::kSine, {2})
+    };
+
+    const LevelParameters Level8
+    {
+        Parameters(250, 100, 1, Wavetable::kSine, {0}),
+        Parameters(125, 100, 0, Wavetable::kSine, {1}),
+        Parameters(75, 100, 0, Wavetable::kSine, {2})
+    };
+
+    const LevelParameters Level9
+    {
+        Parameters(560, 100, 0, Wavetable::kCustom, {0}),
+        Parameters(1120, 100, 0, Wavetable::kCustom, {1}),
+        Parameters(840, 100, 0.5, Wavetable::kSine, {0}),
+        Parameters(210, 100, 0, Wavetable::kSine, {3})
+    };
+
+    const LevelParameters Level10
+    {
+        Parameters(500, 100, 0, Wavetable::kSine, {0}),
+        Parameters(501, 100, 0, Wavetable::kSine, {0}),
+        Parameters(499, 100, 0, Wavetable::kSine, {0})
+    };
+
 };
 
 

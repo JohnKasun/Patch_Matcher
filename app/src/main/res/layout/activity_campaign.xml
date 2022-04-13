@@ -261,5 +261,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/settingswheel" />
 
+    <TextView
+        android:id="@+id/levelText"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:autoSizeTextType="uniform"
+        android:background="@color/white"
+        android:backgroundTintMode="add"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="5dp"
+        android:text="Level 1"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="#8A8585"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
