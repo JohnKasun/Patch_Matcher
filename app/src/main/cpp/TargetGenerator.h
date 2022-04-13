@@ -13,11 +13,14 @@
 
 struct Parameters
 {
+    Parameters(){};
+    Parameters(float freq, float gain, float feedback, Wavetable::Wavetable_t waveType, std::set<int> ids) :
+        fFreq(freq), fGain(gain), fFeedback(feedback), eWaveType(waveType), operatorIds(ids) {};
     float fFreq = 0;
     float fGain = 0;
     float fFeedback = 0;
     Wavetable::Wavetable_t eWaveType = Wavetable::Wavetable_t::kSine;
-    std::set<int> operatorIds;
+    std::set<int> operatorIds {};
     void reset()
     {
         fFreq = 0;
@@ -52,7 +55,7 @@ public:
     Parameters getOperatorParameters(int iOperator) const;
     ConnectionSetup getConnectionSetup() const;
 
-private:
+protected:
 
     float m_fMaxFreq;
     float m_fMaxGain;

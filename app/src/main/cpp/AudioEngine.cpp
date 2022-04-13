@@ -54,7 +54,6 @@ int32_t AudioEngine::pauseAudio()
 {
     m_isRunning = false;
     oboe::Result result = mStream->requestPause();
-    mStream->requestFlush();
     return static_cast<int32_t>(result);
 }
 
@@ -312,6 +311,18 @@ float AudioEngine::evaluatePatch()
     return fScore;
 
 
+}
+
+void AudioEngine::setLevelPatch(int level)
+{
+    LevelParameters levelParameters = levelGenerator.getLevelParameters(level);
+    parameterInterface_t[0] = levelParameters.Operator1;
+    parameterInterface_t[1] = levelParameters.Operator2;
+    parameterInterface_t[2] = levelParameters.Operator3;
+    parameterInterface_t[3] = levelParameters.Operator4;
+    parameterInterface_t[4] = levelParameters.Operator5;
+    parameterInterface_t[5] = levelParameters.Operator6;
+    setOperatorParameters(operatorInterface_t, parameterInterface_t, &outputTerminal_t);
 }
 
 

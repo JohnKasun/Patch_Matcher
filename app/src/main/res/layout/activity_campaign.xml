@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#C6C3C3"
-    tools:context="com.johnkasun.patch_matcher.GameActivity">
+    tools:context="com.johnkasun.patch_matcher.CampaignActivity">
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -224,8 +224,8 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
-        android:onClick="finishButtonPressed"
-        android:text="Done"
+        android:onClick="onNextLevelButtonClicked"
+        android:text="Next"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/outputTerminalView"
         app:layout_constraintTop_toBottomOf="@+id/LiveScoreView" />

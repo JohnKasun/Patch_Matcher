@@ -26,7 +26,8 @@ add_library( # Sets the name of the library.
         Wavetable.cpp
         Operator.cpp
         Tester.cpp
-        TargetGenerator.cpp)
+        TargetGenerator.cpp
+        LevelGenerator.cpp)
 
 include_directories(src/main/cpp)
 

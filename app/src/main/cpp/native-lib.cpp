@@ -293,3 +293,8 @@ JNIEXPORT jfloat JNICALL
 Java_com_johnkasun_patch_1matcher_TutorialActivity_ai_1onEvaluatePatch(JNIEnv *env, jobject thiz) {
     return engine.evaluatePatch();
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_johnkasun_patch_1matcher_CampaignActivity_ai_1setLevel(JNIEnv *env, jobject thiz, jint level) {
+    engine.setLevelPatch(level);
+}

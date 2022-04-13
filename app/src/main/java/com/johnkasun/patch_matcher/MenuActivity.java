@@ -26,4 +26,9 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TutorialActivity.class);
         startActivity(intent);
     }
+    public void startCampaign(View view)
+    {
+        Intent intent = new Intent(this, CampaignActivity.class);
+        startActivity(intent);
+    }
 }

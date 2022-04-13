@@ -9,6 +9,7 @@
 
 #include "Operator.h"
 #include "TargetGenerator.h"
+#include "LevelGenerator.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 private:
@@ -42,6 +43,7 @@ private:
     };
 
     TargetGenerator targetGenerator;
+    LevelGenerator levelGenerator;
     Parameters parameterInterface_t[maxOperators] {
             Parameters(),
             Parameters(),
@@ -79,6 +81,8 @@ public:
     void initializeUserPatch();
     float evaluatePatch();
     void reset();
+
+    void setLevelPatch(int level);
 
     OutputTerminal outputTerminal;
     Operator operatorInterface[maxOperators] {

@@ -4,40 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C6C3C3"
     tools:context=".MenuActivity">
-
-    <Button
-        android:id="@+id/freeplayButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="300dp"
-        android:layout_marginBottom="135dp"
-        android:onClick="startFreePlay"
-        android:text="Free Play"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.714"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tutorialButton"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/tutorialButton"
-        android:layout_width="112dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="300dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="startTutorial"
-        android:text="Tutorial"
-        app:layout_constraintBottom_toTopOf="@+id/freeplayButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -54,4 +22,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <LinearLayout
+        android:layout_width="540dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="26dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <Button
+            android:id="@+id/tutorialButton"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:onClick="startTutorial"
+            android:text="Tutorial" />
+
+        <Button
+            android:id="@+id/campaignButton"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:onClick="startCampaign"
+            android:text="Campaign" />
+
+        <Button
+            android:id="@+id/freeplayButton"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:onClick="startFreePlay"
+            android:text="Free Play" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
