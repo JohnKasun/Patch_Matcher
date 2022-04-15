@@ -171,6 +171,7 @@ public class TutorialActivity extends GameActivity
                 break;
             case Scene11:
                 setScene11();
+                break;
             case Scene12:
                 setScene12();
             default:
