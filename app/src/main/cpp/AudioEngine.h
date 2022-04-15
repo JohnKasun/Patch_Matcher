@@ -83,6 +83,7 @@ public:
     void reset();
 
     void setLevelPatch(int level);
+    void setTutorialPatch();
 
     OutputTerminal outputTerminal;
     Operator operatorInterface[maxOperators] {

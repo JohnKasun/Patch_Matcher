@@ -345,7 +345,7 @@ public class GameActivity extends AppCompatActivity
         }
     }
 
-    private void doEvaluation()
+    protected void doEvaluation()
     {
         mCurrentScore = ai_onEvaluatePatch();
         if (mCurrentScore >= mScoreThreshold)

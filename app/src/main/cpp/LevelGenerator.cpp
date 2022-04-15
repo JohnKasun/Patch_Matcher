@@ -27,3 +27,7 @@ LevelParameters LevelGenerator::getLevelParameters(int level) const {
         default : return Level10;
     }
 }
+
+LevelParameters LevelGenerator::getTutorialParameters() const {
+    return Tutorial;
+}

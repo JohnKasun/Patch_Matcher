@@ -23,8 +23,16 @@ public:
     ~LevelGenerator();
 
     LevelParameters getLevelParameters(int level) const;
+    LevelParameters getTutorialParameters() const;
 
 private:
+
+    const LevelParameters Tutorial
+    {
+        Parameters(440, 100, 0, Wavetable::kCustom, {0}),
+        Parameters(220, 100, 0, Wavetable::kSine, {1}),
+        Parameters(3, 100, 0, Wavetable::kSine, {1})
+    };
 
     const LevelParameters Level1
     {

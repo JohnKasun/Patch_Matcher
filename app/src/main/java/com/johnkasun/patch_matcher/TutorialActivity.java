@@ -41,7 +41,8 @@ public class TutorialActivity extends GameActivity
         Scene8,
         Scene9,
         Scene10,
-        Scene11
+        Scene11,
+        Scene12
     }
 
     ImageView controlPanelView, outputTerminalView, similarityScoreView;
@@ -83,6 +84,7 @@ public class TutorialActivity extends GameActivity
         tempWaveLabel.setVisibility(View.INVISIBLE);
 
         setScene(mCurrentScene);
+        ai_setTutorialPatch();
     }
 
     public void setPages(Vector<String> pages)
@@ -169,6 +171,8 @@ public class TutorialActivity extends GameActivity
                 break;
             case Scene11:
                 setScene11();
+            case Scene12:
+                setScene12();
             default:
 
         }
@@ -380,14 +384,38 @@ public class TutorialActivity extends GameActivity
         String body2 = "You can toggle between hearing your on-screen patch or the Target Patch by clicking the appropriate play button.";
         String body3 = "The percentage value in the top right of the screen is your Similarity Score.";
         String body4 = "This updates live as you work and represents how close your patch is to the Target Patch.";
+        String body5 = "Once your similarity score reaches 95% or higher, you can proceed to the next level by pressing the Next button";
+        String body6 = "To complete this tutorial, try to match the current target patch! When done, click the Next button in the top right corner...";
         Vector<String> pages = new Vector<>();
         pages.add(body1);
         pages.add(body2);
         pages.add(body3);
         pages.add(body4);
+        pages.add(body5);
+        pages.add(body6);
         setPages(pages);
 
         similarityScoreView.setVisibility(View.VISIBLE);
+    }
+
+    private void setScene12()
+    {
+        String body1 = "Congratulations -- you're ready for Patch Matcher's challenges!";
+        String body2 = "Press the settings wheel in the top left, then the Menu button to return to the main menu...";
+        Vector<String> pages = new Vector<>();
+        pages.add(body1);
+        pages.add(body2);
+        setPages(pages);
+
+
+    }
+
+    @Override
+    public void onNextLevelButtonClicked(View view)
+    {
+        super.onNextLevelButtonClicked(view);
+        if (mCurrentScene == Scene.Scene11)
+            setScene(Scene.Scene12);
     }
 
     @Override
@@ -433,5 +461,7 @@ public class TutorialActivity extends GameActivity
         else if (mCurrentScene == Scene.Scene10 && playButtonView == playButtonTarget)
             setScene(Scene.Scene11);
     }
+
+    public native void ai_setTutorialPatch();
 
 }
