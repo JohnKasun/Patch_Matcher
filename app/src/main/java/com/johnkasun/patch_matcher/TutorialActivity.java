@@ -47,8 +47,9 @@ public class TutorialActivity extends GameActivity
 
     ImageView controlPanelView, outputTerminalView, similarityScoreView;
     TextView tempFreqLabel, tempGainLabel, tempFeedbackLabel, tempWaveLabel;
+    TextView liveScoreView;
     TextView infoTitle, infoBody;
-    Button infoPreviousButton, infoNextButton;
+    Button infoPreviousButton, infoNextButton, nextButton, proceedButton;
     Scene mCurrentScene = Scene.Scene0;
     int mCurrentPage;
     Vector<String> mPages;
@@ -82,6 +83,16 @@ public class TutorialActivity extends GameActivity
         tempGainLabel.setVisibility(View.INVISIBLE);
         tempFeedbackLabel.setVisibility(View.INVISIBLE);
         tempWaveLabel.setVisibility(View.INVISIBLE);
+
+        proceedButton = findViewById(R.id.ProceedButton);
+        liveScoreView = findViewById(R.id.LiveScoreView);
+        nextButton = findViewById(R.id.NextLevelButton);
+        proceedButton.setVisibility(View.INVISIBLE);
+        liveScoreView.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        trashCan.setVisibility(View.INVISIBLE);
+        playButtonTarget.setVisibility(View.INVISIBLE);
+        playButtonUser.setVisibility(View.INVISIBLE);
 
         setScene(mCurrentScene);
         ai_setTutorialPatch();
@@ -190,7 +201,6 @@ public class TutorialActivity extends GameActivity
 
         maxOperators = 1;
 
-        trashCan.setEnabled(false);
         playButtonUser.setEnabled(false);
         playButtonTarget.setEnabled(false);
     }
@@ -263,6 +273,7 @@ public class TutorialActivity extends GameActivity
 
         infoTitle.setText("Operators");
 
+        playButtonUser.setVisibility(View.VISIBLE);
         controlPanelView.setVisibility(View.INVISIBLE);
         outputTerminalView.setVisibility(View.INVISIBLE);
     }
@@ -364,7 +375,8 @@ public class TutorialActivity extends GameActivity
         pages.add(body6);
         setPages(pages);
 
-        trashCan.setEnabled(true);
+        proceedButton.setVisibility(View.VISIBLE);
+        trashCan.setVisibility(View.VISIBLE);
     }
 
     private void setScene10()
@@ -377,6 +389,9 @@ public class TutorialActivity extends GameActivity
         pages.add(body1);
         pages.add(body2);
         setPages(pages);
+
+        proceedButton.setVisibility(View.INVISIBLE);
+        playButtonTarget.setVisibility(View.VISIBLE);
     }
 
     private void setScene11()
@@ -396,6 +411,8 @@ public class TutorialActivity extends GameActivity
         pages.add(body6);
         setPages(pages);
 
+        liveScoreView.setVisibility(View.VISIBLE);
+        nextButton.setVisibility(View.VISIBLE);
         similarityScoreView.setVisibility(View.VISIBLE);
     }
 
@@ -408,15 +425,18 @@ public class TutorialActivity extends GameActivity
         pages.add(body2);
         setPages(pages);
 
-
+        similarityScoreView.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onNextLevelButtonClicked(View view)
     {
-        super.onNextLevelButtonClicked(view);
         if (mCurrentScene == Scene.Scene11)
+        {
+            super.onNextLevelButtonClicked(view);
             setScene(Scene.Scene12);
+        }
+
     }
 
     @Override
