@@ -11,6 +11,7 @@
         android:theme="@style/Theme.Patch_Matcher">
         <activity
             android:name=".CampaignActivity"
+            android:screenOrientation="landscape"
             android:exported="true" />
         <activity
             android:name=".TutorialActivity"
