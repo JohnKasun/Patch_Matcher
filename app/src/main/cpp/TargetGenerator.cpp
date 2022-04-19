@@ -26,7 +26,7 @@ Parameters TargetGenerator::getOperatorParameters(int iOperator) const {
 void TargetGenerator::generateParameters()
 {
 
-    float fFundFreq = genRandParam(50, 200);
+/*    float fFundFreq = genRandParam(50, 200);
     Algorithm algorithmToUse = m_sAlgorithm1;
     m_pConnectionSetup.algorithm = algorithmToUse;
     m_pConnectionSetup.iNumActiveOperators = 2;
@@ -41,9 +41,15 @@ void TargetGenerator::generateParameters()
     m_pOperator1Parameters.fGain = 100;
     m_pOperator1Parameters.fFeedback = 0;
     m_pOperator1Parameters.eWaveType = Wavetable::kSine;
-    m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
+    m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;*/
+    m_pOperator1Parameters.reset();
+    m_pOperator2Parameters.reset();
+    m_pOperator3Parameters.reset();
+    m_pOperator4Parameters.reset();
+    m_pOperator5Parameters.reset();
+    m_pOperator6Parameters.reset();
 
-/*    float fFundFreq = genRandParam(50.0f, 200.0f);
+    float fFundFreq = genRandParam(50.0f, 200.0f);
     Algorithm algorithmToUse = generateAlgorithm();
     m_pConnectionSetup.algorithm = algorithmToUse;
     m_pConnectionSetup.iNumActiveOperators = static_cast<int>(genRandParam(2, 4) + getRandBetween(std::vector<int>{0,0,0,0,1,1,2}));
@@ -86,7 +92,7 @@ void TargetGenerator::generateParameters()
             m_pOperator1Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
             m_pOperator1Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(genRandParam(0, 4));
             m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
-    }*/
+    }
 
 }
 

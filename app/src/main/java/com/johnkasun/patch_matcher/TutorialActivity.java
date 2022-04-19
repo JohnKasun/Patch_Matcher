@@ -229,8 +229,7 @@ public class TutorialActivity extends GameActivity
     private void setScene2()
     {
         String body1 = "You just selected an Operator for editting.\n\n"
-                + "You can now adjust its parameters as well as connect it to other Operators."
-                + "\n\nLet's discuss the parameters...";
+                + "You can now adjust its parameters and connect it to other Operators/the Output Terminal.";
         String body2 = "Use the control panel to adjust the Operator's frequency, gain, feedback, and waveform.";
         String body3 = "Frequency is the pitch of the Operator.";
         String body4 = "Gain is the volume of the Operator.";
@@ -349,7 +348,7 @@ public class TutorialActivity extends GameActivity
                 + "Looks like we need to erase the connection from Operator 3 to Operator 2!";
         String body2 = "To do so, select Operator 3 and double-tap Operator 2.";
         String body3 = "You may notice this is the same gesture used to CREATE the connection.";
-        String body4 = "Once you delete that connection, connect Operator 3 to Operator 1;";
+        String body4 = "Once you delete that connection, connect Operator 3 to Operator 1...";
         Vector<String> pages = new Vector<>();
         pages.add(body1);
         pages.add(body2);
@@ -402,6 +401,7 @@ public class TutorialActivity extends GameActivity
         String body4 = "This updates live as you work and represents how close your patch is to the Target Patch.";
         String body5 = "Once your similarity score reaches 95% or higher, you can proceed to the next level by pressing the Next button";
         String body6 = "To complete this tutorial, try to match the current target patch! When done, click the Next button in the top right corner...";
+        String body7 = "psst...\nOperator 3's frequency is 110 and its gain is 100...\nOperator 1 may have a different waveform...";
         Vector<String> pages = new Vector<>();
         pages.add(body1);
         pages.add(body2);
@@ -409,6 +409,7 @@ public class TutorialActivity extends GameActivity
         pages.add(body4);
         pages.add(body5);
         pages.add(body6);
+        pages.add(body7);
         setPages(pages);
 
         liveScoreView.setVisibility(View.VISIBLE);

@@ -147,16 +147,20 @@ void AudioEngine::regenerateTarget()
         op.reset();
         op.setWavetable(&sine);
     }
+    for (Parameters& param : parameterInterface_t)
+    {
+        param.reset();
+    }
 
     initializeTargetOperators();
 }
 
 std::string AudioEngine::getTargetValues() {
     std::stringstream iss;
-    for (int i = 1; i <= targetGenerator.getConnectionSetup().iNumActiveOperators; i++)
+    for (int i = 1; i <= 6; i++)
     {
         iss << "Operator " << i << "-";
-        Parameters opParameters = targetGenerator.getOperatorParameters(i);
+        Parameters opParameters = parameterInterface_t[i-1];
         iss << "\n\t " << opParameters.fFreq << "Hz "
                         << opParameters.fGain << " "
                         << opParameters.fFeedback * 100 << "% "
@@ -221,6 +225,8 @@ void AudioEngine::reset()
         op.setWavetable(&sine);
     }
     for (Parameters& params : parameterInterface)
+        params.reset();
+    for (Parameters& params : parameterInterface_t)
         params.reset();
 }
 

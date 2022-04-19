@@ -211,10 +211,10 @@
 
     <TextView
         android:id="@+id/TargetValuesText"
-        android:layout_width="206dp"
-        android:layout_height="143dp"
+        android:layout_width="201dp"
+        android:layout_height="193dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="28dp"
         android:textSize="8sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton" />
@@ -289,6 +289,7 @@
         android:layout_marginEnd="55dp"
         android:onClick="onTempNextLevelButtonClicked"
         android:text="Proceed"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/NextLevelButton"
         app:layout_constraintTop_toTopOf="parent" />
 

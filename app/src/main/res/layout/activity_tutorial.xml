@@ -341,11 +341,11 @@
         <TextView
             android:id="@+id/infoBody"
             android:layout_width="match_parent"
-            android:layout_height="114dp"
-            android:autoSizeMaxTextSize="16dp"
-            android:autoSizeTextType="uniform"
+            android:layout_height="119dp"
+            android:autoSizeTextType="none"
             android:text="Body"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="11sp" />
 
         <LinearLayout
             android:layout_width="128dp"
