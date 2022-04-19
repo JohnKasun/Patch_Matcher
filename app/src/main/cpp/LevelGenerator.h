@@ -103,7 +103,7 @@ private:
 
     const LevelParameters Level11
             {
-        Parameters(250, 100, 50, Wavetable::kSine, {0}),
+        Parameters(250, 100, 0.50, Wavetable::kSine, {0}),
         Parameters(750, 50, 0, Wavetable::kSine, {1}),
         Parameters(500, 100, 0, Wavetable::kSine, {0}),
         Parameters(250, 50, 0, Wavetable::kSine, {3})
