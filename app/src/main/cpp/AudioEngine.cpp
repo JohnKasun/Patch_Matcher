@@ -53,7 +53,7 @@ void AudioEngine::stopAudio()
 int32_t AudioEngine::pauseAudio()
 {
     m_isRunning = false;
-    oboe::Result result = mStream->requestPause();
+    oboe::Result result = mStream->requestStop();
     return static_cast<int32_t>(result);
 }
 
