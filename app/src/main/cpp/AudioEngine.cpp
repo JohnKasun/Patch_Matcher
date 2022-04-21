@@ -73,12 +73,12 @@ oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStrea
                 onStateChange(Stopped);
                 break;
             case SwitchingToTarget:
-                mRamp.rampTo(1, 0.1);
+                mRamp.rampTo(1, 0.01);
                 shouldPlayUser = false;
                 onStateChange(Playing);
                 break;
             case SwitchingToUser:
-                mRamp.rampTo(1, 0.1);
+                mRamp.rampTo(1, 0.01);
                 shouldPlayUser = true;
                 onStateChange(Playing);
                 break;
@@ -378,16 +378,16 @@ void AudioEngine::onStateChange(AudioEngine::state nextState)
     switch(nextState)
     {
         case Starting:
-            mRamp.rampTo(1, 0.1);
+            mRamp.rampTo(1, 0.01);
             break;
         case Playing:
             break;
         case SwitchingToTarget:
         case SwitchingToUser:
-            mRamp.rampTo(0, 0.1);
+            mRamp.rampTo(0, 0.01);
             break;
         case Stopping:
-            mRamp.rampTo(0, 0.1);
+            mRamp.rampTo(0, 0.01);
             break;
         default:
             ;
