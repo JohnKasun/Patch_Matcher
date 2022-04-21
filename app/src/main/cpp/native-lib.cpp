@@ -120,16 +120,18 @@ Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onStopAudio(JNIEnv *env, jobj
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onPlayTargetAudio(JNIEnv *env, jobject thiz) {
-    engine.setOutputType(false);
     if (!engine.isRunning())
         engine.startAudio();
+
+    engine.onStateChange(AudioEngine::SwitchingToTarget);
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_johnkasun_patch_1matcher_GameActivity_ai_1onPlayUserAudio(JNIEnv *env, jobject thiz) {
-    engine.setOutputType(true);
     if (!engine.isRunning())
         engine.startAudio();
+
+    engine.onStateChange(AudioEngine::SwitchingToUser);
 }
 
 

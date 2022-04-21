@@ -27,7 +27,8 @@ add_library( # Sets the name of the library.
         Operator.cpp
         Tester.cpp
         TargetGenerator.cpp
-        LevelGenerator.cpp)
+        LevelGenerator.cpp
+        Ramp.cpp)
 
 include_directories(src/main/cpp)
 

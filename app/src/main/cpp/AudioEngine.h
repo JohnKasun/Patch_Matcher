@@ -10,10 +10,12 @@
 #include "Operator.h"
 #include "TargetGenerator.h"
 #include "LevelGenerator.h"
+#include "Ramp.h"
 
 class AudioEngine : public oboe::AudioStreamCallback{
 private:
 
+    Ramp mRamp;
     std::mutex         mLock;
     std::shared_ptr<oboe::AudioStream> mStream;
 
@@ -66,10 +68,20 @@ public:
     AudioEngine();
     virtual ~AudioEngine();
 
+    enum state{
+        Starting,
+        Playing,
+        SwitchingToUser,
+        SwitchingToTarget,
+        Stopping,
+        Stopped
+    } mCurrentState = Stopped;
+
+    void onStateChange(state nextState);
     int32_t initializeAudio();
     int32_t startAudio();
     void stopAudio();
-    int32_t pauseAudio();
+    void pauseAudio();
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) override;
 
     void changeWavetable(int iOperatorId, Wavetable::Wavetable_t eWaveType);

@@ -27,6 +27,8 @@ int32_t AudioEngine::initializeAudio()
             ->setFormat(oboe::AudioFormat::Float)
             ->setDataCallback(this)
             ->openStream(mStream);
+    mRamp.setSampleRate(kSampleRate);
+    mRamp.setValue(0);
     WavetableOscillator::setSampleRate(kSampleRate);
     return (int32_t) result;
 }
@@ -34,6 +36,7 @@ int32_t AudioEngine::initializeAudio()
 int32_t AudioEngine::startAudio()
 {
     // Typically, start the stream after querying some stream information, as well as some input from the user
+    onStateChange(Starting);
     m_isRunning = true;
     return (int32_t) mStream->requestStart();
 }
@@ -42,6 +45,7 @@ void AudioEngine::stopAudio()
 {
     // Stop, close and delete in case not already closed.
     m_isRunning = false;
+    onStateChange(Stopping);
     std::lock_guard<std::mutex> lock(mLock);
     if (mStream) {
         mStream->stop();
@@ -50,30 +54,56 @@ void AudioEngine::stopAudio()
     }
 }
 
-int32_t AudioEngine::pauseAudio()
+void AudioEngine::pauseAudio()
 {
     m_isRunning = false;
-    oboe::Result result = mStream->requestStop();
-    return static_cast<int32_t>(result);
+    onStateChange(Stopping);
 }
 
 oboe::DataCallbackResult AudioEngine::onAudioReady(oboe::AudioStream *audioStream, void *audioData, int32_t numFrames) {
     float *floatData = (float *) audioData;
+
+
+    if (mRamp.finished())
+    {
+        switch (mCurrentState)
+        {
+            case Stopping:
+                mStream->requestStop();
+                onStateChange(Stopped);
+                break;
+            case SwitchingToTarget:
+                mRamp.rampTo(1, 0.1);
+                shouldPlayUser = false;
+                onStateChange(Playing);
+                break;
+            case SwitchingToUser:
+                mRamp.rampTo(1, 0.1);
+                shouldPlayUser = true;
+                onStateChange(Playing);
+                break;
+        }
+    }
+
+
     if (shouldPlayUser) {
         for (int i = 0; i < numFrames; ++i) {
+            float rampVal = mRamp.process();
             float sampleValue = (float) outputTerminal.getNextSample();
             for (int j = 0; j < kChannelCount; j++) {
-                floatData[i * kChannelCount + j] = sampleValue / kChannelCount;
+                floatData[i * kChannelCount + j] = rampVal * sampleValue / kChannelCount;
             }
         }
     } else {
         for (int i = 0; i < numFrames; ++i) {
+            float rampVal = mRamp.process();
             float sampleValue = (float) outputTerminal_t.getNextSample();
             for (int j = 0; j < kChannelCount; j++) {
-                floatData[i * kChannelCount + j] = sampleValue / kChannelCount;
+                floatData[i * kChannelCount + j] = rampVal * sampleValue / kChannelCount;
             }
         }
     }
+
     return oboe::DataCallbackResult::Continue;
 }
 
@@ -341,6 +371,28 @@ void AudioEngine::setTutorialPatch()
     parameterInterface_t[4] = levelParameters.Operator5;
     parameterInterface_t[5] = levelParameters.Operator6;
     setOperatorParameters(operatorInterface_t, parameterInterface_t, &outputTerminal_t);
+}
+
+void AudioEngine::onStateChange(AudioEngine::state nextState)
+{
+    switch(nextState)
+    {
+        case Starting:
+            mRamp.rampTo(1, 0.1);
+            break;
+        case Playing:
+            break;
+        case SwitchingToTarget:
+        case SwitchingToUser:
+            mRamp.rampTo(0, 0.1);
+            break;
+        case Stopping:
+            mRamp.rampTo(0, 0.1);
+            break;
+        default:
+            ;
+    }
+    mCurrentState = nextState;
 }
 
 
