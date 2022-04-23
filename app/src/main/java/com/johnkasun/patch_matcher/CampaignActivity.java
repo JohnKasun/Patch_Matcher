@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class CampaignActivity extends GameActivity {
 
-    private final int mMaxLevel = 15;
+    private final int mMaxLevel = 20;
     private int mCurrentLevel = 1;
     private Button mNextLevelButton;
     private TextView mLevelText;

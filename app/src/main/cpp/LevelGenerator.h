@@ -49,14 +49,14 @@ private:
 
     const LevelParameters Level3
     {
-        Parameters(330, 100, 0, Wavetable::kSine, {0}),
-        Parameters(990, 100, 0, Wavetable::kSine, {1})
+        Parameters(435, 100, 0, Wavetable::kSine, {0}),
+        Parameters(435, 50, 0, Wavetable::kSine, {1})
     };
 
     const LevelParameters Level4
     {
-        Parameters(450, 100, 0, Wavetable::kSine, {0}),
-        Parameters(300, 100, 0, Wavetable::kSine, {1})
+        Parameters(200, 100, 0, Wavetable::kSine, {0}),
+        Parameters(280, 75, 0, Wavetable::kSine, {1})
     };
 
     const LevelParameters Level5
@@ -81,9 +81,8 @@ private:
 
     const LevelParameters Level8
     {
-        Parameters(250, 100, 1, Wavetable::kSine, {0}),
-        Parameters(125, 100, 0, Wavetable::kSine, {1}),
-        Parameters(75, 100, 0, Wavetable::kSine, {2})
+        Parameters(500, 100, 1, Wavetable::kSine, {0}),
+        Parameters(100, 100, 0, Wavetable::kSine, {1})
     };
 
     const LevelParameters Level9
@@ -111,14 +110,14 @@ private:
 
     const LevelParameters Level12
             {
-        Parameters(1000, 100, 0, Wavetable::kSaw, {0}),
+        Parameters(1000, 100, 0, Wavetable::kCustom, {0}),
         Parameters(100, 100, 1.00, Wavetable::kCustom, {1})
             };
 
     const LevelParameters Level13
             {
         Parameters(750, 100, .50, Wavetable::kTriangle, {0}),
-        Parameters(750, 100, 0, Wavetable::kSquare, {1}),
+        Parameters(750, 25, 0, Wavetable::kSquare, {1}),
         Parameters(1500, 50, 0, Wavetable::kSine, {1})
             };
 
@@ -131,9 +130,42 @@ private:
 
     const LevelParameters Level15
     {
-        Parameters(500, 100, 0, Wavetable::kSine, {0}),
-        Parameters(100, 100, 0, Wavetable::kTriangle, {1})
+        Parameters(80, 100, 0, Wavetable::kSine, {0}),
+        Parameters(55, 100, 0, Wavetable::kSine, {1})
     };
+
+    const LevelParameters Level16
+    {
+        Parameters(250, 100, .75, Wavetable::kTriangle, {0}),
+        Parameters(1500, 40, 0, Wavetable::kSine, {1})
+    };
+
+    const LevelParameters Level17
+            {
+        Parameters(555, 100, 1.00, Wavetable::kCustom, {0}),
+        Parameters(222, 30, 1.00, Wavetable::kCustom, {1}),
+        Parameters(11, 100, 1.00, Wavetable::kCustom, {2})
+            };
+
+    const LevelParameters Level18
+            {
+        Parameters(600, 100, 0, Wavetable::kSine, {0}),
+        Parameters(300, 100, 0, Wavetable::kSine, {1}),
+        Parameters(200, 100, .50, Wavetable::kSaw, {0}),
+        Parameters(800, 100, .50, Wavetable::kSine, {3})
+            };
+
+    const LevelParameters Level19
+            {
+        Parameters(432, 100, .44, Wavetable::kSquare, {0}),
+        Parameters(433, 100, .77, Wavetable::kSine, {0}),
+        Parameters(864, 100, 0, Wavetable::kTriangle, {1, 2})
+            };
+
+    const LevelParameters Level20
+            {
+        Parameters(440, 100, 0, Wavetable::kSine, {0})
+            };
 };
 
 

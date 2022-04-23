@@ -29,7 +29,12 @@ LevelParameters LevelGenerator::getLevelParameters(int level) const {
         case 12 : return Level12;
         case 13 : return Level13;
         case 14 : return Level14;
-        default : return Level15;
+        case 15 : return Level15;
+        case 16 : return Level16;
+        case 17 : return Level17;
+        case 18 : return Level18;
+        case 19 : return Level19;
+        default : return Level20;
     }
 }
 
