@@ -81,16 +81,16 @@ void TargetGenerator::generateParameters()
             m_pOperator3Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(genRandParam(0, 4));
             m_pOperator3Parameters.operatorIds = algorithmToUse.iOperator3Connections;
         case 2:
-            m_pOperator2Parameters.fFreq = genMultiple(fFundFreq, 1, 9);
+            m_pOperator2Parameters.fFreq = genMultiple(fFundFreq, 1, 3);
             m_pOperator2Parameters.fGain = genRandParam(0.0f, m_fMaxGain);
             m_pOperator2Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
-            m_pOperator2Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(genRandParam(0, 4));
+            m_pOperator2Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(getRandBetween(std::vector<int>{0,2,4}));
             m_pOperator2Parameters.operatorIds = algorithmToUse.iOperator2Connections;
         default:
-            m_pOperator1Parameters.fFreq = genMultiple(fFundFreq, 1, 4);
+            m_pOperator1Parameters.fFreq = genMultiple(fFundFreq, 1, 3);
             m_pOperator1Parameters.fGain = getRandBetween(std::vector<int>{50, 100});
             m_pOperator1Parameters.fFeedback = genRandParam(0.0f, 100.0f, true);
-            m_pOperator1Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(genRandParam(0, 4));
+            m_pOperator1Parameters.eWaveType = static_cast<Wavetable::Wavetable_t>(getRandBetween(std::vector<int>{0,2,4}));
             m_pOperator1Parameters.operatorIds = algorithmToUse.iOperator1Connections;
     }
 
