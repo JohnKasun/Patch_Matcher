@@ -5,14 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CampaignActivity extends GameActivity {
 
-    private final int mMaxLevel = 20;
+    private final int mMaxLevel = 21;
     private int mCurrentLevel = 1;
     private Button mNextLevelButton;
     private TextView mLevelText;
+    private LinearLayout mWinText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,8 @@ public class CampaignActivity extends GameActivity {
 
         mNextLevelButton = findViewById(R.id.NextLevelButton);
         mLevelText = findViewById(R.id.levelText);
+        mWinText = findViewById(R.id.WinText);
+        mWinText.setVisibility(View.INVISIBLE);
 
         setLevel(mCurrentLevel);
     }
@@ -30,8 +34,17 @@ public class CampaignActivity extends GameActivity {
     @Override
     public void onNextLevelButtonClicked(View view)
     {
-        if (mCurrentLevel + 1 <= mMaxLevel)
-            setLevel(++mCurrentLevel);
+        mCurrentLevel++;
+        if (mCurrentLevel <= mMaxLevel)
+        {
+            if (mCurrentLevel == mMaxLevel)
+            {
+                mWinText.setVisibility(View.VISIBLE);
+                mLevelText.setVisibility(View.INVISIBLE);
+            }
+            setLevel(mCurrentLevel);
+        }
+
     }
 
     public void setLevel(int level)
@@ -43,8 +56,16 @@ public class CampaignActivity extends GameActivity {
 
     public void onTempNextLevelButtonClicked(View view)
     {
-        if (mCurrentLevel + 1 <= mMaxLevel)
-            setLevel(++mCurrentLevel);
+        mCurrentLevel++;
+        if (mCurrentLevel <= mMaxLevel)
+        {
+            if (mCurrentLevel == mMaxLevel)
+            {
+                mWinText.setVisibility(View.VISIBLE);
+                mLevelText.setVisibility(View.INVISIBLE);
+            }
+            setLevel(mCurrentLevel);
+        }
     }
 
     public native void ai_setLevel(int level);

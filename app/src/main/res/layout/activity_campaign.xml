@@ -293,5 +293,35 @@
         app:layout_constraintEnd_toStartOf="@+id/NextLevelButton"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/WinText"
+        android:layout_width="453dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="76dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/CongratsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Congratulations!"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/YouWonText"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:text="You Win!"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="34sp" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

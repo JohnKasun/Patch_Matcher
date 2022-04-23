@@ -166,6 +166,11 @@ private:
             {
         Parameters(440, 100, 0, Wavetable::kSine, {0})
             };
+
+    const LevelParameters Level21
+            {
+        Parameters(440, 0, 0, Wavetable::kSine, {0})
+            };
 };
 
 
